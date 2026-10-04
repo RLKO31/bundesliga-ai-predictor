@@ -1,24 +1,9 @@
-"""
-===============================================================================
-SENIOR ENGINEER REVIEW: MASTER DASHBOARD BUNDLER & BUG FIXER V2
-===============================================================================
-Resolves:
-1. 100% Team Logo Coverage: Adds all 47 team name variations to teamLogos.
-2. Complete Data State: Injects window.predictions_v2, v3, v4, v5, v6, v6_2stage, 
-   heatmaps, stadiums, vulnerabilities, and adaptability.
-3. Element ID Harmonization: Restores standings-tab (live-standings-body & 
-   predicted-standings-body), complexity-tab (v4-complexity-standings-body), 
-   m14-tab (v5-m14-standings-body), predictions-tab (fixtures-grid).
-4. Leaflet Map Initialization: Fixes stadium lat/lng coordinates & Leaflet markers.
-===============================================================================
-"""
-
 import os
 import json
 import re
 
 def compile_complete_bundle():
-    print("--- Senior Engineer Master Bundle Compiler V2 ---")
+    print("--- Senior Engineer Master Bundle Compiler V3 ---")
     
     # 1. Load All Prediction & Feature Datasets
     p2_path = "models/model_v1_v2_baseline/predictions_26_27_all.json" if os.path.exists("models/model_v1_v2_baseline/predictions_26_27_all.json") else "predictions_26_27_all.json"
@@ -73,76 +58,142 @@ def compile_complete_bundle():
         "Schalke 04": { "name": "VELTINS-Arena", "city": "Gelsenkirchen", "lat": 51.5545, "lng": 7.0675 }
     }
 
-    # Complete Team Logo URL Map for 100% of Team Name Aliases
+    # Complete Team Logo URL Map (including raw + unicode escaped keys + OpenLigaDB CDN fallbacks)
     team_logo_urls = {
-        "Bayern Munich": "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg",
-        "FC Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg",
-        "FC Bayern Muenchen": "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg",
-        "Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg",
+        # Bayern Munich
+        "Bayern Munich": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        "FC Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        "FC Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        "FC Bayern Muenchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        "Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        "Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
         
-        "Bayer Leverkusen": "https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg",
-        "Bayer 04 Leverkusen": "https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg",
+        # Bayer Leverkusen
+        "Bayer Leverkusen": "https://www.bundesliga-reisefuehrer.de/sites/default/files/B04_Standard_Logo_RGB.png",
+        "Bayer 04 Leverkusen": "https://www.bundesliga-reisefuehrer.de/sites/default/files/B04_Standard_Logo_RGB.png",
         
-        "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg",
+        # Dortmund
+        "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
         
-        "RB Leipzig": "https://upload.wikimedia.org/wikipedia/en/0/04/RB_Leipzig_2014_logo.svg",
-        "RasenBallsport Leipzig": "https://upload.wikimedia.org/wikipedia/en/0/04/RB_Leipzig_2014_logo.svg",
+        # RB Leipzig
+        "RB Leipzig": "https://i.imgur.com/Rpwsjz1.png",
+        "RasenBallsport Leipzig": "https://i.imgur.com/Rpwsjz1.png",
         
-        "VfB Stuttgart": "https://upload.wikimedia.org/wikipedia/commons/e/eb/VfB_Stuttgart_1893_Logo.svg",
+        # Stuttgart
+        "VfB Stuttgart": "https://i.imgur.com/v0tkpNx.png",
         
-        "Eintracht Frankfurt": "https://upload.wikimedia.org/wikipedia/commons/0/04/Eintracht_Frankfurt_Logo.svg",
+        # Eintracht Frankfurt
+        "Eintracht Frankfurt": "https://i.imgur.com/X8NFkOb.png",
         
-        "SC Freiburg": "https://upload.wikimedia.org/wikipedia/en/6/6d/SC_Freiburg_logo.svg",
-        "Freiburg": "https://upload.wikimedia.org/wikipedia/en/6/6d/SC_Freiburg_logo.svg",
+        # SC Freiburg
+        "SC Freiburg": "https://i.imgur.com/r3mvi0h.png",
+        "Freiburg": "https://i.imgur.com/r3mvi0h.png",
+        "Sport-Club Freiburg": "https://i.imgur.com/r3mvi0h.png",
         
-        "Borussia M.Gladbach": "https://upload.wikimedia.org/wikipedia/commons/8/81/Borussia_M%C3%B6nchengladbach_logo.svg",
-        "Borussia Mönchengladbach": "https://upload.wikimedia.org/wikipedia/commons/8/81/Borussia_M%C3%B6nchengladbach_logo.svg",
-        "Borussia Mnchengladbach": "https://upload.wikimedia.org/wikipedia/commons/8/81/Borussia_M%C3%B6nchengladbach_logo.svg",
+        # Borussia Mönchengladbach
+        "Borussia M.Gladbach": "https://i.imgur.com/KSIk0Eu.png",
+        "Borussia Mönchengladbach": "https://i.imgur.com/KSIk0Eu.png",
+        "Borussia M\u00f6nchengladbach": "https://i.imgur.com/KSIk0Eu.png",
+        "Borussia Mnchengladbach": "https://i.imgur.com/KSIk0Eu.png",
         
-        "Union Berlin": "https://upload.wikimedia.org/wikipedia/commons/4/44/1._FC_Union_Berlin_Logo.svg",
-        "1. FC Union Berlin": "https://upload.wikimedia.org/wikipedia/commons/4/44/1._FC_Union_Berlin_Logo.svg",
+        # Union Berlin
+        "Union Berlin": "https://assets.dfb.de/uploads/000/018/232/small_union-Berlin.jpg",
+        "1. FC Union Berlin": "https://assets.dfb.de/uploads/000/018/232/small_union-Berlin.jpg",
         
+        # Werder Bremen
         "Werder Bremen": "https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg",
         "SV Werder Bremen": "https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg",
         
+        # Mainz 05
         "Mainz 05": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
         "1. FSV Mainz 05": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
         "Mainz": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
         
-        "TSG Hoffenheim": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Logo_TSG_1899_Hoffenheim.svg",
-        "Hoffenheim": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Logo_TSG_1899_Hoffenheim.svg",
+        # Hoffenheim
+        "TSG Hoffenheim": "https://i.imgur.com/gF0PfEl.png",
+        "Hoffenheim": "https://i.imgur.com/gF0PfEl.png",
         
-        "Augsburg": "https://upload.wikimedia.org/wikipedia/en/c/c5/FC_Augsburg_logo.svg",
-        "FC Augsburg": "https://upload.wikimedia.org/wikipedia/en/c/c5/FC_Augsburg_logo.svg",
+        # Augsburg
+        "Augsburg": "https://i.imgur.com/sdE62e2.png",
+        "FC Augsburg": "https://i.imgur.com/sdE62e2.png",
         
-        "FC Cologne": "https://upload.wikimedia.org/wikipedia/commons/1/1a/1._FC_K%C3%B6ln_logo.svg",
-        "1. FC Köln": "https://upload.wikimedia.org/wikipedia/commons/1/1a/1._FC_K%C3%B6ln_logo.svg",
-        "1. FC Kln": "https://upload.wikimedia.org/wikipedia/commons/1/1a/1._FC_K%C3%B6ln_logo.svg",
-        "FC Köln": "https://upload.wikimedia.org/wikipedia/commons/1/1a/1._FC_K%C3%B6ln_logo.svg",
+        # FC Köln
+        "FC Cologne": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        "1. FC Köln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        r"1. FC K\u00f6ln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        "1. FC Kln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        "FC Köln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        r"FC K\u00f6ln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+
+        # Bayern Munich
+        "Bayern Munich": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        "FC Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        r"FC Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        "FC Bayern Muenchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        "Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+        r"Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
+
+        # Borussia Mönchengladbach
+        "Borussia M.Gladbach": "https://i.imgur.com/KSIk0Eu.png",
+        "Borussia Mönchengladbach": "https://i.imgur.com/KSIk0Eu.png",
+        r"Borussia M\u00f6nchengladbach": "https://i.imgur.com/KSIk0Eu.png",
+        "Borussia Mnchengladbach": "https://i.imgur.com/KSIk0Eu.png",
         
-        "Hamburger SV": "https://upload.wikimedia.org/wikipedia/commons/6/66/HSV-Logo.svg",
-        "Hamburg SV": "https://upload.wikimedia.org/wikipedia/commons/6/66/HSV-Logo.svg",
+        # Hamburger SV
+        "Hamburger SV": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Hamburger_SV_logo.svg",
+        "Hamburg SV": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Hamburger_SV_logo.svg",
         
-        "Paderborn": "https://upload.wikimedia.org/wikipedia/commons/b/b3/SC_Paderborn_07_Logo.svg",
-        "SC Paderborn 07": "https://upload.wikimedia.org/wikipedia/commons/b/b3/SC_Paderborn_07_Logo.svg",
+        # Paderborn
+        "Paderborn": "https://upload.wikimedia.org/wikipedia/commons/e/e3/SC_Paderborn_07_Logo.svg",
+        "SC Paderborn 07": "https://upload.wikimedia.org/wikipedia/commons/e/e3/SC_Paderborn_07_Logo.svg",
         
-        "Elversberg": "https://upload.wikimedia.org/wikipedia/commons/a/a2/SV_Elversberg_Logo.svg",
-        "SV 07 Elversberg": "https://upload.wikimedia.org/wikipedia/commons/a/a2/SV_Elversberg_Logo.svg",
+        # Elversberg
+        "Elversberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/SV_Elversberg_Logo.svg/500px-SV_Elversberg_Logo.svg.png",
+        "SV 07 Elversberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/SV_Elversberg_Logo.svg/500px-SV_Elversberg_Logo.svg.png",
+        "SV Elversberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/SV_Elversberg_Logo.svg/500px-SV_Elversberg_Logo.svg.png",
         
-        "Schalke 04": "https://upload.wikimedia.org/wikipedia/commons/6/6d/FC_Schalke_04_Logo.svg",
-        "FC Schalke 04": "https://upload.wikimedia.org/wikipedia/commons/6/6d/FC_Schalke_04_Logo.svg",
+        # Schalke 04
+        "Schalke 04": "https://upload.wikimedia.org/wikipedia/commons/9/97/FC_Schalke_04_Logo.png",
+        "FC Schalke 04": "https://upload.wikimedia.org/wikipedia/commons/9/97/FC_Schalke_04_Logo.png",
         
-        "Wolfsburg": "https://upload.wikimedia.org/wikipedia/commons/c/ce/VfL_Wolfsburg_Logo.svg",
-        "VfL Wolfsburg": "https://upload.wikimedia.org/wikipedia/commons/c/ce/VfL_Wolfsburg_Logo.svg",
+        # Wolfsburg
+        "Wolfsburg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/VfL_Wolfsburg_logo_2026.svg/960px-VfL_Wolfsburg_logo_2026.svg.png",
+        "VfL Wolfsburg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/VfL_Wolfsburg_logo_2026.svg/960px-VfL_Wolfsburg_logo_2026.svg.png",
         
-        "Bochum": "https://upload.wikimedia.org/wikipedia/commons/7/72/VfL_Bochum_logo.svg",
-        "VfL Bochum": "https://upload.wikimedia.org/wikipedia/commons/7/72/VfL_Bochum_logo.svg",
+        # Bochum
+        "Bochum": "https://i.imgur.com/5jy3Gfr.png",
+        "VfL Bochum": "https://i.imgur.com/5jy3Gfr.png",
         
-        "FC Heidenheim": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846_Logo.svg",
-        "1. FC Heidenheim": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846_Logo.svg",
-        "1. FC Heidenheim 1846": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846_Logo.svg",
+        # Heidenheim
+        "FC Heidenheim": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846.svg",
+        "1. FC Heidenheim": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846.svg",
+        "1. FC Heidenheim 1846": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846.svg",
         
-        "St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/e/e4/FC_St._Pauli_logo.svg"
+        # St. Pauli
+        "St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg",
+        "FC St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg",
+        "1. FC St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg",
+
+        # Additional 2nd/3rd Liga teams
+        "Holstein Kiel": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Holstein_Kiel_Logo.svg/330px-Holstein_Kiel_Logo.svg.png",
+        "SV Darmstadt 98": "https://upload.wikimedia.org/wikipedia/commons/e/e5/SV_Darmstadt_98_Logo.svg",
+        "Darmstadt 98": "https://upload.wikimedia.org/wikipedia/commons/e/e5/SV_Darmstadt_98_Logo.svg",
+        "Hertha BSC": "https://i.imgur.com/apFwbYZ.png",
+        "Hertha Berlin": "https://i.imgur.com/apFwbYZ.png",
+        "Hannover 96": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Hannover_96_Logo.svg",
+        "1. FC Kaiserslautern": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Logo_1_FC_Kaiserslautern.svg",
+        "Kaiserslautern": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Logo_1_FC_Kaiserslautern.svg",
+        "Karlsruher SC": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Karlsruher_SC_Logo_2.svg",
+        "Fortuna Düsseldorf": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Fortuna_D%C3%BCsseldorf.svg/960px-Fortuna_D%C3%BCsseldorf.svg.png",
+        "SpVgg Greuther Fürth": "https://i.imgur.com/pwuVbKr.png",
+        "SpVgg Greuther F\u00fcrth": "https://i.imgur.com/pwuVbKr.png",
+        "1. FC Magdeburg": "https://upload.wikimedia.org/wikipedia/commons/8/84/1._FC_Magdeburg.svg",
+        "1. FC Nürnberg": "https://upload.wikimedia.org/wikipedia/commons/f/fa/1._FC_N%C3%BCrnberg_logo.svg",
+        "1. FC N\u00fcrnberg": "https://upload.wikimedia.org/wikipedia/commons/f/fa/1._FC_N%C3%BCrnberg_logo.svg",
+        "Eintracht Braunschweig": "https://upload.wikimedia.org/wikipedia/de/4/45/Logo_Eintracht_Braunschweig.svg",
+        "VfL Osnabrück": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/VfL_Osnabrueck_Logo_2021%E2%80%93.svg/960px-VfL_Osnabrueck_Logo_2021%E2%80%93.svg.png",
+        "VfL Osnabruck": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/VfL_Osnabrueck_Logo_2021%E2%80%93.svg/960px-VfL_Osnabrueck_Logo_2021%E2%80%93.svg.png",
+        "Arminia Bielefeld": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Arminia_Bielefeld_logo.svg/960px-Arminia_Bielefeld_logo.svg.png"
     }
 
     v2_json = json.dumps(v2_data)
@@ -160,7 +211,7 @@ def compile_complete_bundle():
     with open("index.html", "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 2. Inject Data Block into <head>
+    # 2. Inject Data Block & getTeamLogo helper into <head>
     data_script_block = f"""
     <script id="embedded-data-state">
         window.stadiums = {stadiums_json};
@@ -173,9 +224,27 @@ def compile_complete_bundle():
         window.predicted_fixture_heatmaps = {heatmaps_json};
         window.team_vulnerabilities_multiseason = {vuln_json};
         window.tactical_adaptability = {adapt_json};
+
+        window.getTeamLogo = function(teamName) {{
+            if (!teamName) return 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Placeholder_LC.svg';
+            if (typeof teamLogos !== 'undefined' && teamLogos[teamName]) return teamLogos[teamName];
+            let s = String(teamName);
+            try {{ s = s.replace(/\\\\u[0-9a-f]{{4}}/gi, c => JSON.parse('"' + c + '"')); }} catch(e) {{}}
+            const norm = s.toLowerCase().replace(/[äöüß]/g, m => ({{'ä':'a','ö':'o','ü':'u','ß':'ss'}}[m])).replace(/[^a-z0-9]/g, '');
+            if (typeof teamLogos !== 'undefined') {{
+                for (const k in teamLogos) {{
+                    let kS = k;
+                    try {{ kS = kS.replace(/\\\\u[0-9a-f]{{4}}/gi, c => JSON.parse('"' + c + '"')); }} catch(e) {{}}
+                    const kNorm = kS.toLowerCase().replace(/[äöüß]/g, m => ({{'ä':'a','ö':'o','ü':'u','ß':'ss'}}[m])).replace(/[^a-z0-9]/g, '');
+                    if (norm === kNorm || (norm.length > 3 && kNorm.includes(norm)) || (kNorm.length > 3 && norm.includes(kNorm))) {{
+                        return teamLogos[k];
+                    }}
+                }}
+            }}
+            return 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Placeholder_LC.svg';
+        }};
     </script>
     """
-    
     if '<script id="embedded-data-state">' in html:
         pattern = r'<script id="embedded-data-state">.*?</script>'
         html = re.sub(pattern, lambda m: data_script_block.strip(), html, flags=re.DOTALL)
@@ -188,7 +257,15 @@ def compile_complete_bundle():
         pattern_logos = r'const teamLogos\s*=\s*\{.*?\};'
         html = re.sub(pattern_logos, lambda m: js_logos_block, html, flags=re.DOTALL)
 
-    # 4. Restore Section #standings-tab (live-standings-body & predicted-standings-body)
+    # 4. Replace CartoDB Tile Layer with 100% Free Esri World Dark Gray Canvas
+    pattern_carto = r"L\.tileLayer\('https://\{s\}\.basemaps\.cartocdn\.com/[^']+',\s*\{.*?\n\s*\}\)\.addTo\(map\);"
+    esri_tile_code = """L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { 
+                maxZoom: 16,
+                attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, USGS'
+            }).addTo(map);"""
+    html = re.sub(pattern_carto, lambda m: esri_tile_code.strip(), html, flags=re.DOTALL)
+
+    # 5. Restore Section #standings-tab (live-standings-body & predicted-standings-body)
     standings_sec_html = """
         <!-- Tab 2: Standings Comparison -->
         <section id="standings-tab" class="content-section">
@@ -241,7 +318,7 @@ def compile_complete_bundle():
     pattern_standings = r'<section id="standings-tab".*?</section>'
     html = re.sub(pattern_standings, lambda m: standings_sec_html.strip(), html, flags=re.DOTALL)
 
-    # 5. Fix Section #complexity-tab (v4 table body ID: #v4-complexity-standings-body)
+    # 6. Fix Section #complexity-tab (v4 table body ID: #v4-complexity-standings-body)
     v4_table_html = """
         <!-- Tab 5: Model v4 First 15 Goals Complexity -->
         <section id="complexity-tab" class="content-section">
@@ -275,7 +352,7 @@ def compile_complete_bundle():
     pattern_v4_sec = r'<section id="complexity-tab".*?</section>'
     html = re.sub(pattern_v4_sec, lambda m: v4_table_html.strip(), html, flags=re.DOTALL)
 
-    # 6. Fix Section #m14-tab (v5 table body ID: #v5-m14-standings-body)
+    # 7. Fix Section #m14-tab (v5 table body ID: #v5-m14-standings-body)
     v5_table_html = """
         <!-- Tab 6: Model v5 Matchday 1-4 Goal Complexity -->
         <section id="m14-tab" class="content-section">
@@ -310,7 +387,7 @@ def compile_complete_bundle():
     pattern_v5_sec = r'<section id="m14-tab".*?</section>'
     html = re.sub(pattern_v5_sec, lambda m: v5_table_html.strip(), html, flags=re.DOTALL)
 
-    # 7. Fix renderV4ComplexityTable JS function
+    # 8. Fix renderV4ComplexityTable JS function
     js_v4_render = """
         function renderV4ComplexityTable() {
             const body = document.getElementById("v4-complexity-standings-body");
@@ -319,9 +396,8 @@ def compile_complete_bundle():
             body.innerHTML = "";
 
             data.forEach(rec => {
-                const teamClean = cleanTeamName(rec.team);
-                const logo = (typeof teamLogos !== "undefined" && (teamLogos[teamClean] || teamLogos[rec.team])) ? (teamLogos[teamClean] || teamLogos[rec.team]) : "";
-                const logoHtml = logo ? `<img class="team-logo-small" src="${logo}" referrerpolicy="no-referrer">` : `<div style="width:20px;height:20px;display:inline-block;background:rgba(255,255,255,0.1);border-radius:50%;text-align:center;font-size:10px;line-height:20px;">${rec.team.substring(0,2)}</div>`;
+                const logo = window.getTeamLogo ? getTeamLogo(rec.team) : "";
+                const logoHtml = logo ? `<img class="team-logo-small" src="${logo}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/e/e0/Placeholder_LC.svg';">` : `<div style="width:20px;height:20px;display:inline-block;background:rgba(255,255,255,0.1);border-radius:50%;text-align:center;font-size:10px;line-height:20px;">${rec.team.substring(0,2)}</div>`;
                 
                 const tr = document.createElement("tr");
                 tr.style.borderBottom = "1px solid rgba(255,255,255,0.05)";
@@ -341,7 +417,7 @@ def compile_complete_bundle():
     pattern_v4_func = r"function renderV4ComplexityTable\(\) \{.*?\n        \}"
     html = re.sub(pattern_v4_func, lambda m: js_v4_render.strip(), html, flags=re.DOTALL)
 
-    # 8. Fix renderV5ComplexityTable JS function
+    # 9. Fix renderV5ComplexityTable JS function
     js_v5_render = """
         function renderV5ComplexityTable() {
             const tbody = document.getElementById("v5-m14-standings-body");
@@ -353,9 +429,8 @@ def compile_complete_bundle():
                 const isTop4 = i < 4;
                 const isRelegation = i >= 15;
                 const rankColor = isTop4 ? "color: var(--accent-green); font-weight: 800;" : (isRelegation ? "color: #ef4444; font-weight: 800;" : "color: var(--text-secondary);");
-                const teamClean = cleanTeamName(t.team);
-                const logo = (typeof teamLogos !== "undefined" && (teamLogos[teamClean] || teamLogos[t.team])) ? (teamLogos[teamClean] || teamLogos[t.team]) : "";
-                const logoHtml = logo ? `<img class="team-logo-small" src="${logo}" referrerpolicy="no-referrer" style="width:20px;height:20px;object-fit:contain;">` : "";
+                const logo = window.getTeamLogo ? getTeamLogo(t.team) : "";
+                const logoHtml = logo ? `<img class="team-logo-small" src="${logo}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/e/e0/Placeholder_LC.svg';" style="width:20px;height:20px;object-fit:contain;">` : "";
 
                 html += `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
@@ -376,7 +451,7 @@ def compile_complete_bundle():
     pattern_v5_func = r"function renderV5ComplexityTable\(\) \{.*?\n        \}"
     html = re.sub(pattern_v5_func, lambda m: js_v5_render.strip(), html, flags=re.DOTALL)
 
-    # 9. Ensure switchTab triggers all tab renderers cleanly
+    # 10. Ensure switchTab triggers all tab renderers cleanly
     js_switch_tab = """
         function switchTab(tabId, btnEl) {
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
@@ -410,7 +485,7 @@ def compile_complete_bundle():
         with open("web_dashboard/index.html", "w", encoding="utf-8") as f:
             f.write(html)
             
-    print("SUCCESS: Senior Engineer Master Bundle V2 compiled into index.html & web_dashboard/index.html!")
+    print("SUCCESS: Senior Engineer Master Bundle V3 compiled into index.html & web_dashboard/index.html!")
 
 if __name__ == "__main__":
     compile_complete_bundle()
