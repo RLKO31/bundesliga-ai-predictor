@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.joblib
+*.zip
+*.log
+debug_*.py
+meineTipps.xlsx
+model_update.txt
+fcbb_calibration_plot.png

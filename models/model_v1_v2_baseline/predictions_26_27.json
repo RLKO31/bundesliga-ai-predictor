@@ -1,0 +1,101 @@
+[
+    {
+        "home_team": "FC Bayern M\u00fcnchen",
+        "away_team": "VfB Stuttgart",
+        "home_clean": "Bayern Munich",
+        "away_clean": "VfB Stuttgart",
+        "date": "2026-08-28 20:30:00",
+        "p_home": 0.6423113343280294,
+        "p_draw": 0.27602601873478017,
+        "p_away": 0.08166262682062274,
+        "tip": "HOME WIN"
+    },
+    {
+        "home_team": "Borussia Dortmund",
+        "away_team": "Hamburger SV",
+        "home_clean": "Borussia Dortmund",
+        "away_clean": "Hamburger SV",
+        "date": "2026-08-29 15:30:00",
+        "p_home": 0.7524264316611735,
+        "p_draw": 0.12865042605462057,
+        "p_away": 0.11892316314583158,
+        "tip": "HOME WIN"
+    },
+    {
+        "home_team": "RB Leipzig",
+        "away_team": "Borussia M\u00f6nchengladbach",
+        "home_clean": "RasenBallsport Leipzig",
+        "away_clean": "Borussia M.Gladbach",
+        "date": "2026-08-29 15:30:00",
+        "p_home": 0.6840883736427048,
+        "p_draw": 0.16444993538919409,
+        "p_away": 0.15146168202740448,
+        "tip": "HOME WIN"
+    },
+    {
+        "home_team": "Sport-Club Freiburg",
+        "away_team": "SV Werder Bremen",
+        "home_clean": "Freiburg",
+        "away_clean": "Werder Bremen",
+        "date": "2026-08-29 15:30:00",
+        "p_home": 0.5370311135413782,
+        "p_draw": 0.2635835485119504,
+        "p_away": 0.19938532900597455,
+        "tip": "HOME WIN"
+    },
+    {
+        "home_team": "FC Augsburg",
+        "away_team": "FC Schalke 04",
+        "home_clean": "Augsburg",
+        "away_clean": "Schalke 04",
+        "date": "2026-08-29 15:30:00",
+        "p_home": 0.6250500379179663,
+        "p_draw": 0.1866730432871032,
+        "p_away": 0.18827694710713674,
+        "tip": "HOME WIN"
+    },
+    {
+        "home_team": "1. FSV Mainz 05",
+        "away_team": "SC Paderborn 07",
+        "home_clean": "Mainz 05",
+        "away_clean": "Paderborn",
+        "date": "2026-08-29 15:30:00",
+        "p_home": 0.6548242850743597,
+        "p_draw": 0.18227651490101562,
+        "p_away": 0.16289922088625022,
+        "tip": "HOME WIN"
+    },
+    {
+        "home_team": "1. FC Union Berlin",
+        "away_team": "Eintracht Frankfurt",
+        "home_clean": "Union Berlin",
+        "away_clean": "Eintracht Frankfurt",
+        "date": "2026-08-29 15:30:00",
+        "p_home": 0.39404148059865635,
+        "p_draw": 0.26840649407155853,
+        "p_away": 0.33755205364199137,
+        "tip": "HOME WIN"
+    },
+    {
+        "home_team": "1. FC K\u00f6ln",
+        "away_team": "TSG Hoffenheim",
+        "home_clean": "FC Cologne",
+        "away_clean": "Hoffenheim",
+        "date": "2026-08-29 15:30:00",
+        "p_home": 0.24582420543602418,
+        "p_draw": 0.2395422492110391,
+        "p_away": 0.5146335587639818,
+        "tip": "AWAY WIN"
+    },
+    {
+        "home_team": "SV Elversberg",
+        "away_team": "Bayer 04 Leverkusen",
+        "home_clean": "Elversberg",
+        "away_clean": "Bayer Leverkusen",
+        "date": "2026-08-30 15:30:00",
+        "p_home": 0.14100134568350225,
+        "p_draw": 0.20216481173999987,
+        "p_away": 0.6568338261852207,
+        "tip": "AWAY WIN"
+    }
+]

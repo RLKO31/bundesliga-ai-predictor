@@ -1,0 +1,28 @@
+{
+  "feature_cols": [
+    "matches_to_15_goals",
+    "goal_tempo",
+    "action_complexity_score",
+    "avg_xg_per_goal",
+    "finishing_delta",
+    "assist_entropy",
+    "open_play_ratio",
+    "counter_ratio",
+    "avg_ppda",
+    "avg_xpts"
+  ],
+  "r2_score": 0.7137,
+  "mae_points": 6.81,
+  "learned_coefficients": {
+    "matches_to_15_goals": 0.1205,
+    "goal_tempo": -3.3745,
+    "action_complexity_score": 1.8068,
+    "avg_xg_per_goal": -3.132,
+    "finishing_delta": 1.8022,
+    "assist_entropy": 8.8335,
+    "open_play_ratio": -3.8347,
+    "counter_ratio": 0.9407,
+    "avg_ppda": -0.7147,
+    "avg_xpts": 8.4414
+  }
+}

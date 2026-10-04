@@ -1,0 +1,36 @@
+{
+  "feature_cols": [
+    "league_tier",
+    "league_teams",
+    "league_pts_std",
+    "matches_to_15_goals",
+    "goal_tempo",
+    "action_complexity_score",
+    "avg_xg_per_goal",
+    "finishing_delta",
+    "assist_entropy",
+    "open_play_ratio",
+    "counter_ratio",
+    "avg_ppda",
+    "avg_xpts"
+  ],
+  "r2_score": 0.519,
+  "mae_points": 9.67,
+  "total_samples": 1332,
+  "leagues_count": 14,
+  "learned_coefficients": {
+    "league_tier": 7.2936,
+    "league_teams": 4.8877,
+    "league_pts_std": 5.784,
+    "matches_to_15_goals": -4.7267,
+    "goal_tempo": 0.7711,
+    "action_complexity_score": 0.8688,
+    "avg_xg_per_goal": 0.5469,
+    "finishing_delta": 1.8527,
+    "assist_entropy": 0.7858,
+    "open_play_ratio": 0.8342,
+    "counter_ratio": 0.0,
+    "avg_ppda": -0.7624,
+    "avg_xpts": 0.7414
+  }
+}

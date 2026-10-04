@@ -1,0 +1,200 @@
+[
+  {
+    "team": "Hertha Berlin",
+    "matches": 4,
+    "goals_m1_4": 12,
+    "xg_m1_4": 8.36,
+    "finishing_delta": 3.64,
+    "action_complexity": 1.35,
+    "assist_entropy": 2.55,
+    "predicted_points": 55.7,
+    "predicted_rank": 1
+  },
+  {
+    "team": "1. FC N\u00fcrnberg",
+    "matches": 4,
+    "goals_m1_4": 13,
+    "xg_m1_4": 10.18,
+    "finishing_delta": 2.82,
+    "action_complexity": 1.26,
+    "assist_entropy": 2.34,
+    "predicted_points": 55.4,
+    "predicted_rank": 2
+  },
+  {
+    "team": "TSV Eintracht Braunschweig",
+    "matches": 4,
+    "goals_m1_4": 10,
+    "xg_m1_4": 12.26,
+    "finishing_delta": -2.26,
+    "action_complexity": 1.29,
+    "assist_entropy": 2.33,
+    "predicted_points": 51.5,
+    "predicted_rank": 3
+  },
+  {
+    "team": "VfL Wolfsburg",
+    "matches": 4,
+    "goals_m1_4": 10,
+    "xg_m1_4": 10.44,
+    "finishing_delta": -0.44,
+    "action_complexity": 1.25,
+    "assist_entropy": 2.29,
+    "predicted_points": 49.2,
+    "predicted_rank": 4
+  },
+  {
+    "team": "Holstein Kiel",
+    "matches": 4,
+    "goals_m1_4": 6,
+    "xg_m1_4": 7.06,
+    "finishing_delta": -1.06,
+    "action_complexity": 1.3,
+    "assist_entropy": 2.48,
+    "predicted_points": 48.0,
+    "predicted_rank": 5
+  },
+  {
+    "team": "St. Pauli",
+    "matches": 4,
+    "goals_m1_4": 6,
+    "xg_m1_4": 8.88,
+    "finishing_delta": -2.88,
+    "action_complexity": 1.21,
+    "assist_entropy": 2.25,
+    "predicted_points": 45.8,
+    "predicted_rank": 6
+  },
+  {
+    "team": "Karlsruher SC",
+    "matches": 4,
+    "goals_m1_4": 6,
+    "xg_m1_4": 7.84,
+    "finishing_delta": -1.84,
+    "action_complexity": 1.24,
+    "assist_entropy": 2.36,
+    "predicted_points": 44.1,
+    "predicted_rank": 7
+  },
+  {
+    "team": "Hannover 96",
+    "matches": 4,
+    "goals_m1_4": 4,
+    "xg_m1_4": 7.58,
+    "finishing_delta": -3.58,
+    "action_complexity": 1.27,
+    "assist_entropy": 2.42,
+    "predicted_points": 43.8,
+    "predicted_rank": 8
+  },
+  {
+    "team": "1. FC Heidenheim 1846",
+    "matches": 4,
+    "goals_m1_4": 11,
+    "xg_m1_4": 8.88,
+    "finishing_delta": 2.12,
+    "action_complexity": 1.21,
+    "assist_entropy": 2.25,
+    "predicted_points": 43.5,
+    "predicted_rank": 9
+  },
+  {
+    "team": "1. FC Magdeburg",
+    "matches": 4,
+    "goals_m1_4": 7,
+    "xg_m1_4": 6.8,
+    "finishing_delta": 0.2,
+    "action_complexity": 1.24,
+    "assist_entropy": 2.35,
+    "predicted_points": 43.1,
+    "predicted_rank": 10
+  },
+  {
+    "team": "VfL Bochum",
+    "matches": 4,
+    "goals_m1_4": 3,
+    "xg_m1_4": 6.28,
+    "finishing_delta": -3.28,
+    "action_complexity": 1.25,
+    "assist_entropy": 2.43,
+    "predicted_points": 42.8,
+    "predicted_rank": 11
+  },
+  {
+    "team": "Energie Cottbus",
+    "matches": 4,
+    "goals_m1_4": 10,
+    "xg_m1_4": 7.58,
+    "finishing_delta": 2.42,
+    "action_complexity": 1.17,
+    "assist_entropy": 2.22,
+    "predicted_points": 40.4,
+    "predicted_rank": 12
+  },
+  {
+    "team": "Arminia Bielefeld",
+    "matches": 4,
+    "goals_m1_4": 7,
+    "xg_m1_4": 7.06,
+    "finishing_delta": -0.06,
+    "action_complexity": 1.15,
+    "assist_entropy": 2.2,
+    "predicted_points": 38.9,
+    "predicted_rank": 13
+  },
+  {
+    "team": "VfL Osnabruck",
+    "matches": 4,
+    "goals_m1_4": 7,
+    "xg_m1_4": 7.84,
+    "finishing_delta": -0.84,
+    "action_complexity": 1.18,
+    "assist_entropy": 2.22,
+    "predicted_points": 38.6,
+    "predicted_rank": 14
+  },
+  {
+    "team": "SpVgg Greuther F\u00fcrth",
+    "matches": 4,
+    "goals_m1_4": 7,
+    "xg_m1_4": 9.14,
+    "finishing_delta": -2.14,
+    "action_complexity": 1.21,
+    "assist_entropy": 2.26,
+    "predicted_points": 38.2,
+    "predicted_rank": 15
+  },
+  {
+    "team": "Dynamo Dresden",
+    "matches": 4,
+    "goals_m1_4": 5,
+    "xg_m1_4": 7.58,
+    "finishing_delta": -2.58,
+    "action_complexity": 1.17,
+    "assist_entropy": 2.22,
+    "predicted_points": 37.7,
+    "predicted_rank": 16
+  },
+  {
+    "team": "Kaiserslautern",
+    "matches": 4,
+    "goals_m1_4": 5,
+    "xg_m1_4": 7.06,
+    "finishing_delta": -2.06,
+    "action_complexity": 1.15,
+    "assist_entropy": 2.2,
+    "predicted_points": 36.9,
+    "predicted_rank": 17
+  },
+  {
+    "team": "SV Darmstadt 98",
+    "matches": 4,
+    "goals_m1_4": 2,
+    "xg_m1_4": 4.98,
+    "finishing_delta": -2.98,
+    "action_complexity": 1.07,
+    "assist_entropy": 2.12,
+    "predicted_points": 28.9,
+    "predicted_rank": 18
+  }
+]

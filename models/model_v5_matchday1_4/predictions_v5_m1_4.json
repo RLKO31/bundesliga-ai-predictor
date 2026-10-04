@@ -1,0 +1,200 @@
+[
+  {
+    "rank": 1,
+    "team": "Bayern Munich",
+    "predicted_points": 74.5,
+    "goals_in_first_4_matches": 14,
+    "action_complexity_score": 1.6846,
+    "assist_entropy": 3.1043,
+    "avg_xg_per_goal": 0.9071,
+    "finishing_delta": 1.3,
+    "open_play_ratio": 0.8
+  },
+  {
+    "rank": 2,
+    "team": "Borussia Dortmund",
+    "predicted_points": 70.1,
+    "goals_in_first_4_matches": 9,
+    "action_complexity_score": 1.4564,
+    "assist_entropy": 2.7734,
+    "avg_xg_per_goal": 0.9389,
+    "finishing_delta": 0.55,
+    "open_play_ratio": 0.73
+  },
+  {
+    "rank": 3,
+    "team": "Bayer Leverkusen",
+    "predicted_points": 66.5,
+    "goals_in_first_4_matches": 10,
+    "action_complexity_score": 1.5282,
+    "assist_entropy": 2.9254,
+    "avg_xg_per_goal": 0.93,
+    "finishing_delta": 0.7,
+    "open_play_ratio": 0.76
+  },
+  {
+    "rank": 4,
+    "team": "SC Freiburg",
+    "predicted_points": 59.5,
+    "goals_in_first_4_matches": 12,
+    "action_complexity_score": 1.3321,
+    "assist_entropy": 2.465,
+    "avg_xg_per_goal": 0.9167,
+    "finishing_delta": 1.0,
+    "open_play_ratio": 0.59
+  },
+  {
+    "rank": 5,
+    "team": "RB Leipzig",
+    "predicted_points": 57.3,
+    "goals_in_first_4_matches": 9,
+    "action_complexity_score": 1.4243,
+    "assist_entropy": 2.6699,
+    "avg_xg_per_goal": 0.9389,
+    "finishing_delta": 0.55,
+    "open_play_ratio": 0.69
+  },
+  {
+    "rank": 6,
+    "team": "Eintracht Frankfurt",
+    "predicted_points": 54.9,
+    "goals_in_first_4_matches": 9,
+    "action_complexity_score": 1.3279,
+    "assist_entropy": 2.5353,
+    "avg_xg_per_goal": 0.9389,
+    "finishing_delta": 0.55,
+    "open_play_ratio": 0.63
+  },
+  {
+    "rank": 7,
+    "team": "VfB Stuttgart",
+    "predicted_points": 51.2,
+    "goals_in_first_4_matches": 6,
+    "action_complexity_score": 1.2956,
+    "assist_entropy": 2.5158,
+    "avg_xg_per_goal": 0.9833,
+    "finishing_delta": 0.1,
+    "open_play_ratio": 0.71
+  },
+  {
+    "rank": 8,
+    "team": "Mainz 05",
+    "predicted_points": 50.4,
+    "goals_in_first_4_matches": 10,
+    "action_complexity_score": 1.2226,
+    "assist_entropy": 2.2777,
+    "avg_xg_per_goal": 0.93,
+    "finishing_delta": 0.7,
+    "open_play_ratio": 0.53
+  },
+  {
+    "rank": 9,
+    "team": "Augsburg",
+    "predicted_points": 49.9,
+    "goals_in_first_4_matches": 11,
+    "action_complexity_score": 1.1553,
+    "assist_entropy": 2.1923,
+    "avg_xg_per_goal": 0.9227,
+    "finishing_delta": 0.85,
+    "open_play_ratio": 0.47
+  },
+  {
+    "rank": 10,
+    "team": "Werder Bremen",
+    "predicted_points": 49.6,
+    "goals_in_first_4_matches": 8,
+    "action_complexity_score": 1.1952,
+    "assist_entropy": 2.2731,
+    "avg_xg_per_goal": 0.95,
+    "finishing_delta": 0.4,
+    "open_play_ratio": 0.57
+  },
+  {
+    "rank": 11,
+    "team": "Elversberg",
+    "predicted_points": 48.7,
+    "goals_in_first_4_matches": 8,
+    "action_complexity_score": 1.1952,
+    "assist_entropy": 2.2526,
+    "avg_xg_per_goal": 0.95,
+    "finishing_delta": 0.4,
+    "open_play_ratio": 0.55
+  },
+  {
+    "rank": 12,
+    "team": "TSG Hoffenheim",
+    "predicted_points": 44.9,
+    "goals_in_first_4_matches": 7,
+    "action_complexity_score": 1.2286,
+    "assist_entropy": 2.4082,
+    "avg_xg_per_goal": 0.9643,
+    "finishing_delta": 0.25,
+    "open_play_ratio": 0.65
+  },
+  {
+    "rank": 13,
+    "team": "Borussia M.Gladbach",
+    "predicted_points": 39.2,
+    "goals_in_first_4_matches": 6,
+    "action_complexity_score": 1.1661,
+    "assist_entropy": 2.2961,
+    "avg_xg_per_goal": 0.9833,
+    "finishing_delta": 0.1,
+    "open_play_ratio": 0.62
+  },
+  {
+    "rank": 14,
+    "team": "FC Cologne",
+    "predicted_points": 38.7,
+    "goals_in_first_4_matches": 6,
+    "action_complexity_score": 1.0863,
+    "assist_entropy": 2.1364,
+    "avg_xg_per_goal": 0.9833,
+    "finishing_delta": 0.1,
+    "open_play_ratio": 0.51
+  },
+  {
+    "rank": 15,
+    "team": "Schalke 04",
+    "predicted_points": 37.3,
+    "goals_in_first_4_matches": 3,
+    "action_complexity_score": 0.979,
+    "assist_entropy": 2.0283,
+    "avg_xg_per_goal": 1.1167,
+    "finishing_delta": -0.35,
+    "open_play_ratio": 0.52
+  },
+  {
+    "rank": 16,
+    "team": "Paderborn",
+    "predicted_points": 35.9,
+    "goals_in_first_4_matches": 3,
+    "action_complexity_score": 0.9968,
+    "assist_entropy": 2.0566,
+    "avg_xg_per_goal": 1.1167,
+    "finishing_delta": -0.35,
+    "open_play_ratio": 0.54
+  },
+  {
+    "rank": 17,
+    "team": "Union Berlin",
+    "predicted_points": 34.8,
+    "goals_in_first_4_matches": 4,
+    "action_complexity_score": 0.987,
+    "assist_entropy": 2.0457,
+    "avg_xg_per_goal": 1.05,
+    "finishing_delta": -0.2,
+    "open_play_ratio": 0.49
+  },
+  {
+    "rank": 18,
+    "team": "Hamburger SV",
+    "predicted_points": 34.4,
+    "goals_in_first_4_matches": 2,
+    "action_complexity_score": 1.0011,
+    "assist_entropy": 2.0993,
+    "avg_xg_per_goal": 1.25,
+    "finishing_delta": -0.5,
+    "open_play_ratio": 0.58
+  }
+]

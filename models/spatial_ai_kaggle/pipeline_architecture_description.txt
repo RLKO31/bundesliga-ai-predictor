@@ -1,0 +1,152 @@
+===============================================================================
+2-STAGE SPATIAL AI MATCHUP PIPELINE ARCHITECTURE DESCRIPTION
+(DINOv2 + 1D Temporal Attention + HistGBDT + Poisson Optimizer)
+===============================================================================
+
+1. HIGH-LEVEL PIPELINE DATA FLOW
+-------------------------------------------------------------------------------
+[Raw Tracking Events (x,y) & Tabular Form]
+                   │
+                   ▼
+[Stage 0: 4-Channel Gaussian KDE Rasterizer (224 x 224 x 4 Tensors)]
+                   │
+                   ▼
+[DINOv2 Vision Transformer Backbone (Frozen dinov2_vits14)]
+                   │
+                   ▼
+[Historical 5-Match Spatial Sequences (5 x 384) + Pre-Match Context]
+                   │
+                   ▼
+[STAGE 1: PyTorch 1D Temporal Attention Latent Matchup Generator]
+                   │
+                   ▼
+[Predicted Matchup Spatial Latent Vectors (384-dim z_home & z_away)]
+                   │
+                   ▼
+[STAGE 2: Feature Fusion (1,160-dim) & HistGradientBoosting Classifier]
+                   │
+                   ▼
+[Poisson Goal Distribution & Scoreline Optimizer]
+                   │
+                   ▼
+[Outputs: Win/Draw/Loss Probabilities, Score, Kicktipp Points]
+
+
+2. DETAILED TECHNICAL STEP-BY-STEP ARCHITECTURE
+-------------------------------------------------------------------------------
+
+Step 1: Input Data Acquisition & Raw Features
+  - Modality A (Spatial Tracking Events): Raw (x, y) pitch coordinates for home and away teams across past matches:
+      * Possession & Passing coordinates.
+      * Defensive pressure, tackle, and interception coordinates.
+  - Modality B (Chronological Pre-Match Tabular Context): 8 scalar metrics:
+      1. elo_diff: Elo rating difference (Elo_home - Elo_away).
+      2. rest_diff: Difference in rest days (travel fatigue).
+      3. home_goals_roll15 & away_goals_roll15: 15-match rolling goals scored.
+      4. home_xg_roll15 & away_xg_roll15: 15-match rolling expected goals (xG).
+      5. finishing_eff_diff: 10-match rolling finishing efficiency (goals - xG).
+      6. value_rank_diff: Squad market value rank difference.
+
+Step 2: Stage 0 — Multi-Channel Gaussian KDE Spatial Rasterization
+  - Rasterizer Engine: 2D Gaussian Kernel Density Estimation (bw_method = 0.25) maps raw (x,y) events onto a 224 x 224 pitch grid (105.0m x 68.0m).
+  - Output Tensor: 4-channel spatial heatmap tensor of shape [4, 224, 224]:
+      * Channel 0: Overall possession & pass density map.
+      * Channel 1: Final-third attacking pass density (X > 70m).
+      * Channel 2: Defensive third pressure density (X <= 52.5m).
+      * Channel 3: Spatial gradient vector map (grad density).
+
+Step 3: Frozen DINOv2 Vision Transformer Backbone
+  - Model: Pre-trained DINOv2 (dinov2_vits14), completely frozen (requires_grad = False).
+  - Processing: 1x1 2D Convolution projects 4 channels to 3 channels -> DINOv2 extracts self-supervised visual features.
+  - Output Shape: Dense 384-dimensional spatial embedding vector z_t in R^384 per match image.
+
+Step 4: STAGE 1 — 1D Temporal Multi-Head Attention Latent Generator
+  - Input: 5-match sequence of past spatial embeddings for Home (5 x 384) and Away (5 x 384) + 8 tabular context features.
+  - Sub-Component 1 (1D Temporal Multi-Head Attention):
+      * Evaluates self-attention across the 5 past games.
+      * Applies an Exponential Recency Decay Prior (w_t = exp(-lambda * (5-t))) to dynamically weight recent games higher while recalling past tactical setups against similar opponents.
+  - Sub-Component 2 (Residual Latent Matchup Generator Trunk):
+      * Fuses Home spatial representation (384) + Away spatial representation (384) + Encoded tabular context (64) = 832-dim vector.
+      * Passes vector through a 2-layer GELU + LayerNorm MLP trunk with residual skip connections.
+  - Loss Function: Combined Cosine Similarity Distance (shape/direction) + Mean Squared Error (magnitude):
+      Loss = 0.7 * (1 - CosSim(z_pred, z_actual)) + 0.3 * MSE(z_pred, z_actual)
+  - Output: Predicted 384-dim spatial latent vector for upcoming Home team (z_home) and Away team (z_away).
+
+Step 5: STAGE 2 — Hybrid Feature Fusion & HistGBDT Classification Head
+  - Vector Concatenation (Feature Fusion): Combines:
+      1. z_home: Predicted Home Spatial Latent Vector (384 dims)
+      2. z_away: Predicted Away Spatial Latent Vector (384 dims)
+      3. z_home (x) z_away: Tactical Spatial Interaction Vector (384 dims)
+      4. Tabular Context Vector (8 dims)
+      Total Fused Feature Dimension: 1,160 dimensions.
+  - Stage 2 Classifier: HistGradientBoostingClassifier (Histogram Gradient Boosted Decision Trees).
+      * Evaluates decision splits across the 1,160 dimensions to isolate the top ~20 most predictive spatial/elo combinations without overfitting.
+  - Output: Calibrated 3-class outcome probabilities: P(Home Win), P(Draw), P(Away Win).
+
+Step 6: Poisson Goal Distribution & Kicktipp Scoreline Optimizer
+  - Expected Goals (lambda_H, lambda_A): Computes expected team goal rates based on probability distribution and xG differentials.
+  - Bivariate Poisson Matrix: Computes joint probability matrix for scorelines (g_h, g_a) in [0..6] x [0..6] under Poisson distribution.
+  - Kicktipp Points Maximizer: Selects predicted scoreline (g_h, g_a) that maximizes expected Kicktipp points under the 4-3-2 point system (4 pts exact score, 3 pts goal difference, 2 pts outcome trend).
+
+
+3. DATA SHAPE TRANSFORMATIONS TABLE
+-------------------------------------------------------------------------------
+Pipeline Stage        | Input Shape                 | Transformation Operation            | Output Shape
+----------------------|-----------------------------|-------------------------------------|--------------------------
+Raw Events            | List of (x,y) coordinates   | 2D Gaussian KDE                     | [4, 224, 224] Image Tensor
+DINOv2 Encoder        | [4, 224, 224]               | 1x1 Conv + Vision Transformer       | [384] Spatial Embedding z_t
+Temporal Sequence     | 5 matches of [384]          | Sequence Stacking                   | [5, 384] Spatial Sequence
+Stage 1 Attention     | [5, 384]                    | 1D Multi-Head Attn + Recency Bias    | [384] Recency Embedding
+Stage 1 Generator     | [384] + [384] + [8] (832)   | Residual LayerNorm MLP              | [384] Predicted z_H, z_A
+Feature Fusion        | z_H, z_A, (z_H * z_A), Tab  | Vector Concatenation                | [1160] Hybrid Vector
+Stage 2 HistGBDT      | [1160]                      | Histogram Decision Tree Ensemble    | [3] Probabilities (P_H, P_D, P_A)
+Poisson Optimizer     | [3] + lambda_H, lambda_A    | Joint Bivariate Matrix Evaluation   | Exact Score (e.g. 2:1)
+
+
+4. MERMAID.JS DIAGRAM SNIPPET FOR OTHER AI / DIAGRAM GENERATORS
+-------------------------------------------------------------------------------
+```mermaid
+flowchart TD
+    subgraph Inputs["1. Raw Multi-Modal Inputs"]
+        A1["Spatial Tracking Events (x,y)"]
+        A2["Tabular Pre-Match Context (Elo, Rest, xG, Value)"]
+    end
+
+    subgraph Stage0["2. Stage 0: Spatial KDE Rasterizer"]
+        B1["2D Gaussian KDE (bw=0.25)"]
+        B2["4-Channel Spatial Tensor (224x224x4)<br/>• Possession • Attacking • Defense • Gradient"]
+        A1 --> B1 --> B2
+    end
+
+    subgraph Backbone["3. DINOv2 Feature Extractor"]
+        C1["Frozen DINOv2 Vision Transformer (dinov2_vits14)"]
+        C2["384-Dim Spatial Embedding Vector (zt)"]
+        B2 --> C1 --> C2
+    end
+
+    subgraph Stage1["4. Stage 1: Generative 1D Temporal Attention Model"]
+        D1["5-Match Historical Spatial Sequences (5x384)"]
+        D2["1D Multi-Head Attention + Exponential Recency Prior"]
+        D3["Residual MLP Latent Matchup Generator Trunk"]
+        C2 --> D1 --> D2
+        A2 --> D3
+        D2 --> D3
+        D3 --> D4["Predicted Match Spatial Vectors (384-dim z_home & z_away)"]
+    end
+
+    subgraph Stage2["5. Stage 2: Feature Fusion & Classification Head"]
+        E1["1,160-Dim Fused Vector<br/>[z_home (384) | z_away (384) | Interaction (384) | Tabular (8)]"]
+        E2["HistGradientBoostingClassifier (GBDT)"]
+        D4 --> E1
+        A2 --> E1
+        E1 --> E2
+        E2 --> E3["Calibrated Outcome Probabilities (Win / Draw / Loss)"]
+    end
+
+    subgraph OutputStage["6. Scoreline Optimizer & Dashboard"]
+        F1["Poisson Bivariate Goal Matrix"]
+        F2["Kicktipp Expected Points Maximizer"]
+        F3["Web Dashboard Output (index.html)"]
+        E3 --> F1 --> F2 --> F3
+    end
+```

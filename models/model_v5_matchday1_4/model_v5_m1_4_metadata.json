@@ -1,0 +1,28 @@
+{
+  "feature_cols": [
+    "goals_in_first_4_matches",
+    "goal_tempo",
+    "action_complexity_score",
+    "avg_xg_per_goal",
+    "finishing_delta",
+    "assist_entropy",
+    "open_play_ratio",
+    "counter_ratio",
+    "avg_ppda",
+    "avg_xpts"
+  ],
+  "r2_score": 0.6383,
+  "mae_points": 7.67,
+  "learned_coefficients": {
+    "goals_in_first_4_matches": -1.0858,
+    "goal_tempo": -1.0858,
+    "action_complexity_score": 1.6612,
+    "avg_xg_per_goal": 0.3181,
+    "finishing_delta": 4.5393,
+    "assist_entropy": 10.1475,
+    "open_play_ratio": -0.927,
+    "counter_ratio": 2.1967,
+    "avg_ppda": -0.6653,
+    "avg_xpts": 4.4322
+  }
+}

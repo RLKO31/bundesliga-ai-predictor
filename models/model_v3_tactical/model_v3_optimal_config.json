@@ -1,0 +1,69 @@
+{
+    "best_window": 9,
+    "final_accuracy": 54.58,
+    "final_log_loss": 1.0129,
+    "window_results": {
+        "1": {
+            "accuracy": 47.39,
+            "log_loss": 1.0506
+        },
+        "2": {
+            "accuracy": 49.35,
+            "log_loss": 1.0375
+        },
+        "3": {
+            "accuracy": 51.31,
+            "log_loss": 1.0171
+        },
+        "4": {
+            "accuracy": 50.98,
+            "log_loss": 1.0195
+        },
+        "5": {
+            "accuracy": 51.31,
+            "log_loss": 1.0122
+        },
+        "6": {
+            "accuracy": 52.94,
+            "log_loss": 1.0113
+        },
+        "7": {
+            "accuracy": 51.63,
+            "log_loss": 1.0308
+        },
+        "8": {
+            "accuracy": 53.27,
+            "log_loss": 1.011
+        },
+        "9": {
+            "accuracy": 54.25,
+            "log_loss": 1.014
+        },
+        "10": {
+            "accuracy": 52.61,
+            "log_loss": 1.0242
+        }
+    },
+    "optimal_features": [
+        "home_goals_decay_9",
+        "away_goals_decay_9",
+        "home_xg_decay_9",
+        "away_xg_decay_9",
+        "home_ppda_decay_9",
+        "away_ppda_decay_9",
+        "home_xpts_decay_9",
+        "away_xpts_decay_9",
+        "home_finishing_eff_decay_9",
+        "away_finishing_eff_decay_9",
+        "home_xg_diff_decay_9",
+        "away_xg_diff_decay_9",
+        "home_win_rate_decay_9",
+        "away_win_rate_decay_9",
+        "home_att_third_9",
+        "away_att_third_9",
+        "pressing_diff_9",
+        "xg_diff_matchup_9",
+        "value_rank_diff",
+        "rest_diff"
+    ]
+}
