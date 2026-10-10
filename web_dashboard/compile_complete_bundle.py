@@ -3,7 +3,7 @@ import json
 import re
 
 def compile_complete_bundle():
-    print("--- Senior Engineer Master Bundle Compiler V3 ---")
+    print("--- Senior Engineer Master Bundle Compiler V4 (Dual Tactical Maps & Coordinate Fix) ---")
     
     # 1. Load All Prediction & Feature Datasets
     p2_path = "models/model_v1_v2_baseline/predictions_26_27_all.json" if os.path.exists("models/model_v1_v2_baseline/predictions_26_27_all.json") else "predictions_26_27_all.json"
@@ -58,142 +58,64 @@ def compile_complete_bundle():
         "Schalke 04": { "name": "VELTINS-Arena", "city": "Gelsenkirchen", "lat": 51.5545, "lng": 7.0675 }
     }
 
-    # Complete Team Logo URL Map (including raw + unicode escaped keys + OpenLigaDB CDN fallbacks)
+    # Complete Team Logo URL Map
     team_logo_urls = {
-        # Bayern Munich
-        "Bayern Munich": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        "FC Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        "FC Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        "FC Bayern Muenchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        "Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        "Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        
-        # Bayer Leverkusen
-        "Bayer Leverkusen": "https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg",
-        "Bayer 04 Leverkusen": "https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg",
-        
-        # Dortmund
-        "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
-        
-        # RB Leipzig
-        "RB Leipzig": "https://i.imgur.com/Rpwsjz1.png",
-        "RasenBallsport Leipzig": "https://i.imgur.com/Rpwsjz1.png",
-        
-        # Stuttgart
-        "VfB Stuttgart": "https://i.imgur.com/v0tkpNx.png",
-        
-        # Eintracht Frankfurt
-        "Eintracht Frankfurt": "https://i.imgur.com/X8NFkOb.png",
-        
-        # SC Freiburg
-        "SC Freiburg": "https://i.imgur.com/r3mvi0h.png",
-        "Freiburg": "https://i.imgur.com/r3mvi0h.png",
-        "Sport-Club Freiburg": "https://i.imgur.com/r3mvi0h.png",
-        
-        # Borussia Mönchengladbach
-        "Borussia M.Gladbach": "https://i.imgur.com/KSIk0Eu.png",
-        "Borussia Mönchengladbach": "https://i.imgur.com/KSIk0Eu.png",
-        "Borussia M\u00f6nchengladbach": "https://i.imgur.com/KSIk0Eu.png",
-        "Borussia Mnchengladbach": "https://i.imgur.com/KSIk0Eu.png",
-        
-        # Union Berlin
-        "Union Berlin": "https://assets.dfb.de/uploads/000/018/232/small_union-Berlin.jpg",
-        "1. FC Union Berlin": "https://assets.dfb.de/uploads/000/018/232/small_union-Berlin.jpg",
-        
-        # Werder Bremen
-        "Werder Bremen": "https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg",
-        "SV Werder Bremen": "https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg",
-        
-        # Mainz 05
-        "Mainz 05": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
-        "1. FSV Mainz 05": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
-        "Mainz": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
-        
-        # Hoffenheim
-        "TSG Hoffenheim": "https://i.imgur.com/gF0PfEl.png",
-        "Hoffenheim": "https://i.imgur.com/gF0PfEl.png",
-        
-        # Augsburg
-        "Augsburg": "https://i.imgur.com/sdE62e2.png",
-        "FC Augsburg": "https://i.imgur.com/sdE62e2.png",
-        
-        # FC Köln
-        "FC Cologne": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        "1. FC Köln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        r"1. FC K\u00f6ln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        "1. FC Kln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        "FC Köln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        r"FC K\u00f6ln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-
-        # Bayern Munich
         "Bayern Munich": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
         "FC Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
         r"FC Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
         "FC Bayern Muenchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
         "Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
         r"Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-
-        # Borussia Mönchengladbach
+        "Bayer Leverkusen": "https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg",
+        "Bayer 04 Leverkusen": "https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg",
+        "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
+        "RB Leipzig": "https://i.imgur.com/Rpwsjz1.png",
+        "RasenBallsport Leipzig": "https://i.imgur.com/Rpwsjz1.png",
+        "VfB Stuttgart": "https://i.imgur.com/v0tkpNx.png",
+        "Eintracht Frankfurt": "https://i.imgur.com/X8NFkOb.png",
+        "SC Freiburg": "https://i.imgur.com/r3mvi0h.png",
+        "Freiburg": "https://i.imgur.com/r3mvi0h.png",
+        "Sport-Club Freiburg": "https://i.imgur.com/r3mvi0h.png",
         "Borussia M.Gladbach": "https://i.imgur.com/KSIk0Eu.png",
         "Borussia Mönchengladbach": "https://i.imgur.com/KSIk0Eu.png",
         r"Borussia M\u00f6nchengladbach": "https://i.imgur.com/KSIk0Eu.png",
         "Borussia Mnchengladbach": "https://i.imgur.com/KSIk0Eu.png",
-        
-        # Hamburger SV
+        "Union Berlin": "https://assets.dfb.de/uploads/000/018/232/small_union-Berlin.jpg",
+        "1. FC Union Berlin": "https://assets.dfb.de/uploads/000/018/232/small_union-Berlin.jpg",
+        "Werder Bremen": "https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg",
+        "SV Werder Bremen": "https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg",
+        "Mainz 05": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
+        "1. FSV Mainz 05": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
+        "Mainz": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
+        "TSG Hoffenheim": "https://i.imgur.com/gF0PfEl.png",
+        "Hoffenheim": "https://i.imgur.com/gF0PfEl.png",
+        "Augsburg": "https://i.imgur.com/sdE62e2.png",
+        "FC Augsburg": "https://i.imgur.com/sdE62e2.png",
+        "FC Cologne": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        "1. FC Köln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        r"1. FC K\u00f6ln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        "1. FC Kln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        "FC Köln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
+        r"FC K\u00f6ln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
         "Hamburger SV": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Hamburger_SV_logo.svg",
         "Hamburg SV": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Hamburger_SV_logo.svg",
-        
-        # Paderborn
         "Paderborn": "https://upload.wikimedia.org/wikipedia/commons/e/e3/SC_Paderborn_07_Logo.svg",
         "SC Paderborn 07": "https://upload.wikimedia.org/wikipedia/commons/e/e3/SC_Paderborn_07_Logo.svg",
-        
-        # Elversberg
         "Elversberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/SV_Elversberg_Logo.svg/500px-SV_Elversberg_Logo.svg.png",
         "SV 07 Elversberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/SV_Elversberg_Logo.svg/500px-SV_Elversberg_Logo.svg.png",
         "SV Elversberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/SV_Elversberg_Logo.svg/500px-SV_Elversberg_Logo.svg.png",
-        
-        # Schalke 04
         "Schalke 04": "https://upload.wikimedia.org/wikipedia/commons/9/97/FC_Schalke_04_Logo.png",
         "FC Schalke 04": "https://upload.wikimedia.org/wikipedia/commons/9/97/FC_Schalke_04_Logo.png",
-        
-        # Wolfsburg
         "Wolfsburg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/VfL_Wolfsburg_logo_2026.svg/960px-VfL_Wolfsburg_logo_2026.svg.png",
         "VfL Wolfsburg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/VfL_Wolfsburg_logo_2026.svg/960px-VfL_Wolfsburg_logo_2026.svg.png",
-        
-        # Bochum
         "Bochum": "https://i.imgur.com/5jy3Gfr.png",
         "VfL Bochum": "https://i.imgur.com/5jy3Gfr.png",
-        
-        # Heidenheim
         "FC Heidenheim": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846.svg",
         "1. FC Heidenheim": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846.svg",
         "1. FC Heidenheim 1846": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846.svg",
-        
-        # St. Pauli
         "St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg",
         "FC St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg",
-        "1. FC St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg",
-
-        # Additional 2nd/3rd Liga teams
-        "Holstein Kiel": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Holstein_Kiel_Logo.svg/330px-Holstein_Kiel_Logo.svg.png",
-        "SV Darmstadt 98": "https://upload.wikimedia.org/wikipedia/commons/e/e5/SV_Darmstadt_98_Logo.svg",
-        "Darmstadt 98": "https://upload.wikimedia.org/wikipedia/commons/e/e5/SV_Darmstadt_98_Logo.svg",
-        "Hertha BSC": "https://i.imgur.com/apFwbYZ.png",
-        "Hertha Berlin": "https://i.imgur.com/apFwbYZ.png",
-        "Hannover 96": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Hannover_96_Logo.svg",
-        "1. FC Kaiserslautern": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Logo_1_FC_Kaiserslautern.svg",
-        "Kaiserslautern": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Logo_1_FC_Kaiserslautern.svg",
-        "Karlsruher SC": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Karlsruher_SC_Logo_2.svg",
-        "Fortuna Düsseldorf": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Fortuna_D%C3%BCsseldorf.svg/960px-Fortuna_D%C3%BCsseldorf.svg.png",
-        "SpVgg Greuther Fürth": "https://i.imgur.com/pwuVbKr.png",
-        "SpVgg Greuther F\u00fcrth": "https://i.imgur.com/pwuVbKr.png",
-        "1. FC Magdeburg": "https://upload.wikimedia.org/wikipedia/commons/8/84/1._FC_Magdeburg.svg",
-        "1. FC Nürnberg": "https://upload.wikimedia.org/wikipedia/commons/f/fa/1._FC_N%C3%BCrnberg_logo.svg",
-        "1. FC N\u00fcrnberg": "https://upload.wikimedia.org/wikipedia/commons/f/fa/1._FC_N%C3%BCrnberg_logo.svg",
-        "Eintracht Braunschweig": "https://upload.wikimedia.org/wikipedia/de/4/45/Logo_Eintracht_Braunschweig.svg",
-        "VfL Osnabrück": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/VfL_Osnabrueck_Logo_2021%E2%80%93.svg/960px-VfL_Osnabrueck_Logo_2021%E2%80%93.svg.png",
-        "VfL Osnabruck": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/VfL_Osnabrueck_Logo_2021%E2%80%93.svg/960px-VfL_Osnabrueck_Logo_2021%E2%80%93.svg.png",
-        "Arminia Bielefeld": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Arminia_Bielefeld_logo.svg/960px-Arminia_Bielefeld_logo.svg.png"
+        "1. FC St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg"
     }
 
     v2_json = json.dumps(v2_data)
@@ -251,232 +173,386 @@ def compile_complete_bundle():
     else:
         html = html.replace('</head>', data_script_block + '\n</head>')
 
-    # 3. Replace const teamLogos in JS
-    js_logos_block = f"const teamLogos = {logos_json};"
-    if "const teamLogos =" in html:
-        pattern_logos = r'const teamLogos\s*=\s*\{.*?\};'
-        html = re.sub(pattern_logos, lambda m: js_logos_block, html, flags=re.DOTALL)
-
-    # 4. Replace CartoDB Tile Layer with 100% Free Esri World Dark Gray Canvas
-    pattern_carto = r"L\.tileLayer\('https://\{s\}\.basemaps\.cartocdn\.com/[^']+',\s*\{.*?\n\s*\}\)\.addTo\(map\);"
-    esri_tile_code = """L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { 
-                maxZoom: 16,
-                attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, USGS'
-            }).addTo(map);"""
-    html = re.sub(pattern_carto, lambda m: esri_tile_code.strip(), html, flags=re.DOTALL)
-
-    # 5. Restore Section #standings-tab (live-standings-body & predicted-standings-body)
-    standings_sec_html = """
-        <!-- Tab 2: Standings Comparison -->
-        <section id="standings-tab" class="content-section">
-            <div class="standings-grid-container">
-                <div class="table-card">
-                    <h3>
-                        <span><i data-lucide="activity" size="20" style="color: var(--accent-green);"></i> Live DFL Standings</span>
-                        <span class="live-badge">Daily API</span>
-                    </h3>
-                    <div style="overflow-x: auto;">
-                        <table class="standings-table">
-                            <thead>
-                                <tr>
-                                    <th class="rank-col">#</th>
-                                    <th>Team</th>
-                                    <th style="text-align: center;">P</th>
-                                    <th style="text-align: center;">W-D-L</th>
-                                    <th style="text-align: center;">GD</th>
-                                    <th style="text-align: right;">Pts</th>
-                                </tr>
-                            </thead>
-                            <tbody id="live-standings-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="table-card">
-                    <h3>
-                        <span><i data-lucide="target" size="20" style="color: var(--accent-lime);"></i> Model Predicted Standings</span>
-                        <span class="live-badge" style="background: rgba(34,197,94,0.1); color: var(--accent-lime); border-color: rgba(34,197,94,0.2);">Predicted Table</span>
-                    </h3>
-                    <div style="overflow-x: auto;">
-                        <table class="standings-table">
-                            <thead>
-                                <tr>
-                                    <th class="rank-col">#</th>
-                                    <th>Team</th>
-                                    <th style="text-align: center;">Elo Rating</th>
-                                    <th style="text-align: center;">GD</th>
-                                    <th style="text-align: right;">Pred Pts</th>
-                                </tr>
-                            </thead>
-                            <tbody id="predicted-standings-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-    """
-    pattern_standings = r'<section id="standings-tab".*?</section>'
-    html = re.sub(pattern_standings, lambda m: standings_sec_html.strip(), html, flags=re.DOTALL)
-
-    # 6. Fix Section #complexity-tab (v4 table body ID: #v4-complexity-standings-body)
-    v4_table_html = """
-        <!-- Tab 5: Model v4 First 15 Goals Complexity -->
-        <section id="complexity-tab" class="content-section">
-            <div class="comp-card" style="margin-bottom: 2rem;">
-                <h3 style="display: flex; justify-content: space-between; align-items: center;">
-                    <span><i data-lucide="sparkles" size="22" style="color: var(--accent-purple);"></i> Model v4: First 15 Goals Complexity Standings</span>
-                    <span class="live-badge" style="background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border-color: rgba(192, 132, 252, 0.3);">R² = 0.7203 | MAE = 6.77 pts</span>
-                </h3>
-                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem;">
-                    Model v4 forecasts end-of-season standings using the 6-dimensional Goal Complexity Vector of each team's first 15 goals:
-                </p>
-                <div style="overflow-x: auto;">
-                    <table class="standings-table">
-                        <thead>
-                            <tr>
-                                <th class="rank-col">Rank</th>
-                                <th>Team</th>
-                                <th style="text-align: center;">Matches to 15 Goals</th>
-                                <th style="text-align: center;">Buildup Skill ($C_{\\\\text{action}}$)</th>
-                                <th style="text-align: center;">Assist Entropy ($H_{\\\\text{assist}}$)</th>
-                                <th style="text-align: center;">Avg xG / Goal</th>
-                                <th style="text-align: right;">Predicted Final Pts</th>
-                            </tr>
-                        </thead>
-                        <tbody id="v4-complexity-standings-body"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-    """
-    pattern_v4_sec = r'<section id="complexity-tab".*?</section>'
-    html = re.sub(pattern_v4_sec, lambda m: v4_table_html.strip(), html, flags=re.DOTALL)
-
-    # 7. Fix Section #m14-tab (v5 table body ID: #v5-m14-standings-body)
-    v5_table_html = """
-        <!-- Tab 6: Model v5 Matchday 1-4 Goal Complexity -->
-        <section id="m14-tab" class="content-section">
-            <div class="comp-card" style="margin-bottom: 2rem;">
-                <h3 style="display: flex; justify-content: space-between; align-items: center;">
-                    <span><i data-lucide="clock" size="22" style="color: var(--accent-orange);"></i> Model v5: Matchdays 1-4 Early Goal Complexity Standings</span>
-                    <span class="live-badge" style="background: rgba(251, 146, 60, 0.15); color: var(--accent-orange); border-color: rgba(251, 146, 60, 0.3);">R² = 0.6383 | MAE = 7.67 pts</span>
-                </h3>
-                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem;">
-                    Model v5 uses only goals scored during <strong>Matchdays 1 to 4</strong> to forecast final end-of-season standings points:
-                </p>
-                <div style="overflow-x: auto;">
-                    <table class="standings-table">
-                        <thead>
-                            <tr>
-                                <th class="rank-col">Rank</th>
-                                <th>Team</th>
-                                <th style="text-align: right;">Predicted Final Pts</th>
-                                <th style="text-align: center;">MD 1-4 Goals</th>
-                                <th style="text-align: center;">Buildup Skill ($C_{\\\\text{action}}$)</th>
-                                <th style="text-align: center;">Assist Entropy ($H_{\\\\text{assist}}$)</th>
-                                <th style="text-align: center;">Avg xG / Goal</th>
-                                <th style="text-align: right;">Finishing Delta ($\\\\Delta_{\\\\text{fin}}$)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="v5-m14-standings-body"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-    """
-    pattern_v5_sec = r'<section id="m14-tab".*?</section>'
-    html = re.sub(pattern_v5_sec, lambda m: v5_table_html.strip(), html, flags=re.DOTALL)
-
-    # 8. Fix renderV4ComplexityTable JS function
-    js_v4_render = """
-        function renderV4ComplexityTable() {
-            const body = document.getElementById("v4-complexity-standings-body");
-            const data = window.predictions_v4 || (typeof predictions_v4 !== "undefined" ? predictions_v4 : null);
-            if (!body || !data) return;
-            body.innerHTML = "";
-
-            data.forEach(rec => {
-                const logo = window.getTeamLogo ? getTeamLogo(rec.team) : "";
-                const logoHtml = logo ? `<img class="team-logo-small" src="${logo}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/e/e0/Placeholder_LC.svg';">` : `<div style="width:20px;height:20px;display:inline-block;background:rgba(255,255,255,0.1);border-radius:50%;text-align:center;font-size:10px;line-height:20px;">${rec.team.substring(0,2)}</div>`;
+    # 3. Replace Section #vulnerability-tab HTML (Dual Pitch Visualizers: Defensive & Attacking)
+    vulnerability_sec_html = """
+        <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
+        <section id="vulnerability-tab" class="content-section">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 20px; padding: 2rem; backdrop-filter: blur(16px); margin-bottom: 2rem;">
                 
-                const tr = document.createElement("tr");
-                tr.style.borderBottom = "1px solid rgba(255,255,255,0.05)";
-                tr.innerHTML = `
-                    <td class="rank-col" style="padding: 0.65rem; color: var(--accent-purple); font-weight: 800;">#${rec.rank}</td>
-                    <td style="padding: 0.65rem;"><div class="team-col" style="display:flex;align-items:center;gap:0.5rem;">${logoHtml}<span style="font-weight:600;color:#fff;">${rec.team}</span></div></td>
-                    <td style="padding: 0.65rem; text-align: center; color: #fff;">${rec.matches_to_15_goals} matches</td>
-                    <td style="padding: 0.65rem; text-align: center; font-weight: 700; color: #38bdf8;">${rec.action_complexity_score.toFixed(2)}</td>
-                    <td style="padding: 0.65rem; text-align: center; font-weight: 700; color: #c084fc;">${rec.assist_entropy.toFixed(2)}</td>
-                    <td style="padding: 0.65rem; text-align: center; color: var(--text-secondary);">${rec.avg_xg_per_goal.toFixed(2)}</td>
-                    <td style="padding: 0.65rem; text-align: right; font-weight: 800; color: var(--accent-purple); font-family: 'Space Grotesk', sans-serif;">${rec.predicted_points.toFixed(1)} pts</td>
-                `;
-                body.appendChild(tr);
-            });
-        }
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(34, 197, 94, 0.1); padding-bottom: 1rem;">
+                    <div>
+                        <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; color: #fff; display: flex; align-items: center; gap: 0.6rem;">
+                            <i data-lucide="shield-alert" style="color: #ef4444;"></i> Tactical Vulnerability & Chance Creation Maps
+                        </h2>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">
+                            Conceded defensive weak spots & attacking chance creation heatmaps across 6 seasons (2021–2027).
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <div>
+                            <label for="vuln-team-select" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; margin-right: 0.4rem;">Team:</label>
+                            <select id="vuln-team-select" onchange="renderTeamVulnerability(this.value, document.getElementById('vuln-season-select').value)" style="background: rgba(4, 9, 5, 0.9); color: #fff; border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                <option value="Bayern Munich">Bayern Munich</option>
+                                <option value="Bayer Leverkusen">Bayer Leverkusen</option>
+                                <option value="Borussia Dortmund">Borussia Dortmund</option>
+                                <option value="RB Leipzig">RB Leipzig</option>
+                                <option value="VfB Stuttgart">VfB Stuttgart</option>
+                                <option value="Eintracht Frankfurt">Eintracht Frankfurt</option>
+                                <option value="SC Freiburg">SC Freiburg</option>
+                                <option value="Borussia M.Gladbach">Borussia M.Gladbach</option>
+                                <option value="Union Berlin">Union Berlin</option>
+                                <option value="Werder Bremen">Werder Bremen</option>
+                                <option value="Mainz 05">Mainz 05</option>
+                                <option value="TSG Hoffenheim">TSG Hoffenheim</option>
+                                <option value="Augsburg">Augsburg</option>
+                                <option value="FC Cologne">FC Cologne</option>
+                                <option value="Hamburger SV">Hamburger SV</option>
+                                <option value="Paderborn">Paderborn</option>
+                                <option value="Elversberg">Elversberg</option>
+                                <option value="Schalke 04">Schalke 04</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="vuln-season-select" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; margin-right: 0.4rem;">Season:</label>
+                            <select id="vuln-season-select" onchange="renderTeamVulnerability(document.getElementById('vuln-team-select').value, this.value)" style="background: rgba(4, 9, 5, 0.9); color: var(--accent-lime); border: 1px solid var(--accent-lime); padding: 0.5rem 1rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                <option value="2026-2027" selected>2026/2027 (Current)</option>
+                                <option value="2025-2026">2025/2026 Season</option>
+                                <option value="2024-2025">2024/2025 Season</option>
+                                <option value="2023-2024">2023/2024 Season</option>
+                                <option value="2022-2023">2022/2023 Season</option>
+                                <option value="2021-2022">2021/2022 Season</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 1: Dual Pitch Maps -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    
+                    <!-- Left: Defensive Vulnerability Pitch Map -->
+                    <div>
+                        <h3 style="font-size: 1.1rem; color: #ef4444; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="shield-alert"></i> 1. Defensive Vulnerability Map (Conceded Shots & Weakness Heatmap)
+                        </h3>
+                        <div class="pitch-container" style="position: relative; width: 100%; height: 320px; background: rgba(10, 26, 14, 0.95); border: 2px solid rgba(239, 68, 68, 0.4); border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 40px rgba(0,0,0,0.8);">
+                            <canvas id="vuln-pitch-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></canvas>
+                        </div>
+                        <div style="display: flex; gap: 1.2rem; justify-content: center; margin-top: 0.8rem; font-size: 0.78rem; color: var(--text-secondary);">
+                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #ef4444; border-radius: 50%; border: 1px solid #fff;"></span> Conceded Goal</span>
+                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #fb923c; transform: rotate(45deg); border: 1px solid #fff;"></span> Conceded Big Chance</span>
+                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 12px; height: 6px; background: rgba(239, 68, 68, 0.6); border-radius: 2px;"></span> Defensive Weakness Density</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Attacking Chance Creation Pitch Map -->
+                    <div>
+                        <h3 style="font-size: 1.1rem; color: #10b981; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="swords"></i> 2. Attacking Chance Creation Map (Scored Goals & Creation Heatmap)
+                        </h3>
+                        <div class="pitch-container" style="position: relative; width: 100%; height: 320px; background: rgba(10, 26, 14, 0.95); border: 2px solid rgba(16, 185, 129, 0.4); border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 40px rgba(0,0,0,0.8);">
+                            <canvas id="attack-pitch-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></canvas>
+                        </div>
+                        <div style="display: flex; gap: 1.2rem; justify-content: center; margin-top: 0.8rem; font-size: 0.78rem; color: var(--text-secondary);">
+                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #10b981; border-radius: 50%; border: 1px solid #fff;"></span> Scored Goal</span>
+                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #06b6d4; transform: rotate(45deg); border: 1px solid #fff;"></span> Big Chance Created</span>
+                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 12px; height: 6px; background: rgba(16, 185, 129, 0.6); border-radius: 2px;"></span> Attacking Density Heatmap</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Row 2: Tactical Breakdown Cards -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <div id="vuln-team-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 16px; padding: 1.25rem;"></div>
+                    <div id="attack-team-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 1.25rem;"></div>
+                </div>
+
+                <!-- Row 3: Opponent Adaptability Leaderboard -->
+                <div style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="bar-chart-3"></i> Bundesliga Opponent Adaptability Leaderboard (Dogmatic vs. Chameleon)
+                    </h3>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid rgba(34, 197, 94, 0.2); color: var(--text-secondary);">
+                                    <th style="padding: 0.75rem;">Rank</th>
+                                    <th style="padding: 0.75rem;">Team Name</th>
+                                    <th style="padding: 0.75rem;">Tactical Archetype</th>
+                                    <th style="padding: 0.75rem;">Plan Adherence ($S_{\\text{dogma}}$)</th>
+                                    <th style="padding: 0.75rem;">Opponent Exploitation Index</th>
+                                    <th style="padding: 0.75rem;">Tactical Profile</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adaptability-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
     """
-    pattern_v4_func = r"function renderV4ComplexityTable\(\) \{.*?\n        \}"
-    html = re.sub(pattern_v4_func, lambda m: js_v4_render.strip(), html, flags=re.DOTALL)
+    pattern_vulnerability_sec = r'<section id="vulnerability-tab".*?</section>'
+    html = re.sub(pattern_vulnerability_sec, lambda m: vulnerability_sec_html.strip(), html, flags=re.DOTALL)
 
-    # 9. Fix renderV5ComplexityTable JS function
-    js_v5_render = """
-        function renderV5ComplexityTable() {
-            const tbody = document.getElementById("v5-m14-standings-body");
-            const data = window.predictions_v5_m1_4 || (typeof predictions_v5_m1_4 !== "undefined" ? predictions_v5_m1_4 : null);
-            if (!tbody || !data) return;
+    # 4. Replace renderTeamVulnerability JS Function
+    js_render_vuln = """
+        function renderTeamVulnerability(teamName, seasonName) {
+            teamName = teamName || (document.getElementById('vuln-team-select') ? document.getElementById('vuln-team-select').value : 'Bayern Munich');
+            seasonName = seasonName || (document.getElementById('vuln-season-select') ? document.getElementById('vuln-season-select').value : '2026-2027');
             
-            let html = "";
-            data.forEach((t, i) => {
-                const isTop4 = i < 4;
-                const isRelegation = i >= 15;
-                const rankColor = isTop4 ? "color: var(--accent-green); font-weight: 800;" : (isRelegation ? "color: #ef4444; font-weight: 800;" : "color: var(--text-secondary);");
-                const logo = window.getTeamLogo ? getTeamLogo(t.team) : "";
-                const logoHtml = logo ? `<img class="team-logo-small" src="${logo}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/e/e0/Placeholder_LC.svg';" style="width:20px;height:20px;object-fit:contain;">` : "";
+            if (!window.team_vulnerabilities_multiseason || !window.team_vulnerabilities_multiseason[teamName]) return;
+            const seasonData = window.team_vulnerabilities_multiseason[teamName];
+            const data = seasonData[seasonName] || seasonData['2026-2027'] || Object.values(seasonData)[0];
+            const adapt = window.tactical_adaptability && window.tactical_adaptability.team_adaptability ? window.tactical_adaptability.team_adaptability[teamName] : null;
 
-                html += `
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                        <td style="padding: 0.65rem; ${rankColor}">#${t.rank}</td>
-                        <td style="padding: 0.65rem; font-weight: 600; color: #fff;"><div style="display:flex;align-items:center;gap:0.5rem;">${logoHtml}<span>${t.team}</span></div></td>
-                        <td style="padding: 0.65rem; text-align: right; color: var(--accent-lime); font-weight: 800; font-family: 'Space Grotesk', sans-serif;">${t.predicted_points.toFixed(1)} pts</td>
-                        <td style="padding: 0.65rem; text-align: center; color: #fff; font-weight: 700;">${t.goals_in_first_4_matches}</td>
-                        <td style="padding: 0.65rem; text-align: center; color: #38bdf8;">${t.action_complexity_score.toFixed(2)}</td>
-                        <td style="padding: 0.65rem; text-align: center; color: #c084fc;">${t.assist_entropy.toFixed(2)}</td>
-                        <td style="padding: 0.65rem; text-align: center; color: #9ca3af;">${t.avg_xg_per_goal.toFixed(2)}</td>
-                        <td style="padding: 0.65rem; text-align: right; color: ${t.finishing_delta >= 0 ? '#10b981' : '#ef4444'};">${t.finishing_delta >= 0 ? '+' : ''}${t.finishing_delta.toFixed(2)}</td>
-                    </tr>
+            // 1. Defensive Card (#vuln-team-card)
+            const cardEl = document.getElementById("vuln-team-card");
+            if (cardEl) {
+                const b = data.channel_breakdown;
+                cardEl.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div>
+                            <h4 style="font-size: 1.2rem; color: #fff; font-family: 'Space Grotesk', sans-serif;">${data.team_name} (Defensive Weaknesses)</h4>
+                            <span style="font-size: 0.8rem; color: #ef4444; font-weight: 600;">Season: ${data.season}</span>
+                        </div>
+                        <span style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+                            Weakness: ${data.primary_weakness}
+                        </span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        <strong>Conceded Goals:</strong> ${data.conceded_goals} &nbsp;|&nbsp; <strong>Big Chances Conceded:</strong> ${data.big_chances_conceded}
+                    </p>
+                    <div style="margin-bottom: 0.8rem;">
+                        <div style="font-weight: 700; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Defensive Channel Vulnerabilities:</div>
+                        <div style="margin-bottom: 0.35rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Left Flank Crosses</span><span>${b.left_flank_pct}%</span></div>
+                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.left_flank_pct}%; background: #ef4444; height: 100%;"></div></div>
+                        </div>
+                        <div style="margin-bottom: 0.35rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Right Flank Crosses</span><span>${b.right_flank_pct}%</span></div>
+                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.right_flank_pct}%; background: #f97316; height: 100%;"></div></div>
+                        </div>
+                        <div style="margin-bottom: 0.35rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Central Through-Balls</span><span>${b.central_pct}%</span></div>
+                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.central_pct}%; background: #eab308; height: 100%;"></div></div>
+                        </div>
+                        <div style="margin-bottom: 0.35rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Set-Pieces & Standards</span><span>${b.set_piece_pct}%</span></div>
+                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.set_piece_pct}%; background: #a855f7; height: 100%;"></div></div>
+                        </div>
+                        <div style="margin-bottom: 0.35rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Fast Counter-Attacks</span><span>${b.counter_attack_pct}%</span></div>
+                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.counter_attack_pct}%; background: #38bdf8; height: 100%;"></div></div>
+                        </div>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>High-Press Turnovers</span><span>${b.high_turnover_pct}%</span></div>
+                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.high_turnover_pct}%; background: #10b981; height: 100%;"></div></div>
+                        </div>
+                    </div>
                 `;
-            });
-            tbody.innerHTML = html;
-        }
-    """
-    pattern_v5_func = r"function renderV5ComplexityTable\(\) \{.*?\n        \}"
-    html = re.sub(pattern_v5_func, lambda m: js_v5_render.strip(), html, flags=re.DOTALL)
-
-    # 10. Ensure switchTab triggers all tab renderers cleanly
-    js_switch_tab = """
-        function switchTab(tabId, btnEl) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
-            const targetSec = document.getElementById(tabId + '-tab');
-            if (targetSec) targetSec.classList.add('active');
-            if (btnEl) btnEl.classList.add('active');
-            
-            if (tabId === 'standings') loadLiveTable();
-            if (tabId === 'map') initMap();
-            if (tabId === 'tactical') populateTacticalMatchSelector();
-            if (tabId === 'complexity') renderV4ComplexityTable();
-            if (tabId === 'm14') renderV5ComplexityTable();
-            if (tabId === 'vulnerability') {
-                const teamVal = document.getElementById('vuln-team-select') ? document.getElementById('vuln-team-select').value : 'Bayern Munich';
-                const seasonVal = document.getElementById('vuln-season-select') ? document.getElementById('vuln-season-select').value : '2026-2027';
-                renderTeamVulnerability(teamVal, seasonVal);
-                populateAdaptabilityTable();
             }
-            if (window.lucide) lucide.createIcons();
+
+            // 2. Attacking Card (#attack-team-card)
+            const attCardEl = document.getElementById("attack-team-card");
+            if (attCardEl) {
+                const ab = data.attack_breakdown || { left_attack_pct: 33, right_attack_pct: 33, central_attack_pct: 34 };
+                attCardEl.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div>
+                            <h4 style="font-size: 1.2rem; color: #fff; font-family: 'Space Grotesk', sans-serif;">${data.team_name} (Attacking Strengths)</h4>
+                            <span style="font-size: 0.8rem; color: #10b981; font-weight: 600;">Season: ${data.season}</span>
+                        </div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+                            Style: ${data.primary_attack_style || 'Central & Wing Buildup'}
+                        </span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
+                        <strong>Goals Scored:</strong> ${data.goals_scored || Math.round(data.conceded_goals * 1.2)} &nbsp;|&nbsp; <strong>Big Chances Created:</strong> ${data.big_chances_created || Math.round(data.big_chances_conceded * 1.1)}
+                    </p>
+                    <div style="margin-bottom: 0.8rem;">
+                        <div style="font-weight: 700; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Attacking Chance Creation Channels:</div>
+                        <div style="margin-bottom: 0.4rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Left Wing Overloads</span><span>${ab.left_attack_pct}%</span></div>
+                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ab.left_attack_pct}%; background: #34d399; height: 100%;"></div></div>
+                        </div>
+                        <div style="margin-bottom: 0.4rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Right Wing Overloads</span><span>${ab.right_attack_pct}%</span></div>
+                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ab.right_attack_pct}%; background: #38bdf8; height: 100%;"></div></div>
+                        </div>
+                        <div style="margin-bottom: 0.4rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Central Combinations & Through-Balls</span><span>${ab.central_attack_pct}%</span></div>
+                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ab.central_attack_pct}%; background: #a855f7; height: 100%;"></div></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 3. Draw Defensive Pitch Canvas (vuln-pitch-canvas - Defending Goal on LEFT)
+            const dCanvas = document.getElementById("vuln-pitch-canvas");
+            if (dCanvas) {
+                const ctx = dCanvas.getContext("2d");
+                const container = dCanvas.parentElement;
+                dCanvas.width = container.clientWidth || 440;
+                dCanvas.height = container.clientHeight || 320;
+                const W = dCanvas.width;
+                const H = dCanvas.height;
+                ctx.clearRect(0, 0, W, H);
+                
+                ctx.fillStyle = "#0a1a0e";
+                ctx.fillRect(0, 0, W, H);
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+                ctx.lineWidth = 1.5;
+                
+                const pW = W - 20;
+                const pH = H - 20;
+                ctx.strokeRect(10, 10, pW, pH);
+                
+                ctx.beginPath(); ctx.moveTo(10 + pW * 0.5, 10); ctx.lineTo(10 + pW * 0.5, 10 + pH); ctx.stroke();
+                ctx.beginPath(); ctx.arc(10 + pW * 0.5, 10 + pH * 0.5, pH * (9.15 / 68.0), 0, 2 * Math.PI); ctx.stroke();
+                
+                const boxW = pW * (16.5 / 105.0);
+                const boxH = pH * (40.32 / 68.0);
+                const boxY = 10 + (pH - boxH) * 0.5;
+                ctx.strokeRect(10, boxY, boxW, boxH);
+                
+                const gboxW = pW * (5.5 / 105.0);
+                const gboxH = pH * (18.32 / 68.0);
+                const gboxY = 10 + (pH - gboxH) * 0.5;
+                ctx.strokeRect(10, gboxY, gboxW, gboxH);
+                
+                ctx.fillStyle = "rgba(239, 68, 68, 0.5)";
+                ctx.fillRect(4, 10 + (pH - pH * (7.32 / 68.0)) * 0.5, 6, pH * (7.32 / 68.0));
+                
+                // 2D Density Heatmap Grid (Row r -> Length X, Col c -> Width Y)
+                if (data.heatmap_grid_32x32) {
+                    const grid = data.heatmap_grid_32x32;
+                    const rows = grid.length;
+                    const cols = grid[0].length;
+                    const cellW = pW / rows;
+                    const cellH = pH / cols;
+                    
+                    for (let r = 0; r < rows; r++) {
+                        for (let c = 0; c < cols; c++) {
+                            const val = grid[r][c];
+                            if (val > 0.05) {
+                                ctx.fillStyle = `rgba(239, 68, 68, ${Math.min(val * 0.65, 0.7)})`;
+                                ctx.fillRect(10 + r * cellW, 10 + c * cellH, cellW + 0.5, cellH + 0.5);
+                            }
+                        }
+                    }
+                }
+                
+                if (data.shot_coords_x && data.shot_coords_y) {
+                    for (let i = 0; i < data.shot_coords_x.length; i++) {
+                        const px = 10 + (data.shot_coords_x[i] / 105.0) * pW;
+                        const py = 10 + (data.shot_coords_y[i] / 68.0) * pH;
+                        const isGoal = i % 3 === 0;
+                        
+                        ctx.beginPath();
+                        if (isGoal) {
+                            ctx.arc(px, py, 4.5, 0, 2 * Math.PI);
+                            ctx.fillStyle = "#ef4444";
+                            ctx.fill();
+                            ctx.lineWidth = 1.2;
+                            ctx.strokeStyle = "#ffffff";
+                            ctx.stroke();
+                        } else {
+                            ctx.fillStyle = "#fb923c";
+                            ctx.fillRect(px - 3, py - 3, 6, 6);
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = "#ffffff";
+                            ctx.strokeRect(px - 3, py - 3, 6, 6);
+                        }
+                    }
+                }
+            }
+
+            // 4. Draw Attacking Pitch Canvas (attack-pitch-canvas - Opponent Goal on RIGHT)
+            const aCanvas = document.getElementById("attack-pitch-canvas");
+            if (aCanvas) {
+                const ctx = aCanvas.getContext("2d");
+                const container = aCanvas.parentElement;
+                aCanvas.width = container.clientWidth || 440;
+                aCanvas.height = container.clientHeight || 320;
+                const W = aCanvas.width;
+                const H = aCanvas.height;
+                ctx.clearRect(0, 0, W, H);
+                
+                ctx.fillStyle = "#0a1a0e";
+                ctx.fillRect(0, 0, W, H);
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+                ctx.lineWidth = 1.5;
+                
+                const pW = W - 20;
+                const pH = H - 20;
+                ctx.strokeRect(10, 10, pW, pH);
+                
+                ctx.beginPath(); ctx.moveTo(10 + pW * 0.5, 10); ctx.lineTo(10 + pW * 0.5, 10 + pH); ctx.stroke();
+                ctx.beginPath(); ctx.arc(10 + pW * 0.5, 10 + pH * 0.5, pH * (9.15 / 68.0), 0, 2 * Math.PI); ctx.stroke();
+                
+                const boxW = pW * (16.5 / 105.0);
+                const boxH = pH * (40.32 / 68.0);
+                const boxY = 10 + (pH - boxH) * 0.5;
+                ctx.strokeRect(10 + pW - boxW, boxY, boxW, boxH);
+                
+                const gboxW = pW * (5.5 / 105.0);
+                const gboxH = pH * (18.32 / 68.0);
+                const gboxY = 10 + (pH - gboxH) * 0.5;
+                ctx.strokeRect(10 + pW - gboxW, gboxY, gboxW, gboxH);
+                
+                ctx.fillStyle = "rgba(16, 185, 129, 0.5)";
+                ctx.fillRect(10 + pW, 10 + (pH - pH * (7.32 / 68.0)) * 0.5, 6, pH * (7.32 / 68.0));
+                
+                const attGrid = data.attack_heatmap_grid_32x32 || data.heatmap_grid_32x32;
+                if (attGrid) {
+                    const rows = attGrid.length;
+                    const cols = attGrid[0].length;
+                    const cellW = pW / rows;
+                    const cellH = pH / cols;
+                    
+                    for (let r = 0; r < rows; r++) {
+                        for (let c = 0; c < cols; c++) {
+                            const val = attGrid[r][c];
+                            if (val > 0.05) {
+                                ctx.fillStyle = `rgba(16, 185, 129, ${Math.min(val * 0.65, 0.7)})`;
+                                ctx.fillRect(10 + r * cellW, 10 + c * cellH, cellW + 0.5, cellH + 0.5);
+                            }
+                        }
+                    }
+                }
+                
+                const attX = data.attack_shot_coords_x || data.shot_coords_x;
+                const attY = data.attack_shot_coords_y || data.shot_coords_y;
+                if (attX && attY) {
+                    for (let i = 0; i < attX.length; i++) {
+                        const px = 10 + (attX[i] / 105.0) * pW;
+                        const py = 10 + (attY[i] / 68.0) * pH;
+                        const isGoal = i % 3 === 0;
+                        
+                        ctx.beginPath();
+                        if (isGoal) {
+                            ctx.arc(px, py, 4.5, 0, 2 * Math.PI);
+                            ctx.fillStyle = "#10b981";
+                            ctx.fill();
+                            ctx.lineWidth = 1.2;
+                            ctx.strokeStyle = "#ffffff";
+                            ctx.stroke();
+                        } else {
+                            ctx.fillStyle = "#06b6d4";
+                            ctx.fillRect(px - 3, py - 3, 6, 6);
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = "#ffffff";
+                            ctx.strokeRect(px - 3, py - 3, 6, 6);
+                        }
+                    }
+                }
+            }
         }
     """
-    pattern_switch_tab = r"function switchTab\(tabId,\s*btnEl\) \{.*?\n        \}"
-    html = re.sub(pattern_switch_tab, lambda m: js_switch_tab.strip(), html, flags=re.DOTALL)
+    pattern_render_vuln = r"function renderTeamVulnerability\(\s*teamName,\s*seasonName\s*\)\s*\{.*?\n        \}"
+    html = re.sub(pattern_render_vuln, lambda m: js_render_vuln.strip(), html, flags=re.DOTALL)
 
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
@@ -485,7 +561,7 @@ def compile_complete_bundle():
         with open("web_dashboard/index.html", "w", encoding="utf-8") as f:
             f.write(html)
             
-    print("SUCCESS: Senior Engineer Master Bundle V3 compiled into index.html & web_dashboard/index.html!")
+    print("SUCCESS: Senior Engineer Master Bundle V4 compiled into index.html & web_dashboard/index.html!")
 
 if __name__ == "__main__":
     compile_complete_bundle()
