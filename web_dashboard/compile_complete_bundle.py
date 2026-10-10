@@ -1,9 +1,26 @@
+"""
+===============================================================================
+SENIOR ENGINEER MASTER BUNDLE COMPILER V6
+REAL DFL / UNDERSTAT MULTI-SEASON TACTICAL ENGINE & DUAL PITCH CALIBRATION
+===============================================================================
+- Authentic match events from DFL / Understat across 6 seasons (2021-2027).
+- Calibrated 105m x 68m pitch canvas with exact goal orientations.
+- Dual Perspective: Unified Pitch (Defense on Left & Offense on Right simultaneously)
+  or focused isolated views (Defensive Vulnerability vs. Attacking Threat).
+- Action Filters: All Actions, Goals Only, Big Chances (xG >= 0.3), Open Play, Set-Pieces.
+- Real player names, minutes, xG, situations, actions, and opponent tags on hover tooltip.
+- 6-Channel Tactical Profiles with live progress bars for Defense and Offense.
+- Dynamic Season Team Selector based on historical Bundesliga participation.
+- Opponent Adaptability Leaderboard with archetypes and exploitation indexes.
+===============================================================================
+"""
+
 import os
 import json
 import re
 
 def compile_complete_bundle():
-    print("--- Senior Engineer Master Bundle Compiler V5 (Unified Tactical Pitch & Exact Shot Counts) ---")
+    print("--- Senior Engineer Master Bundle Compiler V6 (Authentic Multi-Season Tactical Engine) ---")
     
     # 1. Load All Datasets
     p2_path = "models/model_v1_v2_baseline/predictions_26_27_all.json" if os.path.exists("models/model_v1_v2_baseline/predictions_26_27_all.json") else "predictions_26_27_all.json"
@@ -33,7 +50,7 @@ def compile_complete_bundle():
         "Augsburg", "Werder Bremen", "Wolfsburg", "Bochum", "TSG Hoffenheim", 
         "FC Heidenheim", "Borussia M.Gladbach", "FC Cologne", "Union Berlin", "Hamburger SV"
     ]
-    v5_filtered = [rec for rec in v5_data if rec['team'] in b1_teams]
+    v5_filtered = [rec for rec in v5_data if rec.get('team') in b1_teams]
     for idx, rec in enumerate(v5_filtered): rec['rank'] = idx + 1
 
     # Stadium coordinates for all 18 Bundesliga teams
@@ -61,78 +78,45 @@ def compile_complete_bundle():
     team_logo_urls = {
         "Bayern Munich": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
         "FC Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        r"FC Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        "FC Bayern Muenchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        "Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
-        r"Bayern M\u00fcnchen": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
         "Bayer Leverkusen": "https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg",
         "Bayer 04 Leverkusen": "https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg",
         "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
         "RB Leipzig": "https://i.imgur.com/Rpwsjz1.png",
-        "RasenBallsport Leipzig": "https://i.imgur.com/Rpwsjz1.png",
         "VfB Stuttgart": "https://i.imgur.com/v0tkpNx.png",
         "Eintracht Frankfurt": "https://i.imgur.com/X8NFkOb.png",
         "SC Freiburg": "https://i.imgur.com/r3mvi0h.png",
-        "Freiburg": "https://i.imgur.com/r3mvi0h.png",
-        "Sport-Club Freiburg": "https://i.imgur.com/r3mvi0h.png",
         "Borussia M.Gladbach": "https://i.imgur.com/KSIk0Eu.png",
-        "Borussia Mönchengladbach": "https://i.imgur.com/KSIk0Eu.png",
-        r"Borussia M\u00f6nchengladbach": "https://i.imgur.com/KSIk0Eu.png",
-        "Borussia Mnchengladbach": "https://i.imgur.com/KSIk0Eu.png",
         "Union Berlin": "https://assets.dfb.de/uploads/000/018/232/small_union-Berlin.jpg",
-        "1. FC Union Berlin": "https://assets.dfb.de/uploads/000/018/232/small_union-Berlin.jpg",
         "Werder Bremen": "https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg",
-        "SV Werder Bremen": "https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg",
         "Mainz 05": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
-        "1. FSV Mainz 05": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
-        "Mainz": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
         "TSG Hoffenheim": "https://i.imgur.com/gF0PfEl.png",
-        "Hoffenheim": "https://i.imgur.com/gF0PfEl.png",
         "Augsburg": "https://i.imgur.com/sdE62e2.png",
-        "FC Augsburg": "https://i.imgur.com/sdE62e2.png",
         "FC Cologne": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        "1. FC Köln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        r"1. FC K\u00f6ln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        "1. FC Kln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        "FC Köln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
-        r"FC K\u00f6ln": "https://upload.wikimedia.org/wikipedia/commons/0/01/1._FC_Koeln_Logo_2014%E2%80%93.svg",
         "Hamburger SV": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Hamburger_SV_logo.svg",
-        "Hamburg SV": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Hamburger_SV_logo.svg",
         "Paderborn": "https://upload.wikimedia.org/wikipedia/commons/e/e3/SC_Paderborn_07_Logo.svg",
-        "SC Paderborn 07": "https://upload.wikimedia.org/wikipedia/commons/e/e3/SC_Paderborn_07_Logo.svg",
         "Elversberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/SV_Elversberg_Logo.svg/500px-SV_Elversberg_Logo.svg.png",
-        "SV 07 Elversberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/SV_Elversberg_Logo.svg/500px-SV_Elversberg_Logo.svg.png",
-        "SV Elversberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/SV_Elversberg_Logo.svg/500px-SV_Elversberg_Logo.svg.png",
         "Schalke 04": "https://upload.wikimedia.org/wikipedia/commons/9/97/FC_Schalke_04_Logo.png",
-        "FC Schalke 04": "https://upload.wikimedia.org/wikipedia/commons/9/97/FC_Schalke_04_Logo.png",
         "Wolfsburg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/VfL_Wolfsburg_logo_2026.svg/960px-VfL_Wolfsburg_logo_2026.svg.png",
-        "VfL Wolfsburg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/VfL_Wolfsburg_logo_2026.svg/960px-VfL_Wolfsburg_logo_2026.svg.png",
         "Bochum": "https://i.imgur.com/5jy3Gfr.png",
-        "VfL Bochum": "https://i.imgur.com/5jy3Gfr.png",
         "FC Heidenheim": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846.svg",
-        "1. FC Heidenheim": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846.svg",
-        "1. FC Heidenheim 1846": "https://upload.wikimedia.org/wikipedia/commons/9/9d/1._FC_Heidenheim_1846.svg",
-        "St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg",
-        "FC St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg",
-        "1. FC St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg"
+        "St. Pauli": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Fc_st_pauli_logo.svg"
     }
 
-    v2_json = json.dumps(v2_data)
-    v3_json = json.dumps(v3_data)
-    v4_json = json.dumps(v4_data)
-    v5_json = json.dumps(v5_filtered)
-    v6_json = json.dumps(v6_data)
-    v6_2stage_json = json.dumps(v6_2stage_data)
-    heatmaps_json = json.dumps(heatmaps_data)
-    vuln_json = json.dumps(vuln_data)
-    adapt_json = json.dumps(adapt_data)
-    stadiums_json = json.dumps(stadiums)
-    logos_json = json.dumps(team_logo_urls, indent=4)
+    v2_json = json.dumps(v2_data, separators=(',', ':'))
+    v3_json = json.dumps(v3_data, separators=(',', ':'))
+    v4_json = json.dumps(v4_data, separators=(',', ':'))
+    v5_json = json.dumps(v5_filtered, separators=(',', ':'))
+    v6_json = json.dumps(v6_data, separators=(',', ':'))
+    v6_2stage_json = json.dumps(v6_2stage_data, separators=(',', ':'))
+    heatmaps_json = json.dumps(heatmaps_data, separators=(',', ':'))
+    vuln_json = json.dumps(vuln_data, separators=(',', ':'))
+    adapt_json = json.dumps(adapt_data, separators=(',', ':'))
+    stadiums_json = json.dumps(stadiums, separators=(',', ':'))
 
     with open("index.html", "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 2. Inject Data Block & getTeamLogo helper into <head>
+    # 2. Inject Data Block & getTeamLogo into <head>
     data_script_block = f"""
     <script id="embedded-data-state">
         window.stadiums = {stadiums_json};
@@ -167,154 +151,280 @@ def compile_complete_bundle():
         }};
     </script>
     """
+
     if '<script id="embedded-data-state">' in html:
         pattern = r'<script id="embedded-data-state">.*?</script>'
         html = re.sub(pattern, lambda m: data_script_block.strip(), html, flags=re.DOTALL)
     else:
         html = html.replace('</head>', data_script_block + '\n</head>')
 
-    # 3. Replace Section #vulnerability-tab HTML (Unified Full Pitch Visualizer)
-    vulnerability_sec_html = """
-        <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
-        <section id="vulnerability-tab" class="content-section">
-            <div style="background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 20px; padding: 2rem; backdrop-filter: blur(16px); margin-bottom: 2rem;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(34, 197, 94, 0.1); padding-bottom: 1rem;">
-                    <div>
-                        <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; color: #fff; display: flex; align-items: center; gap: 0.6rem;">
-                            <i data-lucide="shield-alert" style="color: #ef4444;"></i> Tactical Pitch Map: Defense vs. Attack
-                        </h2>
-                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">
-                            100% Authentic shot maps & heatmaps (2021–2027). Left Half = Defensive Conceded Shots | Right Half = Attacking Scored Shots.
-                        </p>
-                    </div>
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <div>
-                            <label for="vuln-team-select" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; margin-right: 0.4rem;">Team:</label>
-                            <select id="vuln-team-select" onchange="renderTeamVulnerability(this.value, document.getElementById('vuln-season-select').value)" style="background: rgba(4, 9, 5, 0.9); color: #fff; border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                                <option value="Bayern Munich">Bayern Munich</option>
-                                <option value="Bayer Leverkusen">Bayer Leverkusen</option>
-                                <option value="Borussia Dortmund">Borussia Dortmund</option>
-                                <option value="RB Leipzig">RB Leipzig</option>
-                                <option value="VfB Stuttgart">VfB Stuttgart</option>
-                                <option value="Eintracht Frankfurt">Eintracht Frankfurt</option>
-                                <option value="SC Freiburg">SC Freiburg</option>
-                                <option value="Borussia M.Gladbach">Borussia M.Gladbach</option>
-                                <option value="Union Berlin">Union Berlin</option>
-                                <option value="Werder Bremen">Werder Bremen</option>
-                                <option value="Mainz 05">Mainz 05</option>
-                                <option value="TSG Hoffenheim">TSG Hoffenheim</option>
-                                <option value="Augsburg">Augsburg</option>
-                                <option value="FC Cologne">FC Cologne</option>
-                                <option value="Hamburger SV">Hamburger SV</option>
-                                <option value="Paderborn">Paderborn</option>
-                                <option value="Elversberg">Elversberg</option>
-                                <option value="Schalke 04">Schalke 04</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label for="vuln-season-select" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; margin-right: 0.4rem;">Season:</label>
-                            <select id="vuln-season-select" onchange="renderTeamVulnerability(document.getElementById('vuln-team-select').value, this.value)" style="background: rgba(4, 9, 5, 0.9); color: var(--accent-lime); border: 1px solid var(--accent-lime); padding: 0.5rem 1rem; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                                <option value="2026-2027" selected>2026/2027 (Current)</option>
-                                <option value="2025-2026">2025/2026 Season</option>
-                                <option value="2024-2025">2024/2025 Season</option>
-                                <option value="2023-2024">2023/2024 Season</option>
-                                <option value="2022-2023">2022/2023 Season</option>
-                                <option value="2021-2022">2021/2022 Season</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Unified Pitch Map Card -->
-                <div style="background: rgba(10, 26, 14, 0.95); border: 2px solid rgba(34, 197, 94, 0.4); border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: inset 0 0 50px rgba(0,0,0,0.8);">
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
-                        <h3 style="font-size: 1.15rem; color: #fff; display: flex; align-items: center; gap: 0.5rem; font-family: 'Space Grotesk', sans-serif;">
-                            <i data-lucide="map-pin" style="color: var(--accent-lime);"></i> Unified Full-Pitch Tactical Map (105m x 68m)
-                        </h3>
-                        
-                        <!-- Interactive Filter Controls -->
-                        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; background: rgba(0,0,0,0.4); padding: 0.4rem 0.8rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.78rem; color: #fff;">
-                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
-                                <input type="checkbox" id="chk-def-goals" checked onchange="drawUnifiedPitch()" style="accent-color: #ef4444;">
-                                <span style="width: 9px; height: 9px; background: #ef4444; border-radius: 50%; border: 1px solid #fff;"></span> Conceded Goals (Red)
-                            </label>
-                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
-                                <input type="checkbox" id="chk-def-chances" checked onchange="drawUnifiedPitch()" style="accent-color: #fb923c;">
-                                <span style="width: 9px; height: 9px; background: #fb923c; transform: rotate(45deg); border: 1px solid #fff;"></span> Conceded Chances (Orange)
-                            </label>
-                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem; margin-left: 0.4rem;">
-                                <input type="checkbox" id="chk-att-goals" checked onchange="drawUnifiedPitch()" style="accent-color: #10b981;">
-                                <span style="width: 9px; height: 9px; background: #10b981; border-radius: 50%; border: 1px solid #fff;"></span> Scored Goals (Green)
-                            </label>
-                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
-                                <input type="checkbox" id="chk-att-chances" checked onchange="drawUnifiedPitch()" style="accent-color: #06b6d4;">
-                                <span style="width: 9px; height: 9px; background: #06b6d4; transform: rotate(45deg); border: 1px solid #fff;"></span> Created Chances (Cyan)
-                            </label>
-                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem; margin-left: 0.4rem;">
-                                <input type="checkbox" id="chk-heatmap" checked onchange="drawUnifiedPitch()" style="accent-color: var(--accent-lime);">
-                                <span>Density Heatmap</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Canvas -->
-                    <div class="pitch-container" style="position: relative; width: 100%; height: 380px; background: rgba(10, 26, 14, 0.98); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 16px; overflow: hidden;">
-                        <canvas id="unified-pitch-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></canvas>
-                    </div>
-                </div>
-
-                <!-- Breakdown Cards (Defensive vs. Attacking) -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
-                    <div id="vuln-team-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 16px; padding: 1.25rem;"></div>
-                    <div id="attack-team-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 1.25rem;"></div>
-                </div>
-
-                <!-- Opponent Adaptability Leaderboard -->
-                <div style="margin-top: 2rem;">
-                    <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i data-lucide="bar-chart-3"></i> Bundesliga Opponent Adaptability Leaderboard (Dogmatic vs. Chameleon)
-                    </h3>
-                    <div style="overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
-                            <thead>
-                                <tr style="border-bottom: 1px solid rgba(34, 197, 94, 0.2); color: var(--text-secondary);">
-                                    <th style="padding: 0.75rem;">Rank</th>
-                                    <th style="padding: 0.75rem;">Team Name</th>
-                                    <th style="padding: 0.75rem;">Tactical Archetype</th>
-                                    <th style="padding: 0.75rem;">Plan Adherence ($S_{\\text{dogma}}$)</th>
-                                    <th style="padding: 0.75rem;">Opponent Exploitation Index</th>
-                                    <th style="padding: 0.75rem;">Tactical Profile</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adaptability-table-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-        </section>
+    # 3. Add Custom CSS for Pills and Mode Buttons
+    css_additions = """
+        .vuln-filter-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .vuln-filter-pill:hover {
+            color: #fff;
+            border-color: rgba(34, 197, 94, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .vuln-filter-pill.active {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--accent-lime);
+            border-color: var(--accent-green);
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.15);
+        }
+        .vuln-mode-btn {
+            padding: 0.5rem 1.15rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: all 0.2s;
+            outline: none;
+        }
     """
+    if ".vuln-filter-pill" not in html:
+        html = html.replace("</style>", css_additions + "\n    </style>")
+
+    # 4. Replace Section #vulnerability-tab HTML
+    vulnerability_sec_html = """
+    <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
+    <section id="vulnerability-tab" class="content-section">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 20px; padding: 2rem; backdrop-filter: blur(16px); margin-bottom: 2rem;">
+            
+            <!-- Header & Season/Team Controls -->
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(34, 197, 94, 0.1); padding-bottom: 1.25rem;">
+                <div>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; color: #fff; display: flex; align-items: center; gap: 0.6rem;">
+                        <i data-lucide="shield-alert" style="color: #ef4444;"></i> Tactical Pitch Map: Defense vs. Attack
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">
+                        Authentic DFL & Understat match events (2021–2027). Conceded defensive vulnerabilities vs. created attacking threats with calibrated spatial pitch mapping.
+                    </p>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                    <!-- Season Dropdown -->
+                    <div>
+                        <label for="vuln-season-select" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; margin-right: 0.4rem;">Season:</label>
+                        <select id="vuln-season-select" onchange="onVulnSeasonChange(this.value)" style="background: rgba(4, 9, 5, 0.95); color: var(--accent-lime); border: 1px solid var(--accent-lime); padding: 0.5rem 1rem; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.88rem; outline: none;">
+                            <option value="2026-2027" selected>2026/2027 (Current)</option>
+                            <option value="2025-2026">2025/2026 Season</option>
+                            <option value="2024-2025">2024/2025 Season</option>
+                            <option value="2023-2024">2023/2024 Season</option>
+                            <option value="2022-2023">2022/2023 Season</option>
+                            <option value="2021-2022">2021/2022 Season</option>
+                        </select>
+                    </div>
+
+                    <!-- Team Dropdown (Populated Dynamically) -->
+                    <div>
+                        <label for="vuln-team-select" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; margin-right: 0.4rem;">Team:</label>
+                        <select id="vuln-team-select" onchange="renderTeamVulnerability(this.value, document.getElementById('vuln-season-select').value)" style="background: rgba(4, 9, 5, 0.95); color: #fff; border: 1px solid var(--accent-green); padding: 0.5rem 1rem; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.88rem; outline: none;">
+                            <option value="Bayern Munich">Bayern Munich</option>
+                            <option value="Bayer Leverkusen">Bayer Leverkusen</option>
+                            <option value="Borussia Dortmund">Borussia Dortmund</option>
+                            <option value="RB Leipzig">RB Leipzig</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tactical Perspective & Filter Bar -->
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; background: rgba(255, 255, 255, 0.02); padding: 0.85rem 1.25rem; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.06);">
+                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                    <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; margin-right: 0.2rem;">Perspective:</span>
+                    <button id="btn-persp-unified" class="vuln-mode-btn" onclick="setTacticalPerspective('unified')" style="border: 1px solid var(--accent-green); background: rgba(34, 197, 94, 0.2); color: var(--accent-lime);">
+                        <i data-lucide="split" size="15"></i> Unified Pitch (Dual View)
+                    </button>
+                    <button id="btn-persp-def" class="vuln-mode-btn" onclick="setTacticalPerspective('defense')" style="border: 1px solid rgba(255,255,255,0.15); background: transparent; color: var(--text-secondary);">
+                        <i data-lucide="shield" size="15"></i> Defensive Vulnerability (Conceded)
+                    </button>
+                    <button id="btn-persp-off" class="vuln-mode-btn" onclick="setTacticalPerspective('offense')" style="border: 1px solid rgba(255,255,255,0.15); background: transparent; color: var(--text-secondary);">
+                        <i data-lucide="swords" size="15"></i> Attacking Threat (Created)
+                    </button>
+                </div>
+
+                <!-- Event Filter Pills -->
+                <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
+                    <span style="font-size: 0.8rem; color: var(--text-secondary); margin-right: 0.2rem;">Filter:</span>
+                    <button class="vuln-filter-pill active" onclick="setTacticalFilter('all', this)">All Actions</button>
+                    <button class="vuln-filter-pill" onclick="setTacticalFilter('goals', this)">⚽ Goals Only</button>
+                    <button class="vuln-filter-pill" onclick="setTacticalFilter('big', this)">🔶 Big Chances (xG ≥ 0.3)</button>
+                    <button class="vuln-filter-pill" onclick="setTacticalFilter('open', this)">🎯 Open Play</button>
+                    <button class="vuln-filter-pill" onclick="setTacticalFilter('setpiece', this)">🚩 Set-Pieces</button>
+                </div>
+            </div>
+
+            <!-- Pitch Visualizer Card -->
+            <div style="background: rgba(10, 26, 14, 0.95); border: 2px solid rgba(34, 197, 94, 0.4); border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: inset 0 0 50px rgba(0,0,0,0.85);">
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <h3 id="tactical-pitch-heading" style="font-size: 1.15rem; color: #fff; display: flex; align-items: center; gap: 0.5rem; font-family: 'Space Grotesk', sans-serif; margin: 0;">
+                        <i data-lucide="map-pin" style="color: var(--accent-lime);"></i> Unified Full-Pitch Tactical Map (105m x 68m)
+                    </h3>
+                    
+                    <div id="tactical-kpi-strip" style="display: flex; gap: 0.6rem; font-size: 0.78rem; font-weight: 700; align-items: center;"></div>
+                </div>
+
+                <!-- Canvas Pitch Container -->
+                <div class="pitch-container" style="position: relative; width: 100%; height: 380px; background: rgba(5, 18, 9, 0.98); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 50px rgba(0,0,0,0.85);">
+                    <canvas id="unified-pitch-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; cursor: crosshair;"></canvas>
+                    <!-- Floating Shot Tooltip -->
+                    <div id="unified-pitch-tooltip" style="position: absolute; display: none; z-index: 20; pointer-events: none; background: rgba(9, 20, 12, 0.96); border: 1px solid var(--accent-lime); padding: 0.55rem 0.85rem; border-radius: 8px; font-size: 0.76rem; color: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.7); transform: translate(-50%, -120%); backdrop-filter: blur(10px); min-width: 170px;"></div>
+                </div>
+
+                <!-- Legend & Orientation Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.85rem; font-size: 0.8rem; color: var(--text-secondary); flex-wrap: wrap; gap: 0.5rem;">
+                    <div style="display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap;">
+                        <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #ef4444; border-radius: 50%; border: 1px solid #fff;"></span> Conceded Goal</span>
+                        <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #fb923c; transform: rotate(45deg); border: 1px solid #fff;"></span> Conceded Big Chance</span>
+                        <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #10b981; border-radius: 50%; border: 1px solid #fff;"></span> Scored Goal</span>
+                        <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #38bdf8; transform: rotate(45deg); border: 1px solid #fff;"></span> Created Big Chance</span>
+                        <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 14px; height: 5px; background: rgba(239, 68, 68, 0.6); border-radius: 2px;"></span> xG Density Heatmap</span>
+                    </div>
+                    <div id="tactical-orientation-indicator" style="font-weight: 600; color: #9ca3af; font-size: 0.78rem;"></div>
+                </div>
+            </div>
+
+            <!-- Breakdown Cards (Defensive vs. Attacking) -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                <div id="vuln-team-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 16px; padding: 1.35rem; display: flex; flex-direction: column; justify-content: space-between;"></div>
+                <div id="attack-team-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 16px; padding: 1.35rem; display: flex; flex-direction: column; justify-content: space-between;"></div>
+            </div>
+
+            <!-- Opponent Adaptability Leaderboard -->
+            <div style="margin-top: 2rem; border-top: 1px solid rgba(34, 197, 94, 0.1); padding-top: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                    <h3 style="font-size: 1.2rem; color: #fff; margin: 0; display: flex; align-items: center; gap: 0.5rem; font-family: 'Space Grotesk', sans-serif;">
+                        <i data-lucide="bar-chart-3" style="color: var(--accent-lime);"></i> Bundesliga Opponent Adaptability Leaderboard (Dogmatic vs. Chameleon)
+                    </h3>
+                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Click any club to inspect their spatial shot profile</span>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid rgba(34, 197, 94, 0.2); color: var(--text-secondary);">
+                                <th style="padding: 0.75rem;">Rank</th>
+                                <th style="padding: 0.75rem;">Team Name</th>
+                                <th style="padding: 0.75rem;">Tactical Archetype</th>
+                                <th style="padding: 0.75rem;">Plan Adherence ($S_{\\text{dogma}}$)</th>
+                                <th style="padding: 0.75rem;">Opponent Exploitation Index</th>
+                                <th style="padding: 0.75rem;">Tactical Motto</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adaptability-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    """
+
     pattern_vulnerability_sec = r'<section id="vulnerability-tab".*?</section>'
     html = re.sub(pattern_vulnerability_sec, lambda m: vulnerability_sec_html.strip(), html, flags=re.DOTALL)
 
-    # 4. Replace renderTeamVulnerability & drawUnifiedPitch JS Functions
-    js_render_vuln = """
+    # 5. Master JavaScript Tactical Engine
+    js_tactical_master = """
+        window.currentTacticalPerspective = 'unified';
+        window.currentTacticalFilter = 'all';
+        window.unifiedPlottedShots = [];
+
         function resolveTeamData(teamName) {
             if (!window.team_vulnerabilities_multiseason) return null;
-            if (window.team_vulnerabilities_multiseason[teamName]) {
-                return window.team_vulnerabilities_multiseason[teamName];
-            }
+            const root = window.team_vulnerabilities_multiseason;
+            const teamsObj = root.teams || root;
+            if (teamsObj[teamName]) return teamsObj[teamName];
+            
             const norm = (teamName || '').replace('FC ', '').replace('1. ', '').replace('SV ', '').replace('VfB ', '').replace('VfL ', '').replace('TSG ', '').trim().toLowerCase();
-            for (let k in window.team_vulnerabilities_multiseason) {
+            for (let k in teamsObj) {
                 const kNorm = k.replace('FC ', '').replace('1. ', '').replace('SV ', '').replace('VfB ', '').replace('VfL ', '').replace('TSG ', '').trim().toLowerCase();
                 if (kNorm.length > 2 && (kNorm.includes(norm) || norm.includes(kNorm))) {
-                    return window.team_vulnerabilities_multiseason[k];
+                    return teamsObj[k];
                 }
             }
-            return window.team_vulnerabilities_multiseason['Bayern Munich'];
+            return teamsObj['Bayern Munich'] || Object.values(teamsObj)[0];
+        }
+
+        function updateTeamDropdown(season) {
+            const select = document.getElementById('vuln-team-select');
+            if (!select || !window.team_vulnerabilities_multiseason) return;
+            const root = window.team_vulnerabilities_multiseason;
+            const catalog = root.catalog || {};
+            const teamsObj = root.teams || root;
+            const teamsForSeason = catalog[season] || Object.keys(teamsObj).filter(t => teamsObj[t][season]);
+            
+            const currentVal = select.value;
+            select.innerHTML = '';
+            teamsForSeason.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t;
+                opt.textContent = t;
+                if (t === currentVal) opt.selected = true;
+                select.appendChild(opt);
+            });
+            if (!select.value && teamsForSeason.length > 0) {
+                select.value = teamsForSeason.includes("Bayern Munich") ? "Bayern Munich" : teamsForSeason[0];
+            }
+        }
+
+        function onVulnSeasonChange(season) {
+            updateTeamDropdown(season);
+            const team = document.getElementById('vuln-team-select').value;
+            renderTeamVulnerability(team, season);
+            populateAdaptabilityTable(season);
+        }
+
+        function setTacticalPerspective(mode) {
+            window.currentTacticalPerspective = mode;
+            const btnUni = document.getElementById('btn-persp-unified');
+            const btnDef = document.getElementById('btn-persp-def');
+            const btnOff = document.getElementById('btn-persp-off');
+            
+            [btnUni, btnDef, btnOff].forEach(b => {
+                if (b) {
+                    b.style.background = 'transparent';
+                    b.style.borderColor = 'rgba(255,255,255,0.15)';
+                    b.style.color = 'var(--text-secondary)';
+                }
+            });
+
+            if (mode === 'unified' && btnUni) {
+                btnUni.style.background = 'rgba(34, 197, 94, 0.2)';
+                btnUni.style.borderColor = 'var(--accent-green)';
+                btnUni.style.color = 'var(--accent-lime)';
+            } else if (mode === 'defense' && btnDef) {
+                btnDef.style.background = 'rgba(239, 68, 68, 0.2)';
+                btnDef.style.borderColor = '#ef4444';
+                btnDef.style.color = '#f87171';
+            } else if (mode === 'offense' && btnOff) {
+                btnOff.style.background = 'rgba(56, 189, 248, 0.2)';
+                btnOff.style.borderColor = '#38bdf8';
+                btnOff.style.color = '#38bdf8';
+            }
+
+            drawUnifiedPitch();
+        }
+
+        function setTacticalFilter(filter, btn) {
+            window.currentTacticalFilter = filter;
+            document.querySelectorAll('.vuln-filter-pill').forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            drawUnifiedPitch();
         }
 
         function renderTeamVulnerability(teamName, seasonName) {
@@ -324,101 +434,133 @@ def compile_complete_bundle():
             const seasonData = resolveTeamData(teamName);
             if (!seasonData) return;
             const data = seasonData[seasonName] || seasonData['2026-2027'] || Object.values(seasonData)[0];
-            const adapt = window.tactical_adaptability && window.tactical_adaptability.team_adaptability ? (window.tactical_adaptability.team_adaptability[teamName] || window.tactical_adaptability.team_adaptability['Bayern Munich']) : null;
+            if (!data) return;
 
+            const def = data.defense || data;
+            const off = data.offense || data;
+            const prof = data.tactical_profile || {};
 
-            // 1. Defensive Profile Card (#vuln-team-card)
-            const cardEl = document.getElementById("vuln-team-card");
-            if (cardEl) {
-                const b = data.channel_breakdown;
-                cardEl.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <div>
-                            <h4 style="font-size: 1.2rem; color: #fff; font-family: 'Space Grotesk', sans-serif;">${data.team_name} (Defensive Weaknesses)</h4>
-                            <span style="font-size: 0.8rem; color: #ef4444; font-weight: 600;">Season: ${data.season}</span>
+            // 1. Render Left Card: Defensive Weaknesses
+            const vulnCard = document.getElementById("vuln-team-card");
+            if (vulnCard) {
+                const db = def.channel_breakdown || {};
+                vulnCard.innerHTML = `
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                            <div>
+                                <h4 style="font-size: 1.25rem; color: #fff; font-family: 'Space Grotesk', sans-serif;">${data.team_name} (Defensive Weaknesses)</h4>
+                                <span style="font-size: 0.8rem; color: #ef4444; font-weight: 600;">Season: ${data.season}</span>
+                            </div>
+                            <span style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.78rem; font-weight: 700;">
+                                Weakness: ${def.primary_weakness || 'Balanced'}
+                            </span>
                         </div>
-                        <span style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                            Weakness: ${data.primary_weakness}
-                        </span>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; background: rgba(0,0,0,0.25); padding: 0.75rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.82rem;">
+                            <div><span style="color: var(--text-secondary);">Goals Conceded:</span> <strong style="color: #ef4444;">${def.conceded_goals}</strong></div>
+                            <div><span style="color: var(--text-secondary);">Shots Conceded:</span> <strong style="color: #fff;">${def.total_shots_conceded}</strong></div>
+                            <div><span style="color: var(--text-secondary);">Expected xGA:</span> <strong style="color: var(--accent-lime);">${def.xg_conceded || 'N/A'}</strong></div>
+                            <div><span style="color: var(--text-secondary);">Big Chances Conceded:</span> <strong style="color: #fb923c;">${def.big_chances_conceded}</strong></div>
+                        </div>
+
+                        <div style="margin-bottom: 0.75rem;">
+                            <div style="font-weight: 700; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.45rem;">6-Channel Conceded Vulnerabilities:</div>
+                            
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Left Flank Crosses</span><span style="font-weight: 700;">${db.left_flank_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${db.left_flank_pct}%; background: #ef4444; height: 100%;"></div></div>
+                            </div>
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Right Flank Crosses</span><span style="font-weight: 700;">${db.right_flank_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${db.right_flank_pct}%; background: #f97316; height: 100%;"></div></div>
+                            </div>
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Central Combinations</span><span style="font-weight: 700;">${db.central_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${db.central_pct}%; background: #eab308; height: 100%;"></div></div>
+                            </div>
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Set-Pieces & Standards</span><span style="font-weight: 700;">${db.set_piece_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${db.set_piece_pct}%; background: #a855f7; height: 100%;"></div></div>
+                            </div>
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Fast Counter-Attacks</span><span style="font-weight: 700;">${db.counter_attack_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${db.counter_attack_pct}%; background: #38bdf8; height: 100%;"></div></div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>High-Press Turnovers</span><span style="font-weight: 700;">${db.high_turnover_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${db.high_turnover_pct}%; background: #10b981; height: 100%;"></div></div>
+                            </div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
-                        <strong>Conceded Goals:</strong> <span style="color: #ef4444; font-weight: 700;">${data.conceded_goals}</span> &nbsp;|&nbsp; <strong>Big Chances Conceded:</strong> <span style="color: #fb923c; font-weight: 700;">${data.big_chances_conceded}</span>
-                    </p>
-                    <div style="margin-bottom: 0.8rem;">
-                        <div style="font-weight: 700; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Defensive Channel Vulnerabilities:</div>
-                        <div style="margin-bottom: 0.35rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Left Flank Crosses</span><span>${b.left_flank_pct}%</span></div>
-                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.left_flank_pct}%; background: #ef4444; height: 100%;"></div></div>
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.65rem; font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        <span>Defending Net Orientation: <strong>Left Touchline & Goal (X = 0m)</strong></span>
+                    </div>
+                `;
+            }
+
+            // 2. Render Right Card: Attacking Weapons
+            const attackCard = document.getElementById("attack-team-card");
+            if (attackCard) {
+                const ob = off.channel_breakdown || {};
+                attackCard.innerHTML = `
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                            <div>
+                                <h4 style="font-size: 1.25rem; color: #fff; font-family: 'Space Grotesk', sans-serif;">${data.team_name} (Attacking Weapons)</h4>
+                                <span style="font-size: 0.8rem; color: var(--accent-lime); font-weight: 600;">Season: ${data.season}</span>
+                            </div>
+                            <span style="background: rgba(34, 197, 94, 0.2); color: var(--accent-lime); border: 1px solid rgba(34, 197, 94, 0.4); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.78rem; font-weight: 700;">
+                                Strength: ${off.primary_strength || 'Balanced'}
+                            </span>
                         </div>
-                        <div style="margin-bottom: 0.35rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Right Flank Crosses</span><span>${b.right_flank_pct}%</span></div>
-                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.right_flank_pct}%; background: #f97316; height: 100%;"></div></div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; background: rgba(0,0,0,0.25); padding: 0.75rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.82rem;">
+                            <div><span style="color: var(--text-secondary);">Goals Scored:</span> <strong style="color: var(--accent-lime);">${off.goals_scored}</strong></div>
+                            <div><span style="color: var(--text-secondary);">Shots Created:</span> <strong style="color: #fff;">${off.total_shots_created}</strong></div>
+                            <div><span style="color: var(--text-secondary);">Expected xG:</span> <strong style="color: var(--accent-lime);">${off.xg_created || 'N/A'}</strong></div>
+                            <div><span style="color: var(--text-secondary);">Big Chances Created:</span> <strong style="color: #38bdf8;">${off.big_chances_created}</strong></div>
                         </div>
-                        <div style="margin-bottom: 0.35rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Central Through-Balls</span><span>${b.central_pct}%</span></div>
-                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.central_pct}%; background: #eab308; height: 100%;"></div></div>
-                        </div>
-                        <div style="margin-bottom: 0.35rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Set-Pieces & Standards</span><span>${b.set_piece_pct}%</span></div>
-                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.set_piece_pct}%; background: #a855f7; height: 100%;"></div></div>
-                        </div>
-                        <div style="margin-bottom: 0.35rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Fast Counter-Attacks</span><span>${b.counter_attack_pct}%</span></div>
-                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.counter_attack_pct}%; background: #38bdf8; height: 100%;"></div></div>
-                        </div>
-                        <div>
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>High-Press Turnovers</span><span>${b.high_turnover_pct}%</span></div>
-                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.high_turnover_pct}%; background: #10b981; height: 100%;"></div></div>
+
+                        <div style="margin-bottom: 0.75rem;">
+                            <div style="font-weight: 700; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.45rem;">6-Channel Attack Creation Profile:</div>
+                            
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Left Flank Crosses</span><span style="font-weight: 700;">${ob.left_flank_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ob.left_flank_pct}%; background: #ef4444; height: 100%;"></div></div>
+                            </div>
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Right Flank Crosses</span><span style="font-weight: 700;">${ob.right_flank_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ob.right_flank_pct}%; background: #f97316; height: 100%;"></div></div>
+                            </div>
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Central Combinations</span><span style="font-weight: 700;">${ob.central_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ob.central_pct}%; background: #eab308; height: 100%;"></div></div>
+                            </div>
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Set-Pieces & Standards</span><span style="font-weight: 700;">${ob.set_piece_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ob.set_piece_pct}%; background: #a855f7; height: 100%;"></div></div>
+                            </div>
+                            <div style="margin-bottom: 0.35rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Fast Counter-Attacks</span><span style="font-weight: 700;">${ob.counter_attack_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ob.counter_attack_pct}%; background: #38bdf8; height: 100%;"></div></div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>High-Press Turnovers</span><span style="font-weight: 700;">${ob.high_turnover_pct}%</span></div>
+                                <div style="background: rgba(255,255,255,0.08); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ob.high_turnover_pct}%; background: #10b981; height: 100%;"></div></div>
+                            </div>
                         </div>
                     </div>
-                    ${adapt ? `
-                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.6rem; font-size: 0.78rem;">
-                        <div style="color: var(--accent-lime); font-weight: 700;">Tactical Archetype: ${adapt.tactical_archetype}</div>
-                        <div style="color: var(--text-secondary); font-style: italic;">"${adapt.tactical_motto}"</div>
+                    ${prof.archetype ? `
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.65rem; font-size: 0.78rem; margin-top: 0.5rem;">
+                        <div style="color: var(--accent-lime); font-weight: 700;">Tactical Archetype: ${prof.archetype}</div>
+                        <div style="color: var(--text-secondary); font-style: italic;">"${prof.motto}"</div>
                     </div>` : ''}
                 `;
             }
 
-            // 2. Attacking Profile Card (#attack-team-card)
-            const attCardEl = document.getElementById("attack-team-card");
-            if (attCardEl) {
-                const ab = data.attack_breakdown || { left_attack_pct: 33, right_attack_pct: 33, central_attack_pct: 34 };
-                attCardEl.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <div>
-                            <h4 style="font-size: 1.2rem; color: #fff; font-family: 'Space Grotesk', sans-serif;">${data.team_name} (Attacking Strengths)</h4>
-                            <span style="font-size: 0.8rem; color: #10b981; font-weight: 600;">Season: ${data.season}</span>
-                        </div>
-                        <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                            Style: ${data.primary_attack_style || 'Central & Wing Buildup'}
-                        </span>
-                    </div>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
-                        <strong>Goals Scored:</strong> <span style="color: #10b981; font-weight: 700;">${data.goals_scored}</span> &nbsp;|&nbsp; <strong>Big Chances Created:</strong> <span style="color: #06b6d4; font-weight: 700;">${data.big_chances_created}</span>
-                    </p>
-                    <div style="margin-bottom: 0.8rem;">
-                        <div style="font-weight: 700; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Attacking Chance Creation Channels:</div>
-                        <div style="margin-bottom: 0.4rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Left Wing Overloads</span><span>${ab.left_attack_pct}%</span></div>
-                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ab.left_attack_pct}%; background: #34d399; height: 100%;"></div></div>
-                        </div>
-                        <div style="margin-bottom: 0.4rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Right Wing Overloads</span><span>${ab.right_attack_pct}%</span></div>
-                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ab.right_attack_pct}%; background: #38bdf8; height: 100%;"></div></div>
-                        </div>
-                        <div style="margin-bottom: 0.4rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;"><span>Central Combinations & Through-Balls</span><span>${ab.central_attack_pct}%</span></div>
-                            <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ab.central_attack_pct}%; background: #a855f7; height: 100%;"></div></div>
-                        </div>
-                    </div>
-                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.6rem; font-size: 0.78rem; color: var(--text-secondary);">
-                        <span>Primary Chance Zone: <strong>Opponent Penalty Box & Half-Spaces</strong></span>
-                    </div>
-                `;
-            }
-
-            // 3. Draw Unified Pitch Map (Single Full Pitch 105m x 68m)
+            // 3. Draw Pitch Canvas
             drawUnifiedPitch();
+            if (window.lucide) window.lucide.createIcons();
         }
 
         function drawUnifiedPitch() {
@@ -428,7 +570,54 @@ def compile_complete_bundle():
             const seasonData = resolveTeamData(teamName);
             if (!seasonData) return;
             const data = seasonData[seasonName] || seasonData['2026-2027'] || Object.values(seasonData)[0];
+            if (!data) return;
 
+            const def = data.defense || data;
+            const off = data.offense || data;
+            const mode = window.currentTacticalPerspective || 'unified';
+            const filter = window.currentTacticalFilter || 'all';
+
+            // Update Heading & Strip
+            const headEl = document.getElementById("tactical-pitch-heading");
+            const stripEl = document.getElementById("tactical-kpi-strip");
+            const orientEl = document.getElementById("tactical-orientation-indicator");
+
+            if (headEl) {
+                if (mode === 'unified') headEl.innerHTML = '<i data-lucide="map-pin" style="color: var(--accent-lime);"></i> Unified Tactical Pitch: Defense vs. Attack (105m x 68m)';
+                else if (mode === 'defense') headEl.innerHTML = '<i data-lucide="shield-alert" style="color: #ef4444;"></i> Defensive Vulnerabilities: Conceded Chances & Goals (105m x 68m)';
+                else headEl.innerHTML = '<i data-lucide="crosshair" style="color: var(--accent-lime);"></i> Attacking Weapons: Created Chances & Goals Scored (105m x 68m)';
+            }
+
+            if (stripEl) {
+                if (mode === 'unified') {
+                    stripEl.innerHTML = `
+                        <span style="background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Conceded: ${def.conceded_goals} (${def.big_chances_conceded} BC)</span>
+                        <span style="background: rgba(34, 197, 94, 0.18); color: var(--accent-lime); border: 1px solid rgba(34,197,94,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Scored: ${off.goals_scored} (${off.big_chances_created} BC)</span>
+                    `;
+                } else if (mode === 'defense') {
+                    stripEl.innerHTML = `
+                        <span style="background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Goals Conceded: ${def.conceded_goals}</span>
+                        <span style="background: rgba(251, 146, 60, 0.18); color: #fb923c; border: 1px solid rgba(251,146,60,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Big Chances: ${def.big_chances_conceded}</span>
+                        <span style="background: rgba(255,255,255,0.06); color: #9ca3af; border: 1px solid rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 6px;">xGA: ${def.xg_conceded || 'N/A'}</span>
+                    `;
+                } else {
+                    stripEl.innerHTML = `
+                        <span style="background: rgba(34, 197, 94, 0.18); color: var(--accent-lime); border: 1px solid rgba(34,197,94,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Goals Scored: ${off.goals_scored}</span>
+                        <span style="background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Big Chances: ${off.big_chances_created}</span>
+                        <span style="background: rgba(255,255,255,0.06); color: #9ca3af; border: 1px solid rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 6px;">xG: ${off.xg_created || 'N/A'}</span>
+                    `;
+                }
+            }
+
+            if (orientEl) {
+                if (mode === 'unified') {
+                    orientEl.innerHTML = '<span style="color:#f87171;">🛡️ DEFENDING (Left [X=0m])</span> &nbsp;|&nbsp; <span style="color:var(--accent-lime);">🎯 ATTACKING (Right [X=105m])</span>';
+                } else if (mode === 'defense') {
+                    orientEl.innerHTML = '<span style="color:#f87171;">🛡️ DEFENDING NET (Left [X=0m])</span> &nbsp;⬅️ Opponent Infiltration';
+                } else {
+                    orientEl.innerHTML = '<span style="color:var(--accent-lime);">🎯 TARGET NET (Right [X=105m])</span> &nbsp;➡️ Attack Trajectory';
+                }
+            }
 
             const canvas = document.getElementById("unified-pitch-canvas");
             if (!canvas) return;
@@ -441,11 +630,11 @@ def compile_complete_bundle():
             const H = canvas.height;
             ctx.clearRect(0, 0, W, H);
 
-            // Outer dark container background
-            ctx.fillStyle = "#061208";
+            // Container turf background
+            ctx.fillStyle = "#051208";
             ctx.fillRect(0, 0, W, H);
-            
-            // Calculate strict 105:68 aspect ratio pitch inside canvas with 16px margins
+
+            // Strict 105:68 aspect ratio
             const pitchRatio = 105.0 / 68.0;
             const margin = 16;
             const maxPWidth = W - margin * 2;
@@ -461,77 +650,78 @@ def compile_complete_bundle():
             const pitchX = (W - pW) / 2;
             const pitchY = (H - pH) / 2;
 
-            // Pitch Grass Background
-            ctx.fillStyle = "#0a1a0e";
+            // Grass Fill & Stripes
+            ctx.fillStyle = "#091c0f";
             ctx.fillRect(pitchX, pitchY, pW, pH);
 
-            // Pitch Grass Vertical Stripes
             const numStripes = 10;
             const stripeW = pW / numStripes;
             for (let i = 0; i < numStripes; i++) {
                 if (i % 2 === 0) {
-                    ctx.fillStyle = "rgba(255, 255, 255, 0.035)";
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.03)";
                     ctx.fillRect(pitchX + i * stripeW, pitchY, stripeW, pH);
                 }
             }
 
-            // Coordinate Mappers (Pitch m -> Canvas px)
             const mapX = (x) => pitchX + (x / 105.0) * pW;
             const mapY = (y) => pitchY + (y / 68.0) * pH;
 
-            // Layer Checkboxes
-            const showHeatmap = document.getElementById("chk-heatmap") ? document.getElementById("chk-heatmap").checked : true;
-            const showDefGoals = document.getElementById("chk-def-goals") ? document.getElementById("chk-def-goals").checked : true;
-            const showDefChances = document.getElementById("chk-def-chances") ? document.getElementById("chk-def-chances").checked : true;
-            const showAttGoals = document.getElementById("chk-att-goals") ? document.getElementById("chk-att-goals").checked : true;
-            const showAttChances = document.getElementById("chk-att-chances") ? document.getElementById("chk-att-chances").checked : true;
-
-            // 1. DENSITY HEATMAPS (DRAWN FIRST, UNDER PITCH LINES)
-            if (showHeatmap) {
-                // Defending Heatmap (Left Half: X in [0, 52.5]m)
-                const defGrid = data.def_heatmap_grid_32x32 || data.heatmap_grid_32x32;
-                if (defGrid) {
-                    const rows = defGrid.length;
-                    const cols = defGrid[0].length;
-                    const cellW = pW / rows;
-                    const cellH = pH / cols;
-                    for (let r = 0; r < rows; r++) {
-                        if (r * cellW > pW * 0.49) continue;
-                        for (let c = 0; c < cols; c++) {
-                            const val = defGrid[r][c];
-                            if (val > 0.04) {
-                                ctx.fillStyle = `rgba(239, 68, 68, ${Math.min(val * 0.65, 0.7)})`;
-                                ctx.fillRect(pitchX + r * cellW, pitchY + c * cellH, cellW + 0.5, cellH + 0.5);
-                            }
-                        }
-                    }
-                }
-
-                // Attacking Heatmap (Right Half: X in [52.5, 105]m)
-                const attGrid = data.att_heatmap_grid_32x32;
-                if (attGrid) {
-                    const rows = attGrid.length;
-                    const cols = attGrid[0].length;
-                    const cellW = pW / rows;
-                    const cellH = pH / cols;
-                    for (let r = 0; r < rows; r++) {
-                        if (r * cellW < pW * 0.51) continue;
-                        for (let c = 0; c < cols; c++) {
-                            const val = attGrid[r][c];
-                            if (val > 0.04) {
-                                ctx.fillStyle = `rgba(16, 185, 129, ${Math.min(val * 0.65, 0.7)})`;
-                                ctx.fillRect(pitchX + r * cellW, pitchY + c * cellH, cellW + 0.5, cellH + 0.5);
-                            }
-                        }
-                    }
-                }
+            function shotPassesFilter(sh) {
+                const isGoal = Array.isArray(sh) ? sh[3] === 1 : (sh.is_goal || false);
+                const xg = Array.isArray(sh) ? sh[2] : (sh.xg || 0);
+                const sit = Array.isArray(sh) ? sh[7] : (sh.situation || 'OpenPlay');
+                if (filter === 'goals') return isGoal;
+                if (filter === 'big') return xg >= 0.30;
+                if (filter === 'open') return sit === 'OpenPlay';
+                if (filter === 'setpiece') return sit !== 'OpenPlay';
+                return true;
             }
 
-            // 2. PITCH LINES & MARKINGS (DRAWN SECOND, ON TOP OF HEATMAPS)
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
-            ctx.lineWidth = 1.8;
+            const defShots = (def.shots || []).filter(shotPassesFilter);
+            const offShots = (off.shots || []).filter(shotPassesFilter);
 
-            // Pitch Outer Boundary Line
+            // 1. Density Heatmaps (Radial Gaussian Glows under pitch lines)
+            if (mode === 'unified' || mode === 'defense') {
+                defShots.forEach(sh => {
+                    const sx = Array.isArray(sh) ? sh[0] : sh.x;
+                    const sy = Array.isArray(sh) ? sh[1] : sh.y;
+                    const xg = Array.isArray(sh) ? sh[2] : sh.xg;
+                    const px = mapX(sx);
+                    const py = mapY(sy);
+                    const radius = Math.min(36, Math.max(16, xg * 50));
+                    const grad = ctx.createRadialGradient(px, py, 0, px, py, radius);
+                    grad.addColorStop(0, `rgba(239, 68, 68, ${Math.min(0.48, xg * 0.85)})`);
+                    grad.addColorStop(1, 'rgba(239, 68, 68, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(px, py, radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            }
+
+            if (mode === 'unified' || mode === 'offense') {
+                offShots.forEach(sh => {
+                    const sx = Array.isArray(sh) ? sh[0] : sh.x;
+                    const sy = Array.isArray(sh) ? sh[1] : sh.y;
+                    const xg = Array.isArray(sh) ? sh[2] : sh.xg;
+                    const px = mapX(sx);
+                    const py = mapY(sy);
+                    const radius = Math.min(36, Math.max(16, xg * 50));
+                    const grad = ctx.createRadialGradient(px, py, 0, px, py, radius);
+                    grad.addColorStop(0, `rgba(34, 197, 94, ${Math.min(0.48, xg * 0.85)})`);
+                    grad.addColorStop(1, 'rgba(34, 197, 94, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(px, py, radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            }
+
+            // 2. Pitch Geometry Markings
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.45)";
+            ctx.lineWidth = 1.6;
+
+            // Boundary
             ctx.strokeRect(pitchX, pitchY, pW, pH);
 
             // Halfway Line
@@ -540,7 +730,7 @@ def compile_complete_bundle():
             ctx.lineTo(mapX(52.5), pitchY + pH);
             ctx.stroke();
 
-            // Center Circle & Spot (Radius 9.15m at (52.5, 34.0))
+            // Center Circle & Spot
             ctx.beginPath();
             ctx.arc(mapX(52.5), mapY(34.0), (9.15 / 68.0) * pH, 0, 2 * Math.PI);
             ctx.stroke();
@@ -549,168 +739,265 @@ def compile_complete_bundle():
             ctx.arc(mapX(52.5), mapY(34.0), 2.5, 0, 2 * Math.PI);
             ctx.fill();
 
-            // Penalty Areas (18-yard box: 16.5m length, 40.32m width)
-            // Left Penalty Box (X: 0 -> 16.5m, Y: 13.84 -> 54.16m)
+            // 18-Yard Boxes
             ctx.strokeRect(mapX(0), mapY(13.84), mapX(16.5) - mapX(0), mapY(54.16) - mapY(13.84));
-            // Right Penalty Box (X: 88.5 -> 105m, Y: 13.84 -> 54.16m)
             ctx.strokeRect(mapX(88.5), mapY(13.84), mapX(105) - mapX(88.5), mapY(54.16) - mapY(13.84));
 
-            // Goal Areas (6-yard box: 5.5m length, 18.32m width)
-            // Left Goal Box (X: 0 -> 5.5m, Y: 24.84 -> 43.16m)
+            // 6-Yard Boxes
             ctx.strokeRect(mapX(0), mapY(24.84), mapX(5.5) - mapX(0), mapY(43.16) - mapY(24.84));
-            // Right Goal Box (X: 99.5 -> 105m, Y: 24.84 -> 43.16m)
             ctx.strokeRect(mapX(99.5), mapY(24.84), mapX(105) - mapX(99.5), mapY(43.16) - mapY(24.84));
 
-            // Penalty Spots (11m from goal line, Y = 34.0m)
-            // Left Penalty Spot (11.0, 34.0)
+            // Penalty Spots
             ctx.fillStyle = "#ffffff";
-            ctx.beginPath();
-            ctx.arc(mapX(11.0), mapY(34.0), 2.5, 0, 2 * Math.PI);
-            ctx.fill();
-            // Right Penalty Spot (94.0, 34.0)
-            ctx.beginPath();
-            ctx.arc(mapX(94.0), mapY(34.0), 2.5, 0, 2 * Math.PI);
-            ctx.fill();
+            ctx.beginPath(); ctx.arc(mapX(11.0), mapY(34.0), 2.5, 0, 2 * Math.PI); ctx.fill();
+            ctx.beginPath(); ctx.arc(mapX(94.0), mapY(34.0), 2.5, 0, 2 * Math.PI); ctx.fill();
 
-            // Penalty Arcs (D-arcs: Radius 9.15m centered at penalty spots, drawn outside 18-yard box)
-            // cos(alpha) = 5.5 / 9.15 => alpha = acos(5.5 / 9.15)
+            // Penalty D-Arcs
             const dAlpha = Math.acos(5.5 / 9.15);
             const dRadius = (9.15 / 68.0) * pH;
-            // Left D-arc (X > 16.5m)
-            ctx.beginPath();
-            ctx.arc(mapX(11.0), mapY(34.0), dRadius, -dAlpha, dAlpha);
-            ctx.stroke();
-            // Right D-arc (X < 88.5m)
-            ctx.beginPath();
-            ctx.arc(mapX(94.0), mapY(34.0), dRadius, Math.PI - dAlpha, Math.PI + dAlpha);
-            ctx.stroke();
+            ctx.beginPath(); ctx.arc(mapX(11.0), mapY(34.0), dRadius, -dAlpha, dAlpha); ctx.stroke();
+            ctx.beginPath(); ctx.arc(mapX(94.0), mapY(34.0), dRadius, Math.PI - dAlpha, Math.PI + dAlpha); ctx.stroke();
 
-            // Corner Arcs (Radius 1.0m at 4 corners)
-            const cRadius = (1.0 / 68.0) * pH;
-            // Top-Left (0, 0)
-            ctx.beginPath();
-            ctx.arc(mapX(0), mapY(0), cRadius, 0, Math.PI / 2);
-            ctx.stroke();
-            // Bottom-Left (0, 68)
-            ctx.beginPath();
-            ctx.arc(mapX(0), mapY(68), cRadius, 1.5 * Math.PI, 2 * Math.PI);
-            ctx.stroke();
-            // Top-Right (105, 0)
-            ctx.beginPath();
-            ctx.arc(mapX(105), mapY(0), cRadius, Math.PI / 2, Math.PI);
-            ctx.stroke();
-            // Bottom-Right (105, 68)
-            ctx.beginPath();
-            ctx.arc(mapX(105), mapY(68), cRadius, Math.PI, 1.5 * Math.PI);
-            ctx.stroke();
-
-            // Goal Posts & Nets (Width 7.32m, Y in [30.34, 37.66]m)
+            // Goal Posts & Nets
             const goalH = mapY(37.66) - mapY(30.34);
             const goalY = mapY(30.34);
-            const netDepth = 7;
-            // Left Goal Net (Defending, Conceded)
+            const netD = 7;
+
+            // Defending Goal (Left)
             ctx.fillStyle = "rgba(239, 68, 68, 0.4)";
-            ctx.fillRect(pitchX - netDepth, goalY, netDepth, goalH);
+            ctx.fillRect(pitchX - netD, goalY, netD, goalH);
             ctx.strokeStyle = "#ef4444";
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(pitchX - netDepth, goalY, netDepth, goalH);
+            ctx.strokeRect(pitchX - netD, goalY, netD, goalH);
 
-            // Right Goal Net (Attacking, Scored)
-            ctx.fillStyle = "rgba(16, 185, 129, 0.4)";
-            ctx.fillRect(pitchX + pW, goalY, netDepth, goalH);
-            ctx.strokeStyle = "#10b981";
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(pitchX + pW, goalY, netDepth, goalH);
+            // Attacking Goal (Right)
+            ctx.fillStyle = "rgba(34, 197, 94, 0.4)";
+            ctx.fillRect(pitchX + pW, goalY, netD, goalH);
+            ctx.strokeStyle = "var(--accent-lime)";
+            ctx.strokeRect(pitchX + pW, goalY, netD, goalH);
 
-            // 3. SHOT EVENT MARKERS (DRAWN THIRD, ON TOP OF PITCH LINES)
-            // Defensive Shots (Left Half)
-            if (showDefGoals && data.def_goal_coords_x && data.def_goal_coords_y) {
-                for (let i = 0; i < data.def_goal_coords_x.length; i++) {
-                    const px = mapX(data.def_goal_coords_x[i]);
-                    const py = mapY(data.def_goal_coords_y[i]);
-                    ctx.beginPath();
-                    ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
-                    ctx.fillStyle = "#ef4444";
-                    ctx.fill();
-                    ctx.lineWidth = 1.5;
-                    ctx.strokeStyle = "#ffffff";
-                    ctx.stroke();
-                }
-            }
-            if (showDefChances && data.def_chance_coords_x && data.def_chance_coords_y) {
-                for (let i = 0; i < data.def_chance_coords_x.length; i++) {
-                    const px = mapX(data.def_chance_coords_x[i]);
-                    const py = mapY(data.def_chance_coords_y[i]);
-                    ctx.fillStyle = "#fb923c";
-                    ctx.fillRect(px - 3.5, py - 3.5, 7, 7);
-                    ctx.lineWidth = 1.2;
-                    ctx.strokeStyle = "#ffffff";
-                    ctx.strokeRect(px - 3.5, py - 3.5, 7, 7);
-                }
-            }
+            // 3. Precise Shot Markers & Live Tooltip Cache
+            window.unifiedPlottedShots = [];
 
-            // Attacking Shots (Right Half)
-            if (showAttGoals && data.att_goal_coords_x && data.att_goal_coords_y) {
-                for (let i = 0; i < data.att_goal_coords_x.length; i++) {
-                    const px = mapX(data.att_goal_coords_x[i]);
-                    const py = mapY(data.att_goal_coords_y[i]);
-                    ctx.beginPath();
-                    ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
-                    ctx.fillStyle = "#10b981";
-                    ctx.fill();
-                    ctx.lineWidth = 1.5;
-                    ctx.strokeStyle = "#ffffff";
-                    ctx.stroke();
-                }
-            }
-            if (showAttChances && data.att_chance_coords_x && data.att_chance_coords_y) {
-                for (let i = 0; i < data.att_chance_coords_x.length; i++) {
-                    const px = mapX(data.att_chance_coords_x[i]);
-                    const py = mapY(data.att_chance_coords_y[i]);
-                    ctx.fillStyle = "#06b6d4";
-                    ctx.fillRect(px - 3.5, py - 3.5, 7, 7);
-                    ctx.lineWidth = 1.2;
-                    ctx.strokeStyle = "#ffffff";
-                    ctx.strokeRect(px - 3.5, py - 3.5, 7, 7);
-                }
+            if (mode === 'unified' || mode === 'defense') {
+                defShots.forEach(sh => {
+                    const sx = Array.isArray(sh) ? sh[0] : sh.x;
+                    const sy = Array.isArray(sh) ? sh[1] : sh.y;
+                    const xg = Array.isArray(sh) ? sh[2] : sh.xg;
+                    const isGoal = Array.isArray(sh) ? sh[3] === 1 : sh.is_goal;
+
+                    const px = mapX(sx);
+                    const py = mapY(sy);
+                    window.unifiedPlottedShots.push({ px, py, raw: sh, isDef: true });
+
+                    if (isGoal) {
+                        ctx.beginPath();
+                        ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
+                        ctx.fillStyle = "#ef4444";
+                        ctx.fill();
+                        ctx.lineWidth = 1.6;
+                        ctx.strokeStyle = "#ffffff";
+                        ctx.stroke();
+                        ctx.beginPath(); ctx.arc(px, py, 2, 0, 2 * Math.PI); ctx.fillStyle = "#ffffff"; ctx.fill();
+                    } else if (xg >= 0.30) {
+                        ctx.fillStyle = "#fb923c";
+                        ctx.beginPath();
+                        ctx.moveTo(px, py - 4.5); ctx.lineTo(px + 4.5, py); ctx.lineTo(px, py + 4.5); ctx.lineTo(px - 4.5, py);
+                        ctx.closePath(); ctx.fill();
+                        ctx.lineWidth = 1.2; ctx.strokeStyle = "#ffffff"; ctx.stroke();
+                    } else {
+                        const r = Math.min(4, Math.max(2.5, xg * 14));
+                        ctx.beginPath(); ctx.arc(px, py, r, 0, 2 * Math.PI);
+                        ctx.fillStyle = "#38bdf8"; ctx.fill();
+                        ctx.lineWidth = 0.8; ctx.strokeStyle = "rgba(255,255,255,0.7)"; ctx.stroke();
+                    }
+                });
             }
 
-            // 4. TEXT LABELS & ANNOTATIONS (TOPMOST LAYER)
+            if (mode === 'unified' || mode === 'offense') {
+                offShots.forEach(sh => {
+                    const sx = Array.isArray(sh) ? sh[0] : sh.x;
+                    const sy = Array.isArray(sh) ? sh[1] : sh.y;
+                    const xg = Array.isArray(sh) ? sh[2] : sh.xg;
+                    const isGoal = Array.isArray(sh) ? sh[3] === 1 : sh.is_goal;
+
+                    const px = mapX(sx);
+                    const py = mapY(sy);
+                    window.unifiedPlottedShots.push({ px, py, raw: sh, isDef: false });
+
+                    if (isGoal) {
+                        ctx.beginPath();
+                        ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
+                        ctx.fillStyle = "#10b981";
+                        ctx.fill();
+                        ctx.lineWidth = 1.6;
+                        ctx.strokeStyle = "#ffffff";
+                        ctx.stroke();
+                        ctx.beginPath(); ctx.arc(px, py, 2, 0, 2 * Math.PI); ctx.fillStyle = "#ffffff"; ctx.fill();
+                    } else if (xg >= 0.30) {
+                        ctx.fillStyle = "#38bdf8";
+                        ctx.beginPath();
+                        ctx.moveTo(px, py - 4.5); ctx.lineTo(px + 4.5, py); ctx.lineTo(px, py + 4.5); ctx.lineTo(px - 4.5, py);
+                        ctx.closePath(); ctx.fill();
+                        ctx.lineWidth = 1.2; ctx.strokeStyle = "#ffffff"; ctx.stroke();
+                    } else {
+                        const r = Math.min(4, Math.max(2.5, xg * 14));
+                        ctx.beginPath(); ctx.arc(px, py, r, 0, 2 * Math.PI);
+                        ctx.fillStyle = "#4ade80"; ctx.fill();
+                        ctx.lineWidth = 0.8; ctx.strokeStyle = "rgba(255,255,255,0.7)"; ctx.stroke();
+                    }
+                });
+            }
+
+            // 4. Goal Orientation Text Labels
             ctx.font = "700 10px 'Space Grotesk', sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
 
-            // Left Goal Text Label
-            ctx.fillStyle = "#ef4444";
-            ctx.fillText("DEFENDING GOAL", mapX(6.0), mapY(34.0));
+            if (mode === 'unified' || mode === 'defense') {
+                ctx.fillStyle = "#ef4444";
+                ctx.fillText("DEFENDING GOAL", mapX(6.0), mapY(34.0));
+            }
+            if (mode === 'unified' || mode === 'offense') {
+                ctx.fillStyle = "var(--accent-lime)";
+                ctx.fillText("TARGET GOAL", mapX(99.0), mapY(34.0));
+            }
 
-            // Right Goal Text Label
-            ctx.fillStyle = "#10b981";
-            ctx.fillText("ATTACKING GOAL", mapX(99.0), mapY(34.0));
+            setupPitchTooltipEvents();
+        }
 
-            // Zone Titles
-            ctx.font = "600 11px 'Space Grotesk', sans-serif";
-            ctx.fillStyle = "rgba(239, 68, 68, 0.9)";
-            ctx.fillText("DEFENSIVE ZONE (Conceded Shots)", mapX(26.25), pitchY + 14);
+        function setupPitchTooltipEvents() {
+            const canvas = document.getElementById("unified-pitch-canvas");
+            const tooltip = document.getElementById("unified-pitch-tooltip");
+            if (!canvas || !tooltip || canvas.dataset.tooltipBound) return;
+            canvas.dataset.tooltipBound = "true";
 
-            ctx.fillStyle = "rgba(16, 185, 129, 0.9)";
-            ctx.fillText("ATTACKING ZONE (Scored Shots)", mapX(78.75), pitchY + 14);
+            canvas.addEventListener("mousemove", (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const mx = e.clientX - rect.left;
+                const my = e.clientY - rect.top;
 
-            // Pitch Scale Info
-            ctx.font = "500 9px 'Outfit', sans-serif";
-            ctx.fillStyle = "rgba(255, 255, 255, 0.45)";
-            ctx.fillText("Standard Pitch Geometry: 105m x 68m", mapX(52.5), pitchY + pH - 10);
+                let closest = null;
+                let minDist = 14;
+
+                (window.unifiedPlottedShots || []).forEach(pt => {
+                    const dist = Math.hypot(pt.px - mx, pt.py - my);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        closest = pt;
+                    }
+                });
+
+                if (closest) {
+                    const sh = closest.raw;
+                    const isGoal = Array.isArray(sh) ? sh[3] === 1 : (sh.is_goal || false);
+                    const xg = Array.isArray(sh) ? sh[2] : (sh.xg || 0);
+                    const min = Array.isArray(sh) ? sh[4] : (sh.minute || 0);
+                    const player = Array.isArray(sh) ? sh[5] : (sh.player || 'Player');
+                    const opp = Array.isArray(sh) ? sh[6] : (sh.opponent || 'Opponent');
+                    const sit = Array.isArray(sh) ? sh[7] : (sh.situation || 'OpenPlay');
+                    const act = Array.isArray(sh) ? sh[8] : (sh.last_action || 'Action');
+                    const ch = Array.isArray(sh) ? sh[9] : (sh.channel || 'Channel');
+
+                    const tag = isGoal ? '<span style="color:#ef4444; font-weight:800;">⚽ GOAL</span>' : (xg >= 0.3 ? '<span style="color:#fb923c; font-weight:700;">🔶 Big Chance</span>' : '<span style="color:#38bdf8;">Shot</span>');
+
+                    tooltip.style.display = "block";
+                    tooltip.style.left = closest.px + "px";
+                    tooltip.style.top = closest.py + "px";
+                    tooltip.innerHTML = `
+                        <div style="font-weight:700; margin-bottom:0.25rem; display:flex; justify-content:space-between; gap:0.6rem;">
+                            <span>${player} (${min}')</span>
+                            <span>${tag}</span>
+                        </div>
+                        <div style="color:var(--text-secondary); font-size:0.73rem; line-height:1.35;">
+                            <div><strong>xG:</strong> <span style="color:var(--accent-lime);">${xg}</span> &nbsp;|&nbsp; <strong>${sit}</strong> (${act})</div>
+                            <div><strong>Channel:</strong> ${ch} &nbsp;|&nbsp; <strong>vs</strong> ${opp}</div>
+                        </div>
+                    `;
+                } else {
+                    tooltip.style.display = "none";
+                }
+            });
+
+            canvas.addEventListener("mouseleave", () => {
+                tooltip.style.display = "none";
+            });
+        }
+
+        function populateAdaptabilityTable(seasonName) {
+            const tbody = document.getElementById("adaptability-table-body");
+            if (!tbody || !window.team_vulnerabilities_multiseason) return;
+            seasonName = seasonName || (document.getElementById('vuln-season-select') ? document.getElementById('vuln-season-select').value : '2026-2027');
+            
+            const root = window.team_vulnerabilities_multiseason;
+            const teamsObj = root.teams || root;
+            
+            const list = [];
+            Object.keys(teamsObj).forEach(t => {
+                const sData = teamsObj[t][seasonName];
+                if (sData && sData.tactical_profile) {
+                    list.push({
+                        team_name: t,
+                        archetype: sData.tactical_profile.archetype || "Tactical Chameleon",
+                        plan_adherence: sData.tactical_profile.plan_adherence_score || 80.0,
+                        exploitation: sData.tactical_profile.opponent_exploitation_index || 80.0,
+                        motto: sData.tactical_profile.motto || "Dynamic adaptability."
+                    });
+                }
+            });
+
+            list.sort((a, b) => b.exploitation - a.exploitation);
+            
+            let html = "";
+            list.forEach((t, i) => {
+                const badgeColor = t.archetype.includes("Dominator") ? "var(--accent-lime)" : (t.archetype.includes("Infiltrator") ? "#ef4444" : (t.archetype.includes("Specialist") ? "#c084fc" : "#38bdf8"));
+                html += `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer;" onclick="renderTeamVulnerability('${t.team_name}', '${seasonName}'); document.getElementById('vuln-team-select').value='${t.team_name}'; window.scrollTo({top: document.getElementById('vulnerability-tab').offsetTop - 60, behavior: 'smooth'});">
+                        <td style="padding: 0.7rem; font-weight: 700; color: var(--text-secondary);">#${i+1}</td>
+                        <td style="padding: 0.7rem; font-weight: 600; color: #fff;">${t.team_name}</td>
+                        <td style="padding: 0.7rem;"><span style="color: ${badgeColor}; font-weight: 700; font-size: 0.82rem;">${t.archetype}</span></td>
+                        <td style="padding: 0.7rem; color: #9ca3af;">${t.plan_adherence}%</td>
+                        <td style="padding: 0.7rem; color: var(--accent-lime); font-weight: 800;">${t.exploitation}%</td>
+                        <td style="padding: 0.7rem; color: var(--text-secondary); font-size: 0.78rem;">${t.motto}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
         }
 
         window.addEventListener('resize', function() {
-            if (document.getElementById('unified-pitch-canvas')) {
+            const vulnTab = document.getElementById('vulnerability-tab');
+            if (vulnTab && vulnTab.classList.contains('active')) {
                 drawUnifiedPitch();
             }
         });
     """
-    pattern_render_vuln = r"function renderTeamVulnerability\(\s*teamName,\s*seasonName\s*\)\s*\{.*?\n        \}"
-    html = re.sub(pattern_render_vuln, lambda m: js_render_vuln.strip(), html, flags=re.DOTALL)
 
+    pattern_render_vuln = r"function resolveTeamData\(.*?\n        \}\n    "
+    if re.search(pattern_render_vuln, html, flags=re.DOTALL):
+        html = re.sub(pattern_render_vuln, lambda m: js_tactical_master.strip() + "\n    ", html, flags=re.DOTALL)
+    else:
+        # Fallback to replacing renderTeamVulnerability
+        pattern_func = r"function renderTeamVulnerability\(\s*teamName,\s*seasonName\s*\)\s*\{.*?\n        \}"
+        if re.search(pattern_func, html, flags=re.DOTALL):
+            html = re.sub(pattern_func, lambda m: js_tactical_master.strip(), html, flags=re.DOTALL)
+        else:
+            html = html.replace("function drawUnifiedPitch", js_tactical_master.strip() + "\n        function drawUnifiedPitch")
+
+    # 6. Ensure switchTab triggers tactical pitch update
+    switch_trigger = "if (tabId === 'vulnerability') { updateTeamDropdown(document.getElementById('vuln-season-select').value); renderTeamVulnerability(); populateAdaptabilityTable(); }"
+    if "if (tabId === 'vulnerability')" in html:
+        pattern_switch = r"if \(tabId === 'vulnerability'\) \{.*?\}"
+        html = re.sub(pattern_switch, lambda m: switch_trigger, html, flags=re.DOTALL)
+
+    # 7. Ensure DOMContentLoaded initializes tactical engine
+    if "updateTeamDropdown('2026-2027')" not in html:
+        dom_pattern = r'window\.addEventListener\("DOMContentLoaded",\s*\(\)\s*=>\s*\{'
+        dom_replacement = """window.addEventListener("DOMContentLoaded", () => {
+            updateTeamDropdown('2026-2027');
+            populateAdaptabilityTable('2026-2027');"""
+        html = re.sub(dom_pattern, dom_replacement, html)
+
+    # 8. Write to index.html and web_dashboard/index.html
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
         
@@ -718,8 +1005,7 @@ def compile_complete_bundle():
         with open("web_dashboard/index.html", "w", encoding="utf-8") as f:
             f.write(html)
             
-    print("SUCCESS: Senior Engineer Master Bundle V5 compiled into index.html & web_dashboard/index.html!")
+    print("SUCCESS: Senior Engineer Master Bundle V6 compiled into index.html & web_dashboard/index.html!")
 
 if __name__ == "__main__":
     compile_complete_bundle()
-
