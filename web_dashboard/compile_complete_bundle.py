@@ -144,6 +144,7 @@ def compile_complete_bundle():
         window.predictions_v6_2stage = {v6_2stage_json};
         window.predicted_fixture_heatmaps = {heatmaps_json};
         window.team_vulnerabilities_multiseason = {vuln_json};
+        window.real_bundesliga_match_events = {vuln_json};
         window.tactical_adaptability = {adapt_json};
 
         window.getTeamLogo = function(teamName) {{
