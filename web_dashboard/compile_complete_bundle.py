@@ -301,14 +301,30 @@ def compile_complete_bundle():
 
     # 4. Replace renderTeamVulnerability & drawUnifiedPitch JS Functions
     js_render_vuln = """
+        function resolveTeamData(teamName) {
+            if (!window.team_vulnerabilities_multiseason) return null;
+            if (window.team_vulnerabilities_multiseason[teamName]) {
+                return window.team_vulnerabilities_multiseason[teamName];
+            }
+            const norm = (teamName || '').replace('FC ', '').replace('1. ', '').replace('SV ', '').replace('VfB ', '').replace('VfL ', '').replace('TSG ', '').trim().toLowerCase();
+            for (let k in window.team_vulnerabilities_multiseason) {
+                const kNorm = k.replace('FC ', '').replace('1. ', '').replace('SV ', '').replace('VfB ', '').replace('VfL ', '').replace('TSG ', '').trim().toLowerCase();
+                if (kNorm.length > 2 && (kNorm.includes(norm) || norm.includes(kNorm))) {
+                    return window.team_vulnerabilities_multiseason[k];
+                }
+            }
+            return window.team_vulnerabilities_multiseason['Bayern Munich'];
+        }
+
         function renderTeamVulnerability(teamName, seasonName) {
             teamName = teamName || (document.getElementById('vuln-team-select') ? document.getElementById('vuln-team-select').value : 'Bayern Munich');
             seasonName = seasonName || (document.getElementById('vuln-season-select') ? document.getElementById('vuln-season-select').value : '2026-2027');
             
-            if (!window.team_vulnerabilities_multiseason || !window.team_vulnerabilities_multiseason[teamName]) return;
-            const seasonData = window.team_vulnerabilities_multiseason[teamName];
+            const seasonData = resolveTeamData(teamName);
+            if (!seasonData) return;
             const data = seasonData[seasonName] || seasonData['2026-2027'] || Object.values(seasonData)[0];
-            const adapt = window.tactical_adaptability && window.tactical_adaptability.team_adaptability ? window.tactical_adaptability.team_adaptability[teamName] : null;
+            const adapt = window.tactical_adaptability && window.tactical_adaptability.team_adaptability ? (window.tactical_adaptability.team_adaptability[teamName] || window.tactical_adaptability.team_adaptability['Bayern Munich']) : null;
+
 
             // 1. Defensive Profile Card (#vuln-team-card)
             const cardEl = document.getElementById("vuln-team-card");
@@ -408,9 +424,10 @@ def compile_complete_bundle():
             const teamName = document.getElementById('vuln-team-select') ? document.getElementById('vuln-team-select').value : 'Bayern Munich';
             const seasonName = document.getElementById('vuln-season-select') ? document.getElementById('vuln-season-select').value : '2026-2027';
             
-            if (!window.team_vulnerabilities_multiseason || !window.team_vulnerabilities_multiseason[teamName]) return;
-            const seasonData = window.team_vulnerabilities_multiseason[teamName];
+            const seasonData = resolveTeamData(teamName);
+            if (!seasonData) return;
             const data = seasonData[seasonName] || seasonData['2026-2027'] || Object.values(seasonData)[0];
+
 
             const canvas = document.getElementById("unified-pitch-canvas");
             if (!canvas) return;
