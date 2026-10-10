@@ -686,7 +686,8 @@ def compile_complete_bundle():
                     const sx = Array.isArray(sh) ? sh[0] : sh.x;
                     const sy = Array.isArray(sh) ? sh[1] : sh.y;
                     const xg = Array.isArray(sh) ? sh[2] : sh.xg;
-                    const px = mapX(sx);
+                    const sx_draw = (mode === 'unified') ? Math.min(51.5, sx) : sx;
+                    const px = mapX(sx_draw);
                     const py = mapY(sy);
                     const radius = Math.min(36, Math.max(16, xg * 50));
                     const grad = ctx.createRadialGradient(px, py, 0, px, py, radius);
@@ -704,7 +705,8 @@ def compile_complete_bundle():
                     const sx = Array.isArray(sh) ? sh[0] : sh.x;
                     const sy = Array.isArray(sh) ? sh[1] : sh.y;
                     const xg = Array.isArray(sh) ? sh[2] : sh.xg;
-                    const px = mapX(sx);
+                    const sx_draw = (mode === 'unified') ? Math.max(53.5, sx) : sx;
+                    const px = mapX(sx_draw);
                     const py = mapY(sy);
                     const radius = Math.min(36, Math.max(16, xg * 50));
                     const grad = ctx.createRadialGradient(px, py, 0, px, py, radius);
@@ -747,7 +749,7 @@ def compile_complete_bundle():
             ctx.strokeRect(mapX(0), mapY(24.84), mapX(5.5) - mapX(0), mapY(43.16) - mapY(24.84));
             ctx.strokeRect(mapX(99.5), mapY(24.84), mapX(105) - mapX(99.5), mapY(43.16) - mapY(24.84));
 
-            // Penalty Spots
+            // Penalty Spots (Exactly 11.0m from each goal line)
             ctx.fillStyle = "#ffffff";
             ctx.beginPath(); ctx.arc(mapX(11.0), mapY(34.0), 2.5, 0, 2 * Math.PI); ctx.fill();
             ctx.beginPath(); ctx.arc(mapX(94.0), mapY(34.0), 2.5, 0, 2 * Math.PI); ctx.fill();
@@ -785,7 +787,8 @@ def compile_complete_bundle():
                     const xg = Array.isArray(sh) ? sh[2] : sh.xg;
                     const isGoal = Array.isArray(sh) ? sh[3] === 1 : sh.is_goal;
 
-                    const px = mapX(sx);
+                    const sx_draw = (mode === 'unified') ? Math.min(51.5, sx) : sx;
+                    const px = mapX(sx_draw);
                     const py = mapY(sy);
                     window.unifiedPlottedShots.push({ px, py, raw: sh, isDef: true });
 
@@ -820,7 +823,8 @@ def compile_complete_bundle():
                     const xg = Array.isArray(sh) ? sh[2] : sh.xg;
                     const isGoal = Array.isArray(sh) ? sh[3] === 1 : sh.is_goal;
 
-                    const px = mapX(sx);
+                    const sx_draw = (mode === 'unified') ? Math.max(53.5, sx) : sx;
+                    const px = mapX(sx_draw);
                     const py = mapY(sy);
                     window.unifiedPlottedShots.push({ px, py, raw: sh, isDef: false });
 
@@ -898,7 +902,27 @@ def compile_complete_bundle():
                     const act = Array.isArray(sh) ? sh[8] : (sh.last_action || 'Action');
                     const ch = Array.isArray(sh) ? sh[9] : (sh.channel || 'Channel');
 
-                    const tag = isGoal ? '<span style="color:#ef4444; font-weight:800;">⚽ GOAL</span>' : (xg >= 0.3 ? '<span style="color:#fb923c; font-weight:700;">🔶 Big Chance</span>' : '<span style="color:#38bdf8;">Shot</span>');
+                    let tag = '';
+                    const isOG = String(player).includes('(OG)');
+                    if (isGoal) {
+                        if (isOG) {
+                            tag = closest.isDef ? 
+                                '<span style="color:#ef4444; font-weight:800;">⚽ GOAL (Own Goal Conceded)</span>' :
+                                '<span style="color:#10b981; font-weight:800;">⚽ GOAL (Opponent Own Goal)</span>';
+                        } else {
+                            tag = closest.isDef ?
+                                '<span style="color:#ef4444; font-weight:800;">⚽ GOAL (Conceded)</span>' :
+                                '<span style="color:#10b981; font-weight:800;">⚽ GOAL (Scored)</span>';
+                        }
+                    } else if (xg >= 0.3) {
+                        tag = closest.isDef ?
+                            '<span style="color:#fb923c; font-weight:700;">🔶 Big Chance Conceded</span>' :
+                            '<span style="color:#38bdf8; font-weight:700;">🔶 Big Chance Created</span>';
+                    } else {
+                        tag = closest.isDef ?
+                            '<span style="color:#94a3b8;">Conceded Shot</span>' :
+                            '<span style="color:#94a3b8;">Created Shot</span>';
+                    }
 
                     tooltip.style.display = "block";
                     tooltip.style.left = closest.px + "px";

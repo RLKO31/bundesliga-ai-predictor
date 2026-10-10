@@ -3,127 +3,127 @@
     "Augsburg": {
       "team_name": "Augsburg",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 81.9,
-      "opponent_exploitation_index": 78.7,
+      "plan_adherence_score": 81.5,
+      "opponent_exploitation_index": 81.7,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Bayer Leverkusen": {
       "team_name": "Bayer Leverkusen",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 80.3,
-      "opponent_exploitation_index": 86.1,
+      "plan_adherence_score": 80.0,
+      "opponent_exploitation_index": 81.2,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Bayern Munich": {
       "team_name": "Bayern Munich",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 84.1,
-      "opponent_exploitation_index": 88.5,
+      "plan_adherence_score": 79.4,
+      "opponent_exploitation_index": 84.6,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Borussia Dortmund": {
       "team_name": "Borussia Dortmund",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 83.6,
-      "opponent_exploitation_index": 80.8,
+      "plan_adherence_score": 78.4,
+      "opponent_exploitation_index": 84.4,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Borussia M.Gladbach": {
       "team_name": "Borussia M.Gladbach",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 79.7,
-      "opponent_exploitation_index": 78.0,
+      "plan_adherence_score": 79.8,
+      "opponent_exploitation_index": 80.8,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Eintracht Frankfurt": {
       "team_name": "Eintracht Frankfurt",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 82.5,
-      "opponent_exploitation_index": 78.6,
+      "plan_adherence_score": 82.0,
+      "opponent_exploitation_index": 78.8,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Elversberg": {
       "team_name": "Elversberg",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 83.0,
-      "opponent_exploitation_index": 78.9,
+      "plan_adherence_score": 78.8,
+      "opponent_exploitation_index": 77.9,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "FC Cologne": {
       "team_name": "FC Cologne",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 80.9,
-      "opponent_exploitation_index": 80.4,
+      "plan_adherence_score": 81.2,
+      "opponent_exploitation_index": 82.1,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Hamburger SV": {
       "team_name": "Hamburger SV",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 89.6,
-      "opponent_exploitation_index": 77.5,
+      "plan_adherence_score": 82.2,
+      "opponent_exploitation_index": 79.0,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Mainz 05": {
       "team_name": "Mainz 05",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 80.7,
-      "opponent_exploitation_index": 79.6,
+      "plan_adherence_score": 77.5,
+      "opponent_exploitation_index": 81.9,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Paderborn": {
       "team_name": "Paderborn",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 83.9,
-      "opponent_exploitation_index": 78.8,
+      "plan_adherence_score": 77.3,
+      "opponent_exploitation_index": 80.0,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "RB Leipzig": {
       "team_name": "RB Leipzig",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 82.8,
-      "opponent_exploitation_index": 83.6,
+      "plan_adherence_score": 83.0,
+      "opponent_exploitation_index": 80.6,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "SC Freiburg": {
       "team_name": "SC Freiburg",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 78.8,
-      "opponent_exploitation_index": 85.8,
+      "plan_adherence_score": 81.5,
+      "opponent_exploitation_index": 87.4,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Schalke 04": {
       "team_name": "Schalke 04",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 83.6,
-      "opponent_exploitation_index": 77.4,
+      "plan_adherence_score": 78.7,
+      "opponent_exploitation_index": 82.6,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "TSG Hoffenheim": {
       "team_name": "TSG Hoffenheim",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 82.0,
-      "opponent_exploitation_index": 82.7,
+      "plan_adherence_score": 81.5,
+      "opponent_exploitation_index": 78.9,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Union Berlin": {
       "team_name": "Union Berlin",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 83.2,
-      "opponent_exploitation_index": 78.8,
+      "plan_adherence_score": 80.2,
+      "opponent_exploitation_index": 79.8,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "VfB Stuttgart": {
       "team_name": "VfB Stuttgart",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 84.4,
-      "opponent_exploitation_index": 84.3,
+      "plan_adherence_score": 87.6,
+      "opponent_exploitation_index": 80.2,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     },
     "Werder Bremen": {
       "team_name": "Werder Bremen",
       "tactical_archetype": "High-Press Infiltrator",
-      "plan_adherence_score": 82.3,
-      "opponent_exploitation_index": 82.4,
+      "plan_adherence_score": 82.4,
+      "opponent_exploitation_index": 81.8,
       "tactical_motto": "Aggressive vertical pressing & rapid counter-transitions exploiting opponent buildup."
     }
   }

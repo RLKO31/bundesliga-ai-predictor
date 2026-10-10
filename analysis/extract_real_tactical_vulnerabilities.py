@@ -143,35 +143,60 @@ def extract_all_seasons():
                         ht = normalize_team(shot.get('h_team'))
                         at = normalize_team(shot.get('a_team'))
                         
-                        if shooter_side == 'h':
-                            off_team, def_team = ht, at
-                        else:
-                            off_team, def_team = at, ht
-                            
                         u_x = float(shot.get('X', 0.85))
                         u_y = float(shot.get('Y', 0.5))
                         xg = float(shot.get('xG', 0.05))
                         result = shot.get('result', '')
-                        is_goal = (result == 'Goal')
-                        is_big = (xg >= 0.30)
+                        is_og = (result == 'OwnGoal')
+                        is_goal = (result == 'Goal' or is_og)
+                        is_big = (xg >= 0.30 or is_og)
                         sit = shot.get('situation', 'OpenPlay')
                         act = shot.get('lastAction', 'Pass')
                         minute = int(shot.get('minute', 45))
-                        player = shot.get('player', 'Unknown')
-                        channel = classify_channel(sit, act, u_x, u_y)
+                        player_raw = shot.get('player', 'Unknown')
+                        player = f"{player_raw} (OG)" if is_og else player_raw
+                        
+                        if not is_og:
+                            if shooter_side == 'h':
+                                off_team, def_team = ht, at
+                            else:
+                                off_team, def_team = at, ht
+                            # Regular shot coordinates:
+                            # Attacking net at Right X=105m
+                            off_m_x = round(u_x * 105.0, 1)
+                            off_m_y = round((1.0 - u_y) * 68.0, 1)
+                            # Defending net at Left X=0m
+                            def_m_x = round((1.0 - u_x) * 105.0, 1)
+                            def_m_y = round((1.0 - u_y) * 68.0, 1)
+                            channel = classify_channel(sit, act, u_x, u_y)
+                        else:
+                            # Own Goal:
+                            # The player who touched it (shooter_side) belongs to def_team (conceding the goal)!
+                            # The opponent team is awarded the goal (off_team)!
+                            if shooter_side == 'h':
+                                def_team = ht  # Home team conceded own goal
+                                off_team = at  # Away team scored/benefited
+                            else:
+                                def_team = at  # Away team conceded own goal
+                                off_team = ht  # Home team scored/benefited
+                            
+                            # In Understat, own goal u_x is measured in front of the defending net (u_x ~ 0.01 - 0.20)
+                            # On defense pitch: defending net is at Left X=0m
+                            def_m_x = round(max(0.5, min(12.0, u_x * 105.0)), 1)
+                            def_m_y = round((1.0 - u_y) * 68.0, 1)
+                            # On offense pitch: target net is at Right X=105m
+                            off_m_x = round(min(104.5, max(93.0, 105.0 - def_m_x)), 1)
+                            off_m_y = round((1.0 - u_y) * 68.0, 1)
+                            channel = 'High-Press Turnovers'
                         
                         for t in [off_team, def_team]:
                             if t not in raw_season_team_shots[s_label]:
                                 raw_season_team_shots[s_label][t] = {'offense_shots': [], 'defense_shots': []}
                                 
-                        # Offense pitch coordinates: target goal at X=105m, Left flank at top (smaller Y)
-                        off_m_x = round(u_x * 105.0, 1)
-                        off_m_y = round((1.0 - u_y) * 68.0, 1)
-                        
                         raw_season_team_shots[s_label][off_team]['offense_shots'].append({
                             'x': off_m_x,
                             'y': off_m_y,
-                            'xg': round(xg, 3),
+                            'xg': round(xg, 3) if not is_og else 0.85,
                             'is_goal': is_goal,
                             'is_big_chance': is_big,
                             'minute': minute,
@@ -182,14 +207,10 @@ def extract_all_seasons():
                             'channel': channel
                         })
                         
-                        # Defense pitch coordinates: defended goal at X=0m, Left flank at top (smaller Y)
-                        def_m_x = round((1.0 - u_x) * 105.0, 1)
-                        def_m_y = round((1.0 - u_y) * 68.0, 1)
-                        
                         raw_season_team_shots[s_label][def_team]['defense_shots'].append({
                             'x': def_m_x,
                             'y': def_m_y,
-                            'xg': round(xg, 3),
+                            'xg': round(xg, 3) if not is_og else 0.85,
                             'is_goal': is_goal,
                             'is_big_chance': is_big,
                             'minute': minute,
@@ -234,38 +255,60 @@ def extract_all_seasons():
                 is_pen = bool(g.get('isPenalty', False))
                 is_og = bool(g.get('isOwnGoal', False))
                 
+                # In OpenLigaDB, scoringTeamId is ALWAYS the team that is awarded the goal on scoreboard!
                 score_team_id = g.get('scoringTeamId')
                 if score_team_id == m['team1']['teamId']:
-                    off_team, def_team = (t1, t2) if not is_og else (t2, t1)
+                    off_team, def_team = t1, t2
                 else:
-                    off_team, def_team = (t2, t1) if not is_og else (t1, t2)
+                    off_team, def_team = t2, t1
                     
-                if is_pen:
-                    u_x, u_y, sit, act, xg = 0.885, 0.50, 'Penalty', 'Standard', 0.76
-                elif is_og:
-                    u_x, u_y, sit, act, xg = 0.965, 0.50, 'OpenPlay', 'Rebound', 0.55
+                if is_og:
+                    # Own goal: e.g. Vagnoman against Bayern counts as goal for Bayern (off_team) and conceded by Stuttgart (def_team)
+                    player_name = f"{scorer} (OG)"
+                    sit = 'OpenPlay'
+                    act = 'Rebound'
+                    xg = 0.85
+                    # Goal crossed into defending net:
+                    # On offense pitch (Bayern attacking Right net X=105m):
+                    off_m_x = 102.5
+                    off_m_y = 34.0
+                    # On defense pitch (Stuttgart defending Left net X=0m):
+                    def_m_x = 2.5
+                    def_m_y = 34.0
+                    channel = 'High-Press Turnovers'
+                elif is_pen:
+                    # Penalty: Exactly on the penalty spot (11.0m from goal line)
+                    player_name = scorer
+                    sit = 'Penalty'
+                    act = 'Standard'
+                    xg = 0.76
+                    off_m_x = 94.0  # 105.0 - 11.0 = 94.0m
+                    off_m_y = 34.0
+                    def_m_x = 11.0  # 11.0m from left goal
+                    def_m_y = 34.0
+                    channel = 'Set-Pieces & Standards'
                 else:
-                    u_x = round(np.random.uniform(0.86, 0.96), 3)
+                    player_name = scorer
+                    u_x = round(np.random.uniform(0.88, 0.96), 3)
                     u_y = round(np.random.uniform(0.38, 0.62), 3)
                     sit = 'OpenPlay'
                     act = np.random.choice(['Cross', 'Throughball', 'Pass', 'Chipped', 'Rebound'])
-                    xg = round(np.random.uniform(0.28, 0.65), 3)
+                    xg = round(np.random.uniform(0.30, 0.65), 3)
+                    channel = classify_channel(sit, act, u_x, u_y)
+                    off_m_x = round(u_x * 105.0, 1)
+                    off_m_y = round((1.0 - u_y) * 68.0, 1)
+                    def_m_x = round((1.0 - u_x) * 105.0, 1)
+                    def_m_y = round((1.0 - u_y) * 68.0, 1)
                     
-                channel = classify_channel(sit, act, u_x, u_y)
-                off_m_x = round(u_x * 105.0, 1)
-                off_m_y = round((1.0 - u_y) * 68.0, 1)
-                def_m_x = round((1.0 - u_x) * 105.0, 1)
-                def_m_y = round((1.0 - u_y) * 68.0, 1)
-                
                 raw_season_team_shots[s_2026_label][off_team]['offense_shots'].append({
                     'x': off_m_x, 'y': off_m_y, 'xg': xg, 'is_goal': True, 'is_big_chance': True,
-                    'minute': minute, 'player': scorer, 'opponent': def_team,
+                    'minute': minute, 'player': player_name, 'opponent': def_team,
                     'situation': sit, 'last_action': act, 'channel': channel
                 })
                 
                 raw_season_team_shots[s_2026_label][def_team]['defense_shots'].append({
                     'x': def_m_x, 'y': def_m_y, 'xg': xg, 'is_goal': True, 'is_big_chance': True,
-                    'minute': minute, 'player': scorer, 'opponent': off_team,
+                    'minute': minute, 'player': player_name, 'opponent': off_team,
                     'situation': sit, 'last_action': act, 'channel': channel
                 })
                 
