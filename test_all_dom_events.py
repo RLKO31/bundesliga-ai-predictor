@@ -43,7 +43,7 @@ tab_checks = [
     ("complexity", "complexity-tab", "v4-complexity-standings-body"),
     ("m14", "m14-tab", "v5-m14-standings-body"),
     ("insights", "insights-tab", None),
-    ("vulnerability", "vulnerability-tab", "vuln-pitch-canvas")
+    ("vulnerability", "vulnerability-tab", "unified-pitch-canvas")
 ]
 
 for name, sec_id, elem_id in tab_checks:

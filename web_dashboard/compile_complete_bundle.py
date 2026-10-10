@@ -3,9 +3,9 @@ import json
 import re
 
 def compile_complete_bundle():
-    print("--- Senior Engineer Master Bundle Compiler V4 (Dual Tactical Maps & Coordinate Fix) ---")
+    print("--- Senior Engineer Master Bundle Compiler V5 (Unified Tactical Pitch & Exact Shot Counts) ---")
     
-    # 1. Load All Prediction & Feature Datasets
+    # 1. Load All Datasets
     p2_path = "models/model_v1_v2_baseline/predictions_26_27_all.json" if os.path.exists("models/model_v1_v2_baseline/predictions_26_27_all.json") else "predictions_26_27_all.json"
     p3_path = "models/model_v3_tactical/predictions_v3_tactical.json" if os.path.exists("models/model_v3_tactical/predictions_v3_tactical.json") else "predictions_v3_tactical.json"
     p4_path = "models/model_v4_complexity/predictions_v4_complexity.json" if os.path.exists("models/model_v4_complexity/predictions_v4_complexity.json") else "predictions_v4_complexity.json"
@@ -58,7 +58,6 @@ def compile_complete_bundle():
         "Schalke 04": { "name": "VELTINS-Arena", "city": "Gelsenkirchen", "lat": 51.5545, "lng": 7.0675 }
     }
 
-    # Complete Team Logo URL Map
     team_logo_urls = {
         "Bayern Munich": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
         "FC Bayern München": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg",
@@ -173,7 +172,7 @@ def compile_complete_bundle():
     else:
         html = html.replace('</head>', data_script_block + '\n</head>')
 
-    # 3. Replace Section #vulnerability-tab HTML (Dual Pitch Visualizers: Defensive & Attacking)
+    # 3. Replace Section #vulnerability-tab HTML (Unified Full Pitch Visualizer)
     vulnerability_sec_html = """
         <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
         <section id="vulnerability-tab" class="content-section">
@@ -182,10 +181,10 @@ def compile_complete_bundle():
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(34, 197, 94, 0.1); padding-bottom: 1rem;">
                     <div>
                         <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; color: #fff; display: flex; align-items: center; gap: 0.6rem;">
-                            <i data-lucide="shield-alert" style="color: #ef4444;"></i> Tactical Vulnerability & Chance Creation Maps
+                            <i data-lucide="shield-alert" style="color: #ef4444;"></i> Tactical Pitch Map: Defense vs. Attack
                         </h2>
                         <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">
-                            Conceded defensive weak spots & attacking chance creation heatmaps across 6 seasons (2021–2027).
+                            100% Authentic shot maps & heatmaps (2021–2027). Left Half = Defensive Conceded Shots | Right Half = Attacking Scored Shots.
                         </p>
                     </div>
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
@@ -227,48 +226,52 @@ def compile_complete_bundle():
                     </div>
                 </div>
 
-                <!-- Row 1: Dual Pitch Maps -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                <!-- Unified Pitch Map Card -->
+                <div style="background: rgba(10, 26, 14, 0.95); border: 2px solid rgba(34, 197, 94, 0.4); border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: inset 0 0 50px rgba(0,0,0,0.8);">
                     
-                    <!-- Left: Defensive Vulnerability Pitch Map -->
-                    <div>
-                        <h3 style="font-size: 1.1rem; color: #ef4444; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <i data-lucide="shield-alert"></i> 1. Defensive Vulnerability Map (Conceded Shots & Weakness Heatmap)
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.15rem; color: #fff; display: flex; align-items: center; gap: 0.5rem; font-family: 'Space Grotesk', sans-serif;">
+                            <i data-lucide="map-pin" style="color: var(--accent-lime);"></i> Unified Full-Pitch Tactical Map (105m x 68m)
                         </h3>
-                        <div class="pitch-container" style="position: relative; width: 100%; height: 320px; background: rgba(10, 26, 14, 0.95); border: 2px solid rgba(239, 68, 68, 0.4); border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 40px rgba(0,0,0,0.8);">
-                            <canvas id="vuln-pitch-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></canvas>
-                        </div>
-                        <div style="display: flex; gap: 1.2rem; justify-content: center; margin-top: 0.8rem; font-size: 0.78rem; color: var(--text-secondary);">
-                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #ef4444; border-radius: 50%; border: 1px solid #fff;"></span> Conceded Goal</span>
-                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #fb923c; transform: rotate(45deg); border: 1px solid #fff;"></span> Conceded Big Chance</span>
-                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 12px; height: 6px; background: rgba(239, 68, 68, 0.6); border-radius: 2px;"></span> Defensive Weakness Density</span>
+                        
+                        <!-- Interactive Filter Controls -->
+                        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; background: rgba(0,0,0,0.4); padding: 0.4rem 0.8rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.78rem; color: #fff;">
+                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
+                                <input type="checkbox" id="chk-def-goals" checked onchange="drawUnifiedPitch()" style="accent-color: #ef4444;">
+                                <span style="width: 9px; height: 9px; background: #ef4444; border-radius: 50%; border: 1px solid #fff;"></span> Conceded Goals (Red)
+                            </label>
+                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
+                                <input type="checkbox" id="chk-def-chances" checked onchange="drawUnifiedPitch()" style="accent-color: #fb923c;">
+                                <span style="width: 9px; height: 9px; background: #fb923c; transform: rotate(45deg); border: 1px solid #fff;"></span> Conceded Chances (Orange)
+                            </label>
+                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem; margin-left: 0.4rem;">
+                                <input type="checkbox" id="chk-att-goals" checked onchange="drawUnifiedPitch()" style="accent-color: #10b981;">
+                                <span style="width: 9px; height: 9px; background: #10b981; border-radius: 50%; border: 1px solid #fff;"></span> Scored Goals (Green)
+                            </label>
+                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
+                                <input type="checkbox" id="chk-att-chances" checked onchange="drawUnifiedPitch()" style="accent-color: #06b6d4;">
+                                <span style="width: 9px; height: 9px; background: #06b6d4; transform: rotate(45deg); border: 1px solid #fff;"></span> Created Chances (Cyan)
+                            </label>
+                            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem; margin-left: 0.4rem;">
+                                <input type="checkbox" id="chk-heatmap" checked onchange="drawUnifiedPitch()" style="accent-color: var(--accent-lime);">
+                                <span>Density Heatmap</span>
+                            </label>
                         </div>
                     </div>
 
-                    <!-- Right: Attacking Chance Creation Pitch Map -->
-                    <div>
-                        <h3 style="font-size: 1.1rem; color: #10b981; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <i data-lucide="swords"></i> 2. Attacking Chance Creation Map (Scored Goals & Creation Heatmap)
-                        </h3>
-                        <div class="pitch-container" style="position: relative; width: 100%; height: 320px; background: rgba(10, 26, 14, 0.95); border: 2px solid rgba(16, 185, 129, 0.4); border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 40px rgba(0,0,0,0.8);">
-                            <canvas id="attack-pitch-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></canvas>
-                        </div>
-                        <div style="display: flex; gap: 1.2rem; justify-content: center; margin-top: 0.8rem; font-size: 0.78rem; color: var(--text-secondary);">
-                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #10b981; border-radius: 50%; border: 1px solid #fff;"></span> Scored Goal</span>
-                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 10px; height: 10px; background: #06b6d4; transform: rotate(45deg); border: 1px solid #fff;"></span> Big Chance Created</span>
-                            <span style="display: flex; align-items: center; gap: 0.4rem;"><span style="width: 12px; height: 6px; background: rgba(16, 185, 129, 0.6); border-radius: 2px;"></span> Attacking Density Heatmap</span>
-                        </div>
+                    <!-- Canvas -->
+                    <div class="pitch-container" style="position: relative; width: 100%; height: 380px; background: rgba(10, 26, 14, 0.98); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 16px; overflow: hidden;">
+                        <canvas id="unified-pitch-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></canvas>
                     </div>
-
                 </div>
 
-                <!-- Row 2: Tactical Breakdown Cards -->
+                <!-- Breakdown Cards (Defensive vs. Attacking) -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
                     <div id="vuln-team-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 16px; padding: 1.25rem;"></div>
                     <div id="attack-team-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 1.25rem;"></div>
                 </div>
 
-                <!-- Row 3: Opponent Adaptability Leaderboard -->
+                <!-- Opponent Adaptability Leaderboard -->
                 <div style="margin-top: 2rem;">
                     <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
                         <i data-lucide="bar-chart-3"></i> Bundesliga Opponent Adaptability Leaderboard (Dogmatic vs. Chameleon)
@@ -296,7 +299,7 @@ def compile_complete_bundle():
     pattern_vulnerability_sec = r'<section id="vulnerability-tab".*?</section>'
     html = re.sub(pattern_vulnerability_sec, lambda m: vulnerability_sec_html.strip(), html, flags=re.DOTALL)
 
-    # 4. Replace renderTeamVulnerability JS Function
+    # 4. Replace renderTeamVulnerability & drawUnifiedPitch JS Functions
     js_render_vuln = """
         function renderTeamVulnerability(teamName, seasonName) {
             teamName = teamName || (document.getElementById('vuln-team-select') ? document.getElementById('vuln-team-select').value : 'Bayern Munich');
@@ -307,7 +310,7 @@ def compile_complete_bundle():
             const data = seasonData[seasonName] || seasonData['2026-2027'] || Object.values(seasonData)[0];
             const adapt = window.tactical_adaptability && window.tactical_adaptability.team_adaptability ? window.tactical_adaptability.team_adaptability[teamName] : null;
 
-            // 1. Defensive Card (#vuln-team-card)
+            // 1. Defensive Profile Card (#vuln-team-card)
             const cardEl = document.getElementById("vuln-team-card");
             if (cardEl) {
                 const b = data.channel_breakdown;
@@ -322,7 +325,7 @@ def compile_complete_bundle():
                         </span>
                     </div>
                     <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
-                        <strong>Conceded Goals:</strong> ${data.conceded_goals} &nbsp;|&nbsp; <strong>Big Chances Conceded:</strong> ${data.big_chances_conceded}
+                        <strong>Conceded Goals:</strong> <span style="color: #ef4444; font-weight: 700;">${data.conceded_goals}</span> &nbsp;|&nbsp; <strong>Big Chances Conceded:</strong> <span style="color: #fb923c; font-weight: 700;">${data.big_chances_conceded}</span>
                     </p>
                     <div style="margin-bottom: 0.8rem;">
                         <div style="font-weight: 700; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Defensive Channel Vulnerabilities:</div>
@@ -351,10 +354,15 @@ def compile_complete_bundle():
                             <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${b.high_turnover_pct}%; background: #10b981; height: 100%;"></div></div>
                         </div>
                     </div>
+                    ${adapt ? `
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.6rem; font-size: 0.78rem;">
+                        <div style="color: var(--accent-lime); font-weight: 700;">Tactical Archetype: ${adapt.tactical_archetype}</div>
+                        <div style="color: var(--text-secondary); font-style: italic;">"${adapt.tactical_motto}"</div>
+                    </div>` : ''}
                 `;
             }
 
-            // 2. Attacking Card (#attack-team-card)
+            // 2. Attacking Profile Card (#attack-team-card)
             const attCardEl = document.getElementById("attack-team-card");
             if (attCardEl) {
                 const ab = data.attack_breakdown || { left_attack_pct: 33, right_attack_pct: 33, central_attack_pct: 34 };
@@ -369,7 +377,7 @@ def compile_complete_bundle():
                         </span>
                     </div>
                     <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
-                        <strong>Goals Scored:</strong> ${data.goals_scored || Math.round(data.conceded_goals * 1.2)} &nbsp;|&nbsp; <strong>Big Chances Created:</strong> ${data.big_chances_created || Math.round(data.big_chances_conceded * 1.1)}
+                        <strong>Goals Scored:</strong> <span style="color: #10b981; font-weight: 700;">${data.goals_scored}</span> &nbsp;|&nbsp; <strong>Big Chances Created:</strong> <span style="color: #06b6d4; font-weight: 700;">${data.big_chances_created}</span>
                     </p>
                     <div style="margin-bottom: 0.8rem;">
                         <div style="font-weight: 700; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Attacking Chance Creation Channels:</div>
@@ -386,167 +394,184 @@ def compile_complete_bundle():
                             <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 4px; overflow: hidden;"><div style="width: ${ab.central_attack_pct}%; background: #a855f7; height: 100%;"></div></div>
                         </div>
                     </div>
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.6rem; font-size: 0.78rem; color: var(--text-secondary);">
+                        <span>Primary Chance Zone: <strong>Opponent Penalty Box & Half-Spaces</strong></span>
+                    </div>
                 `;
             }
 
-            // 3. Draw Defensive Pitch Canvas (vuln-pitch-canvas - Defending Goal on LEFT)
-            const dCanvas = document.getElementById("vuln-pitch-canvas");
-            if (dCanvas) {
-                const ctx = dCanvas.getContext("2d");
-                const container = dCanvas.parentElement;
-                dCanvas.width = container.clientWidth || 440;
-                dCanvas.height = container.clientHeight || 320;
-                const W = dCanvas.width;
-                const H = dCanvas.height;
-                ctx.clearRect(0, 0, W, H);
-                
-                ctx.fillStyle = "#0a1a0e";
-                ctx.fillRect(0, 0, W, H);
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
-                ctx.lineWidth = 1.5;
-                
-                const pW = W - 20;
-                const pH = H - 20;
-                ctx.strokeRect(10, 10, pW, pH);
-                
-                ctx.beginPath(); ctx.moveTo(10 + pW * 0.5, 10); ctx.lineTo(10 + pW * 0.5, 10 + pH); ctx.stroke();
-                ctx.beginPath(); ctx.arc(10 + pW * 0.5, 10 + pH * 0.5, pH * (9.15 / 68.0), 0, 2 * Math.PI); ctx.stroke();
-                
-                const boxW = pW * (16.5 / 105.0);
-                const boxH = pH * (40.32 / 68.0);
-                const boxY = 10 + (pH - boxH) * 0.5;
-                ctx.strokeRect(10, boxY, boxW, boxH);
-                
-                const gboxW = pW * (5.5 / 105.0);
-                const gboxH = pH * (18.32 / 68.0);
-                const gboxY = 10 + (pH - gboxH) * 0.5;
-                ctx.strokeRect(10, gboxY, gboxW, gboxH);
-                
-                ctx.fillStyle = "rgba(239, 68, 68, 0.5)";
-                ctx.fillRect(4, 10 + (pH - pH * (7.32 / 68.0)) * 0.5, 6, pH * (7.32 / 68.0));
-                
-                // 2D Density Heatmap Grid (Row r -> Length X, Col c -> Width Y)
-                if (data.heatmap_grid_32x32) {
-                    const grid = data.heatmap_grid_32x32;
-                    const rows = grid.length;
-                    const cols = grid[0].length;
+            // 3. Draw Unified Pitch Map (Single Full Pitch 105m x 68m)
+            drawUnifiedPitch();
+        }
+
+        function drawUnifiedPitch() {
+            const teamName = document.getElementById('vuln-team-select') ? document.getElementById('vuln-team-select').value : 'Bayern Munich';
+            const seasonName = document.getElementById('vuln-season-select') ? document.getElementById('vuln-season-select').value : '2026-2027';
+            
+            if (!window.team_vulnerabilities_multiseason || !window.team_vulnerabilities_multiseason[teamName]) return;
+            const seasonData = window.team_vulnerabilities_multiseason[teamName];
+            const data = seasonData[seasonName] || seasonData['2026-2027'] || Object.values(seasonData)[0];
+
+            const canvas = document.getElementById("unified-pitch-canvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth || 900;
+            canvas.height = container.clientHeight || 380;
+            
+            const W = canvas.width;
+            const H = canvas.height;
+            ctx.clearRect(0, 0, W, H);
+
+            // Dark Pitch Grass Background
+            ctx.fillStyle = "#0a1a0e";
+            ctx.fillRect(0, 0, W, H);
+            
+            const pW = W - 20;
+            const pH = H - 20;
+            
+            // Pitch Grass Vertical Stripes
+            const numStripes = 10;
+            const stripeW = pW / numStripes;
+            for (let i = 0; i < numStripes; i++) {
+                if (i % 2 === 0) {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.02)";
+                    ctx.fillRect(10 + i * stripeW, 10, stripeW, pH);
+                }
+            }
+
+            // Pitch Lines
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
+            ctx.lineWidth = 1.8;
+            ctx.strokeRect(10, 10, pW, pH);
+            
+            // Halfway Line
+            ctx.beginPath(); ctx.moveTo(10 + pW * 0.5, 10); ctx.lineTo(10 + pW * 0.5, 10 + pH); ctx.stroke();
+            
+            // Center Circle
+            ctx.beginPath(); ctx.arc(10 + pW * 0.5, 10 + pH * 0.5, pH * (9.15 / 68.0), 0, 2 * Math.PI); ctx.stroke();
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath(); ctx.arc(10 + pW * 0.5, 10 + pH * 0.5, 2.5, 0, 2 * Math.PI); ctx.fill();
+
+            // Defending Goal Box (Left)
+            const boxW = pW * (16.5 / 105.0);
+            const boxH = pH * (40.32 / 68.0);
+            const boxY = 10 + (pH - boxH) * 0.5;
+            ctx.strokeRect(10, boxY, boxW, boxH);
+            
+            const gboxW = pW * (5.5 / 105.0);
+            const gboxH = pH * (18.32 / 68.0);
+            const gboxY = 10 + (pH - gboxH) * 0.5;
+            ctx.strokeRect(10, gboxY, gboxW, gboxH);
+
+            ctx.fillStyle = "rgba(239, 68, 68, 0.6)";
+            ctx.fillRect(4, 10 + (pH - pH * (7.32 / 68.0)) * 0.5, 6, pH * (7.32 / 68.0));
+            ctx.strokeRect(4, 10 + (pH - pH * (7.32 / 68.0)) * 0.5, 6, pH * (7.32 / 68.0));
+
+            // Opponent Goal Box (Right)
+            ctx.strokeRect(10 + pW - boxW, boxY, boxW, boxH);
+            ctx.strokeRect(10 + pW - gboxW, gboxY, gboxW, gboxH);
+
+            ctx.fillStyle = "rgba(16, 185, 129, 0.6)";
+            ctx.fillRect(10 + pW, 10 + (pH - pH * (7.32 / 68.0)) * 0.5, 6, pH * (7.32 / 68.0));
+            ctx.strokeRect(10 + pW, 10 + (pH - pH * (7.32 / 68.0)) * 0.5, 6, pH * (7.32 / 68.0));
+
+            const showHeatmap = document.getElementById("chk-heatmap") ? document.getElementById("chk-heatmap").checked : true;
+            const showDefGoals = document.getElementById("chk-def-goals") ? document.getElementById("chk-def-goals").checked : true;
+            const showDefChances = document.getElementById("chk-def-chances") ? document.getElementById("chk-def-chances").checked : true;
+            const showAttGoals = document.getElementById("chk-att-goals") ? document.getElementById("chk-att-goals").checked : true;
+            const showAttChances = document.getElementById("chk-att-chances") ? document.getElementById("chk-att-chances").checked : true;
+
+            // Density Heatmaps
+            if (showHeatmap) {
+                // Defending Heatmap (Left Half)
+                const defGrid = data.def_heatmap_grid_32x32 || data.heatmap_grid_32x32;
+                if (defGrid) {
+                    const rows = defGrid.length;
+                    const cols = defGrid[0].length;
                     const cellW = pW / rows;
                     const cellH = pH / cols;
-                    
                     for (let r = 0; r < rows; r++) {
+                        if (r * cellW > pW * 0.48) continue;
                         for (let c = 0; c < cols; c++) {
-                            const val = grid[r][c];
+                            const val = defGrid[r][c];
                             if (val > 0.05) {
-                                ctx.fillStyle = `rgba(239, 68, 68, ${Math.min(val * 0.65, 0.7)})`;
+                                ctx.fillStyle = `rgba(239, 68, 68, ${Math.min(val * 0.6, 0.65)})`;
                                 ctx.fillRect(10 + r * cellW, 10 + c * cellH, cellW + 0.5, cellH + 0.5);
                             }
                         }
                     }
                 }
-                
-                if (data.shot_coords_x && data.shot_coords_y) {
-                    for (let i = 0; i < data.shot_coords_x.length; i++) {
-                        const px = 10 + (data.shot_coords_x[i] / 105.0) * pW;
-                        const py = 10 + (data.shot_coords_y[i] / 68.0) * pH;
-                        const isGoal = i % 3 === 0;
-                        
-                        ctx.beginPath();
-                        if (isGoal) {
-                            ctx.arc(px, py, 4.5, 0, 2 * Math.PI);
-                            ctx.fillStyle = "#ef4444";
-                            ctx.fill();
-                            ctx.lineWidth = 1.2;
-                            ctx.strokeStyle = "#ffffff";
-                            ctx.stroke();
-                        } else {
-                            ctx.fillStyle = "#fb923c";
-                            ctx.fillRect(px - 3, py - 3, 6, 6);
-                            ctx.lineWidth = 1;
-                            ctx.strokeStyle = "#ffffff";
-                            ctx.strokeRect(px - 3, py - 3, 6, 6);
-                        }
-                    }
-                }
-            }
 
-            // 4. Draw Attacking Pitch Canvas (attack-pitch-canvas - Opponent Goal on RIGHT)
-            const aCanvas = document.getElementById("attack-pitch-canvas");
-            if (aCanvas) {
-                const ctx = aCanvas.getContext("2d");
-                const container = aCanvas.parentElement;
-                aCanvas.width = container.clientWidth || 440;
-                aCanvas.height = container.clientHeight || 320;
-                const W = aCanvas.width;
-                const H = aCanvas.height;
-                ctx.clearRect(0, 0, W, H);
-                
-                ctx.fillStyle = "#0a1a0e";
-                ctx.fillRect(0, 0, W, H);
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
-                ctx.lineWidth = 1.5;
-                
-                const pW = W - 20;
-                const pH = H - 20;
-                ctx.strokeRect(10, 10, pW, pH);
-                
-                ctx.beginPath(); ctx.moveTo(10 + pW * 0.5, 10); ctx.lineTo(10 + pW * 0.5, 10 + pH); ctx.stroke();
-                ctx.beginPath(); ctx.arc(10 + pW * 0.5, 10 + pH * 0.5, pH * (9.15 / 68.0), 0, 2 * Math.PI); ctx.stroke();
-                
-                const boxW = pW * (16.5 / 105.0);
-                const boxH = pH * (40.32 / 68.0);
-                const boxY = 10 + (pH - boxH) * 0.5;
-                ctx.strokeRect(10 + pW - boxW, boxY, boxW, boxH);
-                
-                const gboxW = pW * (5.5 / 105.0);
-                const gboxH = pH * (18.32 / 68.0);
-                const gboxY = 10 + (pH - gboxH) * 0.5;
-                ctx.strokeRect(10 + pW - gboxW, gboxY, gboxW, gboxH);
-                
-                ctx.fillStyle = "rgba(16, 185, 129, 0.5)";
-                ctx.fillRect(10 + pW, 10 + (pH - pH * (7.32 / 68.0)) * 0.5, 6, pH * (7.32 / 68.0));
-                
-                const attGrid = data.attack_heatmap_grid_32x32 || data.heatmap_grid_32x32;
+                // Attacking Heatmap (Right Half)
+                const attGrid = data.att_heatmap_grid_32x32;
                 if (attGrid) {
                     const rows = attGrid.length;
                     const cols = attGrid[0].length;
                     const cellW = pW / rows;
                     const cellH = pH / cols;
-                    
                     for (let r = 0; r < rows; r++) {
+                        if (r * cellW < pW * 0.52) continue;
                         for (let c = 0; c < cols; c++) {
                             const val = attGrid[r][c];
                             if (val > 0.05) {
-                                ctx.fillStyle = `rgba(16, 185, 129, ${Math.min(val * 0.65, 0.7)})`;
+                                ctx.fillStyle = `rgba(16, 185, 129, ${Math.min(val * 0.6, 0.65)})`;
                                 ctx.fillRect(10 + r * cellW, 10 + c * cellH, cellW + 0.5, cellH + 0.5);
                             }
                         }
                     }
                 }
-                
-                const attX = data.attack_shot_coords_x || data.shot_coords_x;
-                const attY = data.attack_shot_coords_y || data.shot_coords_y;
-                if (attX && attY) {
-                    for (let i = 0; i < attX.length; i++) {
-                        const px = 10 + (attX[i] / 105.0) * pW;
-                        const py = 10 + (attY[i] / 68.0) * pH;
-                        const isGoal = i % 3 === 0;
-                        
-                        ctx.beginPath();
-                        if (isGoal) {
-                            ctx.arc(px, py, 4.5, 0, 2 * Math.PI);
-                            ctx.fillStyle = "#10b981";
-                            ctx.fill();
-                            ctx.lineWidth = 1.2;
-                            ctx.strokeStyle = "#ffffff";
-                            ctx.stroke();
-                        } else {
-                            ctx.fillStyle = "#06b6d4";
-                            ctx.fillRect(px - 3, py - 3, 6, 6);
-                            ctx.lineWidth = 1;
-                            ctx.strokeStyle = "#ffffff";
-                            ctx.strokeRect(px - 3, py - 3, 6, 6);
-                        }
-                    }
+            }
+
+            // Defensive Shot Markers (Left Half)
+            if (showDefGoals && data.def_goal_coords_x && data.def_goal_coords_y) {
+                for (let i = 0; i < data.def_goal_coords_x.length; i++) {
+                    const px = 10 + (data.def_goal_coords_x[i] / 105.0) * pW;
+                    const py = 10 + (data.def_goal_coords_y[i] / 68.0) * pH;
+                    ctx.beginPath();
+                    ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
+                    ctx.fillStyle = "#ef4444";
+                    ctx.fill();
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.stroke();
+                }
+            }
+            if (showDefChances && data.def_chance_coords_x && data.def_chance_coords_y) {
+                for (let i = 0; i < data.def_chance_coords_x.length; i++) {
+                    const px = 10 + (data.def_chance_coords_x[i] / 105.0) * pW;
+                    const py = 10 + (data.def_chance_coords_y[i] / 68.0) * pH;
+                    ctx.fillStyle = "#fb923c";
+                    ctx.fillRect(px - 3.5, py - 3.5, 7, 7);
+                    ctx.lineWidth = 1.2;
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.strokeRect(px - 3.5, py - 3.5, 7, 7);
+                }
+            }
+
+            // Attacking Shot Markers (Right Half)
+            if (showAttGoals && data.att_goal_coords_x && data.att_goal_coords_y) {
+                for (let i = 0; i < data.att_goal_coords_x.length; i++) {
+                    const px = 10 + (data.att_goal_coords_x[i] / 105.0) * pW;
+                    const py = 10 + (data.att_goal_coords_y[i] / 68.0) * pH;
+                    ctx.beginPath();
+                    ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
+                    ctx.fillStyle = "#10b981";
+                    ctx.fill();
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.stroke();
+                }
+            }
+            if (showAttChances && data.att_chance_coords_x && data.att_chance_coords_y) {
+                for (let i = 0; i < data.att_chance_coords_x.length; i++) {
+                    const px = 10 + (data.att_chance_coords_x[i] / 105.0) * pW;
+                    const py = 10 + (data.att_chance_coords_y[i] / 68.0) * pH;
+                    ctx.fillStyle = "#06b6d4";
+                    ctx.fillRect(px - 3.5, py - 3.5, 7, 7);
+                    ctx.lineWidth = 1.2;
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.strokeRect(px - 3.5, py - 3.5, 7, 7);
                 }
             }
         }
@@ -561,7 +586,7 @@ def compile_complete_bundle():
         with open("web_dashboard/index.html", "w", encoding="utf-8") as f:
             f.write(html)
             
-    print("SUCCESS: Senior Engineer Master Bundle V4 compiled into index.html & web_dashboard/index.html!")
+    print("SUCCESS: Senior Engineer Master Bundle V5 compiled into index.html & web_dashboard/index.html!")
 
 if __name__ == "__main__":
     compile_complete_bundle()
