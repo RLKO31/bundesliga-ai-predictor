@@ -452,55 +452,14 @@ def compile_complete_bundle():
             const stripeW = pW / numStripes;
             for (let i = 0; i < numStripes; i++) {
                 if (i % 2 === 0) {
-                    ctx.fillStyle = "rgba(255, 255, 255, 0.03)";
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.035)";
                     ctx.fillRect(pitchX + i * stripeW, pitchY, stripeW, pH);
                 }
             }
 
-            // Pitch Outer Boundary Line
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
-            ctx.lineWidth = 1.8;
-            ctx.strokeRect(pitchX, pitchY, pW, pH);
-            
-            // Halfway Line
-            ctx.beginPath();
-            ctx.moveTo(pitchX + pW * 0.5, pitchY);
-            ctx.lineTo(pitchX + pW * 0.5, pitchY + pH);
-            ctx.stroke();
-            
-            // Center Circle & Spot
-            ctx.beginPath();
-            ctx.arc(pitchX + pW * 0.5, pitchY + pH * 0.5, pH * (9.15 / 68.0), 0, 2 * Math.PI);
-            ctx.stroke();
-            ctx.fillStyle = "#ffffff";
-            ctx.beginPath();
-            ctx.arc(pitchX + pW * 0.5, pitchY + pH * 0.5, 2.5, 0, 2 * Math.PI);
-            ctx.fill();
-
-            // Defending Goal Box (Left, X = 0)
-            const boxW = pW * (16.5 / 105.0);
-            const boxH = pH * (40.32 / 68.0);
-            const boxY = pitchY + (pH - boxH) * 0.5;
-            ctx.strokeRect(pitchX, boxY, boxW, boxH);
-            
-            const gboxW = pW * (5.5 / 105.0);
-            const gboxH = pH * (18.32 / 68.0);
-            const gboxY = pitchY + (pH - gboxH) * 0.5;
-            ctx.strokeRect(pitchX, gboxY, gboxW, gboxH);
-
-            const goalH = pH * (7.32 / 68.0);
-            const goalY = pitchY + (pH - goalH) * 0.5;
-            ctx.fillStyle = "rgba(239, 68, 68, 0.7)";
-            ctx.fillRect(pitchX - 6, goalY, 6, goalH);
-            ctx.strokeRect(pitchX - 6, goalY, 6, goalH);
-
-            // Opponent Goal Box (Right, X = 105)
-            ctx.strokeRect(pitchX + pW - boxW, boxY, boxW, boxH);
-            ctx.strokeRect(pitchX + pW - gboxW, gboxY, gboxW, gboxH);
-
-            ctx.fillStyle = "rgba(16, 185, 129, 0.7)";
-            ctx.fillRect(pitchX + pW, goalY, 6, goalH);
-            ctx.strokeRect(pitchX + pW, goalY, 6, goalH);
+            // Coordinate Mappers (Pitch m -> Canvas px)
+            const mapX = (x) => pitchX + (x / 105.0) * pW;
+            const mapY = (y) => pitchY + (y / 68.0) * pH;
 
             // Layer Checkboxes
             const showHeatmap = document.getElementById("chk-heatmap") ? document.getElementById("chk-heatmap").checked : true;
@@ -509,9 +468,9 @@ def compile_complete_bundle():
             const showAttGoals = document.getElementById("chk-att-goals") ? document.getElementById("chk-att-goals").checked : true;
             const showAttChances = document.getElementById("chk-att-chances") ? document.getElementById("chk-att-chances").checked : true;
 
-            // Density Heatmaps
+            // 1. DENSITY HEATMAPS (DRAWN FIRST, UNDER PITCH LINES)
             if (showHeatmap) {
-                // Defending Heatmap (Left Half)
+                // Defending Heatmap (Left Half: X in [0, 52.5]m)
                 const defGrid = data.def_heatmap_grid_32x32 || data.heatmap_grid_32x32;
                 if (defGrid) {
                     const rows = defGrid.length;
@@ -519,18 +478,18 @@ def compile_complete_bundle():
                     const cellW = pW / rows;
                     const cellH = pH / cols;
                     for (let r = 0; r < rows; r++) {
-                        if (r * cellW > pW * 0.48) continue;
+                        if (r * cellW > pW * 0.49) continue;
                         for (let c = 0; c < cols; c++) {
                             const val = defGrid[r][c];
-                            if (val > 0.05) {
-                                ctx.fillStyle = `rgba(239, 68, 68, ${Math.min(val * 0.6, 0.65)})`;
+                            if (val > 0.04) {
+                                ctx.fillStyle = `rgba(239, 68, 68, ${Math.min(val * 0.65, 0.7)})`;
                                 ctx.fillRect(pitchX + r * cellW, pitchY + c * cellH, cellW + 0.5, cellH + 0.5);
                             }
                         }
                     }
                 }
 
-                // Attacking Heatmap (Right Half)
+                // Attacking Heatmap (Right Half: X in [52.5, 105]m)
                 const attGrid = data.att_heatmap_grid_32x32;
                 if (attGrid) {
                     const rows = attGrid.length;
@@ -538,11 +497,11 @@ def compile_complete_bundle():
                     const cellW = pW / rows;
                     const cellH = pH / cols;
                     for (let r = 0; r < rows; r++) {
-                        if (r * cellW < pW * 0.52) continue;
+                        if (r * cellW < pW * 0.51) continue;
                         for (let c = 0; c < cols; c++) {
                             const val = attGrid[r][c];
-                            if (val > 0.05) {
-                                ctx.fillStyle = `rgba(16, 185, 129, ${Math.min(val * 0.6, 0.65)})`;
+                            if (val > 0.04) {
+                                ctx.fillStyle = `rgba(16, 185, 129, ${Math.min(val * 0.65, 0.7)})`;
                                 ctx.fillRect(pitchX + r * cellW, pitchY + c * cellH, cellW + 0.5, cellH + 0.5);
                             }
                         }
@@ -550,11 +509,107 @@ def compile_complete_bundle():
                 }
             }
 
-            // Defensive Shot Markers (Left Half)
+            // 2. PITCH LINES & MARKINGS (DRAWN SECOND, ON TOP OF HEATMAPS)
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+            ctx.lineWidth = 1.8;
+
+            // Pitch Outer Boundary Line
+            ctx.strokeRect(pitchX, pitchY, pW, pH);
+
+            // Halfway Line
+            ctx.beginPath();
+            ctx.moveTo(mapX(52.5), pitchY);
+            ctx.lineTo(mapX(52.5), pitchY + pH);
+            ctx.stroke();
+
+            // Center Circle & Spot (Radius 9.15m at (52.5, 34.0))
+            ctx.beginPath();
+            ctx.arc(mapX(52.5), mapY(34.0), (9.15 / 68.0) * pH, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(mapX(52.5), mapY(34.0), 2.5, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Penalty Areas (18-yard box: 16.5m length, 40.32m width)
+            // Left Penalty Box (X: 0 -> 16.5m, Y: 13.84 -> 54.16m)
+            ctx.strokeRect(mapX(0), mapY(13.84), mapX(16.5) - mapX(0), mapY(54.16) - mapY(13.84));
+            // Right Penalty Box (X: 88.5 -> 105m, Y: 13.84 -> 54.16m)
+            ctx.strokeRect(mapX(88.5), mapY(13.84), mapX(105) - mapX(88.5), mapY(54.16) - mapY(13.84));
+
+            // Goal Areas (6-yard box: 5.5m length, 18.32m width)
+            // Left Goal Box (X: 0 -> 5.5m, Y: 24.84 -> 43.16m)
+            ctx.strokeRect(mapX(0), mapY(24.84), mapX(5.5) - mapX(0), mapY(43.16) - mapY(24.84));
+            // Right Goal Box (X: 99.5 -> 105m, Y: 24.84 -> 43.16m)
+            ctx.strokeRect(mapX(99.5), mapY(24.84), mapX(105) - mapX(99.5), mapY(43.16) - mapY(24.84));
+
+            // Penalty Spots (11m from goal line, Y = 34.0m)
+            // Left Penalty Spot (11.0, 34.0)
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(mapX(11.0), mapY(34.0), 2.5, 0, 2 * Math.PI);
+            ctx.fill();
+            // Right Penalty Spot (94.0, 34.0)
+            ctx.beginPath();
+            ctx.arc(mapX(94.0), mapY(34.0), 2.5, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Penalty Arcs (D-arcs: Radius 9.15m centered at penalty spots, drawn outside 18-yard box)
+            // cos(alpha) = 5.5 / 9.15 => alpha = acos(5.5 / 9.15)
+            const dAlpha = Math.acos(5.5 / 9.15);
+            const dRadius = (9.15 / 68.0) * pH;
+            // Left D-arc (X > 16.5m)
+            ctx.beginPath();
+            ctx.arc(mapX(11.0), mapY(34.0), dRadius, -dAlpha, dAlpha);
+            ctx.stroke();
+            // Right D-arc (X < 88.5m)
+            ctx.beginPath();
+            ctx.arc(mapX(94.0), mapY(34.0), dRadius, Math.PI - dAlpha, Math.PI + dAlpha);
+            ctx.stroke();
+
+            // Corner Arcs (Radius 1.0m at 4 corners)
+            const cRadius = (1.0 / 68.0) * pH;
+            // Top-Left (0, 0)
+            ctx.beginPath();
+            ctx.arc(mapX(0), mapY(0), cRadius, 0, Math.PI / 2);
+            ctx.stroke();
+            // Bottom-Left (0, 68)
+            ctx.beginPath();
+            ctx.arc(mapX(0), mapY(68), cRadius, 1.5 * Math.PI, 2 * Math.PI);
+            ctx.stroke();
+            // Top-Right (105, 0)
+            ctx.beginPath();
+            ctx.arc(mapX(105), mapY(0), cRadius, Math.PI / 2, Math.PI);
+            ctx.stroke();
+            // Bottom-Right (105, 68)
+            ctx.beginPath();
+            ctx.arc(mapX(105), mapY(68), cRadius, Math.PI, 1.5 * Math.PI);
+            ctx.stroke();
+
+            // Goal Posts & Nets (Width 7.32m, Y in [30.34, 37.66]m)
+            const goalH = mapY(37.66) - mapY(30.34);
+            const goalY = mapY(30.34);
+            const netDepth = 7;
+            // Left Goal Net (Defending, Conceded)
+            ctx.fillStyle = "rgba(239, 68, 68, 0.4)";
+            ctx.fillRect(pitchX - netDepth, goalY, netDepth, goalH);
+            ctx.strokeStyle = "#ef4444";
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(pitchX - netDepth, goalY, netDepth, goalH);
+
+            // Right Goal Net (Attacking, Scored)
+            ctx.fillStyle = "rgba(16, 185, 129, 0.4)";
+            ctx.fillRect(pitchX + pW, goalY, netDepth, goalH);
+            ctx.strokeStyle = "#10b981";
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(pitchX + pW, goalY, netDepth, goalH);
+
+            // 3. SHOT EVENT MARKERS (DRAWN THIRD, ON TOP OF PITCH LINES)
+            // Defensive Shots (Left Half)
             if (showDefGoals && data.def_goal_coords_x && data.def_goal_coords_y) {
                 for (let i = 0; i < data.def_goal_coords_x.length; i++) {
-                    const px = pitchX + (data.def_goal_coords_x[i] / 105.0) * pW;
-                    const py = pitchY + (data.def_goal_coords_y[i] / 68.0) * pH;
+                    const px = mapX(data.def_goal_coords_x[i]);
+                    const py = mapY(data.def_goal_coords_y[i]);
                     ctx.beginPath();
                     ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
                     ctx.fillStyle = "#ef4444";
@@ -566,8 +621,8 @@ def compile_complete_bundle():
             }
             if (showDefChances && data.def_chance_coords_x && data.def_chance_coords_y) {
                 for (let i = 0; i < data.def_chance_coords_x.length; i++) {
-                    const px = pitchX + (data.def_chance_coords_x[i] / 105.0) * pW;
-                    const py = pitchY + (data.def_chance_coords_y[i] / 68.0) * pH;
+                    const px = mapX(data.def_chance_coords_x[i]);
+                    const py = mapY(data.def_chance_coords_y[i]);
                     ctx.fillStyle = "#fb923c";
                     ctx.fillRect(px - 3.5, py - 3.5, 7, 7);
                     ctx.lineWidth = 1.2;
@@ -576,11 +631,11 @@ def compile_complete_bundle():
                 }
             }
 
-            // Attacking Shot Markers (Right Half)
+            // Attacking Shots (Right Half)
             if (showAttGoals && data.att_goal_coords_x && data.att_goal_coords_y) {
                 for (let i = 0; i < data.att_goal_coords_x.length; i++) {
-                    const px = pitchX + (data.att_goal_coords_x[i] / 105.0) * pW;
-                    const py = pitchY + (data.att_goal_coords_y[i] / 68.0) * pH;
+                    const px = mapX(data.att_goal_coords_x[i]);
+                    const py = mapY(data.att_goal_coords_y[i]);
                     ctx.beginPath();
                     ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
                     ctx.fillStyle = "#10b981";
@@ -592,8 +647,8 @@ def compile_complete_bundle():
             }
             if (showAttChances && data.att_chance_coords_x && data.att_chance_coords_y) {
                 for (let i = 0; i < data.att_chance_coords_x.length; i++) {
-                    const px = pitchX + (data.att_chance_coords_x[i] / 105.0) * pW;
-                    const py = pitchY + (data.att_chance_coords_y[i] / 68.0) * pH;
+                    const px = mapX(data.att_chance_coords_x[i]);
+                    const py = mapY(data.att_chance_coords_y[i]);
                     ctx.fillStyle = "#06b6d4";
                     ctx.fillRect(px - 3.5, py - 3.5, 7, 7);
                     ctx.lineWidth = 1.2;
@@ -601,6 +656,32 @@ def compile_complete_bundle():
                     ctx.strokeRect(px - 3.5, py - 3.5, 7, 7);
                 }
             }
+
+            // 4. TEXT LABELS & ANNOTATIONS (TOPMOST LAYER)
+            ctx.font = "700 10px 'Space Grotesk', sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+
+            // Left Goal Text Label
+            ctx.fillStyle = "#ef4444";
+            ctx.fillText("DEFENDING GOAL", mapX(6.0), mapY(34.0));
+
+            // Right Goal Text Label
+            ctx.fillStyle = "#10b981";
+            ctx.fillText("ATTACKING GOAL", mapX(99.0), mapY(34.0));
+
+            // Zone Titles
+            ctx.font = "600 11px 'Space Grotesk', sans-serif";
+            ctx.fillStyle = "rgba(239, 68, 68, 0.9)";
+            ctx.fillText("DEFENSIVE ZONE (Conceded Shots)", mapX(26.25), pitchY + 14);
+
+            ctx.fillStyle = "rgba(16, 185, 129, 0.9)";
+            ctx.fillText("ATTACKING ZONE (Scored Shots)", mapX(78.75), pitchY + 14);
+
+            // Pitch Scale Info
+            ctx.font = "500 9px 'Outfit', sans-serif";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.45)";
+            ctx.fillText("Standard Pitch Geometry: 105m x 68m", mapX(52.5), pitchY + pH - 10);
         }
 
         window.addEventListener('resize', function() {

@@ -156,25 +156,25 @@ REAL_SEASON_STATS = {
 
 def generate_exact_calibrated_shots(n_goals, n_chances, is_attacking=False, seed_val=0):
     """
-    Generates exact-matching shot coordinates for goals and big chances.
-    Clamped strictly between Y=14m and Y=54m to prevent corner/touchline clipping.
+    Generates exact-matching shot coordinates for goals and big chances using raw realistic distributions
+    spanning full 105m x 68m pitch geometry without artificial touchline clamping or protection.
     """
     np.random.seed(seed_val)
     
     if is_attacking:
-        # Attacking Goal at X=105 (Right Half X in [68, 103]m, Y in [16, 52]m)
-        gx = np.clip(np.random.normal(95.0, 4.5, n_goals), 78.0, 103.0) if n_goals > 0 else np.array([])
-        gy = np.clip(np.random.normal(34.0, 7.5, n_goals), 16.0, 52.0) if n_goals > 0 else np.array([])
+        # Attacking Goal at X=105 (Right Half X in [53.0, 104.5]m, Y in [0.5, 67.5]m)
+        gx = np.clip(np.random.normal(96.0, 6.0, n_goals), 53.0, 104.5) if n_goals > 0 else np.array([])
+        gy = np.clip(np.random.normal(34.0, 11.0, n_goals), 0.5, 67.5) if n_goals > 0 else np.array([])
         
-        cx = np.clip(np.random.normal(86.0, 6.5, n_chances), 68.0, 101.0) if n_chances > 0 else np.array([])
-        cy = np.clip(np.random.normal(34.0, 9.5, n_chances), 15.0, 53.0) if n_chances > 0 else np.array([])
+        cx = np.clip(np.random.normal(87.0, 8.5, n_chances), 53.0, 104.5) if n_chances > 0 else np.array([])
+        cy = np.clip(np.random.normal(34.0, 14.0, n_chances), 0.5, 67.5) if n_chances > 0 else np.array([])
     else:
-        # Defending Goal at X=0 (Left Half X in [2, 37]m, Y in [16, 52]m)
-        gx = np.clip(np.random.normal(10.0, 4.5, n_goals), 2.0, 27.0) if n_goals > 0 else np.array([])
-        gy = np.clip(np.random.normal(34.0, 7.5, n_goals), 16.0, 52.0) if n_goals > 0 else np.array([])
+        # Defending Goal at X=0 (Left Half X in [0.5, 52.0]m, Y in [0.5, 67.5]m)
+        gx = np.clip(np.random.normal(9.0, 6.0, n_goals), 0.5, 52.0) if n_goals > 0 else np.array([])
+        gy = np.clip(np.random.normal(34.0, 11.0, n_goals), 0.5, 67.5) if n_goals > 0 else np.array([])
         
-        cx = np.clip(np.random.normal(19.0, 6.5, n_chances), 4.0, 37.0) if n_chances > 0 else np.array([])
-        cy = np.clip(np.random.normal(34.0, 9.5, n_chances), 15.0, 53.0) if n_chances > 0 else np.array([])
+        cx = np.clip(np.random.normal(18.0, 8.5, n_chances), 0.5, 52.0) if n_chances > 0 else np.array([])
+        cy = np.clip(np.random.normal(34.0, 14.0, n_chances), 0.5, 67.5) if n_chances > 0 else np.array([])
 
     # Generate 32x32 KDE Grid
     all_x = np.concatenate([gx, cx]) if len(gx) or len(cx) else np.array([20.0 if not is_attacking else 85.0])
