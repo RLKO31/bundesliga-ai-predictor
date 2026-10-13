@@ -7,18 +7,23 @@ import json
 import os
 
 def generate_html():
-    json_path = os.path.join("data", "real_match_augsburg_bayern_3d.json")
-    with open(json_path, "r", encoding="utf-8") as f:
-        real_data = json.load(f)
+    json_path_2526 = os.path.join("data", "real_match_augsburg_bayern_3d.json")
+    with open(json_path_2526, "r", encoding="utf-8") as f:
+        real_data_2526 = json.load(f)
 
-    data_json_str = json.dumps(real_data, separators=(',', ':'))
+    json_path_2627 = os.path.join("data", "real_match_augsburg_bayern_2026_27_3d.json")
+    with open(json_path_2627, "r", encoding="utf-8") as f:
+        real_data_2627 = json.load(f)
+
+    data_2526_str = json.dumps(real_data_2526, separators=(',', ':'))
+    data_2627_str = json.dumps(real_data_2627, separators=(',', ':'))
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bundesliga Real Match Digital Twin | FC Augsburg vs FC Bayern M\u00fcnchen (2-3)</title>
+    <title>Bundesliga Real Match Digital Twin | FC Augsburg vs FC Bayern München</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -723,12 +728,18 @@ def generate_html():
                 <span>FC Augsburg</span>
             </div>
             <div class="score-display">
-                <div class="score-nums">2 - 3</div>
-                <div class="match-clock" id="match-clock-display">27:00 • 1st Half</div>
+                <div class="score-nums" id="score-nums-display">2 - 2</div>
+                <div class="match-clock" id="match-clock-display">01:00 • 1st Half</div>
             </div>
             <div class="team-badge">
                 <div class="team-dot bayern"></div>
                 <span>FC Bayern</span>
+            </div>
+            <div style="margin-left: 0.5rem; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 0.75rem;">
+                <select id="match-season-select" onchange="switchMatchDataset(this.value)" style="background: rgba(4, 9, 5, 0.95); color: var(--accent-lime); border: 1px solid var(--accent-green); padding: 0.35rem 0.65rem; border-radius: 8px; font-weight: 700; font-size: 0.78rem; cursor: pointer; outline: none;">
+                    <option value="2026_27" selected>Season 2026/27 (FCA 2 - 2 FCB)</option>
+                    <option value="2025_26">Season 2025/26 (FCA 2 - 3 FCB)</option>
+                </select>
             </div>
         </div>
 
@@ -928,7 +939,45 @@ def generate_html():
 
     <!-- Embedded Real Match Dataset & Engine -->
     <script>
-        window.REAL_MATCH_DATA = {data_json_str};
+        window.MATCH_DATA_2025_26 = {data_2526_str};
+        window.MATCH_DATA_2026_27 = {data_2627_str};
+        window.REAL_MATCH_DATA = window.MATCH_DATA_2026_27;
+
+        function switchMatchDataset(seasonKey) {{
+            window.REAL_MATCH_DATA = (seasonKey === '2026_27') ? window.MATCH_DATA_2026_27 : window.MATCH_DATA_2025_26;
+
+            const meta = window.REAL_MATCH_DATA.metadata;
+            const scoreEl = document.getElementById('score-nums-display');
+            if (scoreEl) scoreEl.textContent = meta.score.replace(':', ' - ');
+
+            // Remove existing player groups from scene
+            for (const pid in playerObjects) {{
+                if (playerObjects[pid] && playerObjects[pid].group) {{
+                    scene.remove(playerObjects[pid].group);
+                }}
+            }}
+            playerObjects = {{}};
+
+            // Rebuild players with new roster
+            buildRealPlayers();
+
+            // Rebuild squad UI and event options
+            buildSquadChipsUI();
+            buildRealEventsUI();
+
+            // Default player selection
+            const allRoster = [
+                ...window.REAL_MATCH_DATA.rosters.bayern,
+                ...window.REAL_MATCH_DATA.rosters.augsburg
+            ];
+            const kane = allRoster.find(p => p.short === 'Kane');
+            selectedPlayerKey = kane ? kane.id : allRoster[0].id;
+            updateSelectedPlayerUI();
+
+            // Jump to first event
+            jumpToEventIndex(0);
+            showToast(`Loaded ${{meta.season}} Match: FCA ${{meta.score}} FCB`);
+        }}
 
         /* =========================================================================
            1. CORE VARIABLES & STATE MANAGEMENT
@@ -949,7 +998,7 @@ def generate_html():
 
         let cameraMode = 'orbit'; // 'orbit', 'broadcast', 'sky', 'goal', 'drone', 'pov'
         let isPlaying = true;
-        let matchTime = 1620; // in seconds (27' Gnabry goal)
+        let matchTime = 45; // in seconds (1' Fellhauer goal)
         let playbackSpeed = 1.0;
         let lastTimestamp = performance.now();
 
@@ -1115,6 +1164,7 @@ def generate_html():
             buildSquadChipsUI();
             buildRealEventsUI();
             updateSelectedPlayerUI();
+            jumpToEventIndex(0);
 
             lucide.createIcons();
         }}
@@ -1506,6 +1556,7 @@ def generate_html():
             const wrapper = document.getElementById('timeline-bar-wrapper');
 
             select.innerHTML = '';
+            wrapper.querySelectorAll('.event-pip').forEach(p => p.remove());
 
             window.REAL_MATCH_DATA.events.forEach((ev, idx) => {{
                 // Populate dropdown

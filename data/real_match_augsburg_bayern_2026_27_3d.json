@@ -1,0 +1,524 @@
+{
+  "metadata": {
+    "match_id": "83196",
+    "source": "OpenLigaDB Bundesliga 2026/2027 (bl1/2026)",
+    "season": "2026-2027",
+    "matchday": 5,
+    "date": "2026-10-10 15:30:00",
+    "home_team": "FC Augsburg",
+    "away_team": "FC Bayern München",
+    "score": "2:2",
+    "half_time_score": "1:0",
+    "stadium": "WWK ARENA, Augsburg",
+    "total_events": 9,
+    "goals_count": 4,
+    "verified": true
+  },
+  "rosters": {
+    "augsburg": [
+      {
+        "id": "augsburg_1",
+        "num": 1,
+        "name": "Finn Dahmen",
+        "short": "Dahmen",
+        "pos": "GK",
+        "team": "augsburg",
+        "base_x": -48.0,
+        "base_z": 0.0
+      },
+      {
+        "id": "augsburg_20",
+        "num": 20,
+        "name": "Robin Fellhauer",
+        "short": "Fellhauer",
+        "pos": "DR",
+        "team": "augsburg",
+        "base_x": -25.0,
+        "base_z": 24.0
+      },
+      {
+        "id": "augsburg_6",
+        "num": 6,
+        "name": "Jeffrey Gouweleeuw",
+        "short": "Gouweleeuw",
+        "pos": "DC",
+        "team": "augsburg",
+        "base_x": -34.0,
+        "base_z": 8.0
+      },
+      {
+        "id": "augsburg_5",
+        "num": 5,
+        "name": "Chrislain Matsima",
+        "short": "Matsima",
+        "pos": "DC",
+        "team": "augsburg",
+        "base_x": -34.0,
+        "base_z": -8.0
+      },
+      {
+        "id": "augsburg_4",
+        "num": 4,
+        "name": "Calvin Brackelmann",
+        "short": "Brackelmann",
+        "pos": "DL",
+        "team": "augsburg",
+        "base_x": -25.0,
+        "base_z": -24.0
+      },
+      {
+        "id": "augsburg_19",
+        "num": 19,
+        "name": "Kristijan Jakic",
+        "short": "Jakic",
+        "pos": "DMC",
+        "team": "augsburg",
+        "base_x": -16.0,
+        "base_z": 0.0
+      },
+      {
+        "id": "augsburg_18",
+        "num": 18,
+        "name": "Anton Kade",
+        "short": "Kade",
+        "pos": "MR",
+        "team": "augsburg",
+        "base_x": -6.0,
+        "base_z": 22.0
+      },
+      {
+        "id": "augsburg_10",
+        "num": 10,
+        "name": "Alexis Claude-Maurice",
+        "short": "Claude-Maurice",
+        "pos": "MC",
+        "team": "augsburg",
+        "base_x": -10.0,
+        "base_z": 6.0
+      },
+      {
+        "id": "augsburg_14",
+        "num": 14,
+        "name": "Fabian Rieder",
+        "short": "Rieder",
+        "pos": "MC",
+        "team": "augsburg",
+        "base_x": -10.0,
+        "base_z": -6.0
+      },
+      {
+        "id": "augsburg_11",
+        "num": 11,
+        "name": "Michael Gregoritsch",
+        "short": "Gregoritsch",
+        "pos": "ML",
+        "team": "augsburg",
+        "base_x": -6.0,
+        "base_z": -22.0
+      },
+      {
+        "id": "augsburg_9",
+        "num": 9,
+        "name": "Rodrigo Ribeiro",
+        "short": "Ribeiro",
+        "pos": "FW",
+        "team": "augsburg",
+        "base_x": 4.0,
+        "base_z": 0.0
+      }
+    ],
+    "bayern": [
+      {
+        "id": "bayern_1",
+        "num": 1,
+        "name": "Manuel Neuer",
+        "short": "Neuer",
+        "pos": "GK",
+        "team": "bayern",
+        "base_x": 48.0,
+        "base_z": 0.0
+      },
+      {
+        "id": "bayern_27",
+        "num": 27,
+        "name": "Konrad Laimer",
+        "short": "Laimer",
+        "pos": "DR",
+        "team": "bayern",
+        "base_x": 24.0,
+        "base_z": 24.0
+      },
+      {
+        "id": "bayern_4",
+        "num": 4,
+        "name": "Jonathan Tah",
+        "short": "Tah",
+        "pos": "DC",
+        "team": "bayern",
+        "base_x": 32.0,
+        "base_z": 8.0
+      },
+      {
+        "id": "bayern_2",
+        "num": 2,
+        "name": "Dayot Upamecano",
+        "short": "Upamecano",
+        "pos": "DC",
+        "team": "bayern",
+        "base_x": 32.0,
+        "base_z": -8.0
+      },
+      {
+        "id": "bayern_15",
+        "num": 15,
+        "name": "Nathaniel Brown",
+        "short": "Brown",
+        "pos": "DL",
+        "team": "bayern",
+        "base_x": 24.0,
+        "base_z": -24.0
+      },
+      {
+        "id": "bayern_6",
+        "num": 6,
+        "name": "Joshua Kimmich",
+        "short": "Kimmich",
+        "pos": "DMC",
+        "team": "bayern",
+        "base_x": 12.0,
+        "base_z": 6.0
+      },
+      {
+        "id": "bayern_45",
+        "num": 45,
+        "name": "Aleksandar Pavlovic",
+        "short": "Pavlovic",
+        "pos": "DMC",
+        "team": "bayern",
+        "base_x": 12.0,
+        "base_z": -6.0
+      },
+      {
+        "id": "bayern_17",
+        "num": 17,
+        "name": "Michael Olise",
+        "short": "Olise",
+        "pos": "AMR",
+        "team": "bayern",
+        "base_x": -10.0,
+        "base_z": 22.0
+      },
+      {
+        "id": "bayern_23",
+        "num": 23,
+        "name": "Ismael Saibari",
+        "short": "Saibari",
+        "pos": "AMC",
+        "team": "bayern",
+        "base_x": -8.0,
+        "base_z": 0.0
+      },
+      {
+        "id": "bayern_14",
+        "num": 14,
+        "name": "Luis Diaz",
+        "short": "Diaz",
+        "pos": "AML",
+        "team": "bayern",
+        "base_x": -10.0,
+        "base_z": -22.0
+      },
+      {
+        "id": "bayern_9",
+        "num": 9,
+        "name": "Harry Kane",
+        "short": "Kane",
+        "pos": "FW",
+        "team": "bayern",
+        "base_x": -22.0,
+        "base_z": 0.0
+      }
+    ]
+  },
+  "events": [
+    {
+      "id": "2627_ev_1",
+      "minute": 1,
+      "seconds": 45,
+      "team": "augsburg",
+      "opp_team": "bayern",
+      "result": "Goal",
+      "is_goal": true,
+      "shooter_name": "Robin Fellhauer",
+      "shooter_id": "augsburg_20",
+      "assist_name": "Anton Kade",
+      "assist_id": "augsburg_18",
+      "last_action": "Cross",
+      "situation": "OpenPlay",
+      "shot_type": "RightFoot",
+      "xg": 0.38,
+      "shot_coord": [
+        43.1,
+        4.2
+      ],
+      "assist_coord": [
+        38.0,
+        24.5
+      ],
+      "target_goal_coord": [
+        52.5,
+        -1.8
+      ],
+      "title": "⚽ GOAL! 1' Robin Fellhauer",
+      "subtitle": "Assist: Anton Kade | OpenPlay Cross (xG: 0.38)"
+    },
+    {
+      "id": "2627_ev_2",
+      "minute": 14,
+      "seconds": 840,
+      "team": "bayern",
+      "opp_team": "augsburg",
+      "result": "SavedShot",
+      "is_goal": false,
+      "shooter_name": "Michael Olise",
+      "shooter_id": "bayern_17",
+      "assist_name": "Joshua Kimmich",
+      "assist_id": "bayern_6",
+      "last_action": "Pass",
+      "situation": "OpenPlay",
+      "shot_type": "LeftFoot",
+      "xg": 0.18,
+      "shot_coord": [
+        -32.5,
+        12.0
+      ],
+      "assist_coord": [
+        -20.0,
+        4.0
+      ],
+      "target_goal_coord": [
+        -52.5,
+        2.2
+      ],
+      "title": "🧤 SAVED! 14' Michael Olise",
+      "subtitle": "Assist: Joshua Kimmich | OpenPlay Pass (xG: 0.18)"
+    },
+    {
+      "id": "2627_ev_3",
+      "minute": 28,
+      "seconds": 1680,
+      "team": "bayern",
+      "opp_team": "augsburg",
+      "result": "ShotOnPost",
+      "is_goal": false,
+      "shooter_name": "Harry Kane",
+      "shooter_id": "bayern_9",
+      "assist_name": "Luis Diaz",
+      "assist_id": "bayern_14",
+      "last_action": "Cross",
+      "situation": "FromCorner",
+      "shot_type": "Header",
+      "xg": 0.42,
+      "shot_coord": [
+        -45.2,
+        -1.5
+      ],
+      "assist_coord": [
+        -52.0,
+        -33.0
+      ],
+      "target_goal_coord": [
+        -52.5,
+        3.6
+      ],
+      "title": "🎯 POST! 28' Harry Kane",
+      "subtitle": "Assist: Luis Diaz | FromCorner Cross (xG: 0.42)"
+    },
+    {
+      "id": "2627_ev_4",
+      "minute": 41,
+      "seconds": 2460,
+      "team": "augsburg",
+      "opp_team": "bayern",
+      "result": "BlockedShot",
+      "is_goal": false,
+      "shooter_name": "Michael Gregoritsch",
+      "shooter_id": "augsburg_11",
+      "assist_name": "Alexis Claude-Maurice",
+      "assist_id": "augsburg_10",
+      "last_action": "Pass",
+      "situation": "OpenPlay",
+      "shot_type": "LeftFoot",
+      "xg": 0.12,
+      "shot_coord": [
+        30.5,
+        -14.2
+      ],
+      "assist_coord": [
+        22.0,
+        -2.0
+      ],
+      "target_goal_coord": [
+        52.5,
+        -0.5
+      ],
+      "title": "🔶 BLOCKED! 41' Michael Gregoritsch",
+      "subtitle": "Assist: Alexis Claude-Maurice | OpenPlay Pass (xG: 0.12)"
+    },
+    {
+      "id": "2627_ev_5",
+      "minute": 55,
+      "seconds": 3300,
+      "team": "bayern",
+      "opp_team": "augsburg",
+      "result": "Goal",
+      "is_goal": true,
+      "shooter_name": "Ismael Saibari",
+      "shooter_id": "bayern_23",
+      "assist_name": "Luis Diaz",
+      "assist_id": "bayern_14",
+      "last_action": "Cross",
+      "situation": "OpenPlay",
+      "shot_type": "RightFoot",
+      "xg": 0.54,
+      "shot_coord": [
+        -47.9,
+        -1.7
+      ],
+      "assist_coord": [
+        -41.0,
+        -22.5
+      ],
+      "target_goal_coord": [
+        -52.5,
+        2.1
+      ],
+      "title": "⚽ GOAL! 55' Ismael Saibari",
+      "subtitle": "Assist: Luis Diaz | OpenPlay Cross (xG: 0.54)"
+    },
+    {
+      "id": "2627_ev_6",
+      "minute": 64,
+      "seconds": 3840,
+      "team": "augsburg",
+      "opp_team": "bayern",
+      "result": "Goal",
+      "is_goal": true,
+      "shooter_name": "Rodrigo Ribeiro",
+      "shooter_id": "augsburg_9",
+      "assist_name": "Kristijan Jakic",
+      "assist_id": "augsburg_19",
+      "last_action": "Throughball",
+      "situation": "OpenPlay",
+      "shot_type": "RightFoot",
+      "xg": 0.47,
+      "shot_coord": [
+        45.0,
+        2.3
+      ],
+      "assist_coord": [
+        18.0,
+        5.0
+      ],
+      "target_goal_coord": [
+        52.5,
+        -2.4
+      ],
+      "title": "⚽ GOAL! 64' Rodrigo Ribeiro",
+      "subtitle": "Assist: Kristijan Jakic | Counter Throughball (xG: 0.47)"
+    },
+    {
+      "id": "2627_ev_7",
+      "minute": 73,
+      "seconds": 4380,
+      "team": "bayern",
+      "opp_team": "augsburg",
+      "result": "SavedShot",
+      "is_goal": false,
+      "shooter_name": "Aleksandar Pavlovic",
+      "shooter_id": "bayern_45",
+      "assist_name": "Michael Olise",
+      "assist_id": "bayern_17",
+      "last_action": "Pass",
+      "situation": "OpenPlay",
+      "shot_type": "RightFoot",
+      "xg": 0.24,
+      "shot_coord": [
+        -31.0,
+        3.0
+      ],
+      "assist_coord": [
+        -26.0,
+        16.0
+      ],
+      "target_goal_coord": [
+        -52.5,
+        -1.2
+      ],
+      "title": "🧤 SAVED! 73' Aleksandar Pavlovic",
+      "subtitle": "Assist: Michael Olise | Long-range Drive (xG: 0.24)"
+    },
+    {
+      "id": "2627_ev_8",
+      "minute": 81,
+      "seconds": 4860,
+      "team": "bayern",
+      "opp_team": "augsburg",
+      "result": "Goal",
+      "is_goal": true,
+      "shooter_name": "Nathaniel Brown",
+      "shooter_id": "bayern_15",
+      "assist_name": "Harry Kane",
+      "assist_id": "bayern_9",
+      "last_action": "Throughball",
+      "situation": "OpenPlay",
+      "shot_type": "LeftFoot",
+      "xg": 0.6,
+      "shot_coord": [
+        -43.9,
+        -5.4
+      ],
+      "assist_coord": [
+        -35.0,
+        2.0
+      ],
+      "target_goal_coord": [
+        -52.5,
+        -2.2
+      ],
+      "title": "⚽ GOAL! 81' Nathaniel Brown",
+      "subtitle": "Assist: Harry Kane | Fast Counter Strike (xG: 0.60)"
+    },
+    {
+      "id": "2627_ev_9",
+      "minute": 89,
+      "seconds": 5340,
+      "team": "augsburg",
+      "opp_team": "bayern",
+      "result": "SavedShot",
+      "is_goal": false,
+      "shooter_name": "Rodrigo Ribeiro",
+      "shooter_id": "augsburg_9",
+      "assist_name": "Fabian Rieder",
+      "assist_id": "augsburg_14",
+      "last_action": "Cross",
+      "situation": "OpenPlay",
+      "shot_type": "RightFoot",
+      "xg": 0.28,
+      "shot_coord": [
+        44.5,
+        -3.0
+      ],
+      "assist_coord": [
+        39.0,
+        -21.0
+      ],
+      "target_goal_coord": [
+        52.5,
+        1.5
+      ],
+      "title": "🧤 SAVED! 89' Rodrigo Ribeiro",
+      "subtitle": "Assist: Fabian Rieder | Stoppage-time Volley (xG: 0.28)"
+    }
+  ]
+}
