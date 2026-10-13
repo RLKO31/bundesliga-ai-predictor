@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bundesliga 3D Match Digital Twin | FC Augsburg vs Bayern München</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Three.js & OrbitControls from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <style>
+        :root {
+            --bg-deep: #030704;
+            --bg-panel: rgba(8, 20, 11, 0.78);
+            --bg-panel-hover: rgba(14, 34, 19, 0.92);
+            --border-glow: rgba(34, 197, 94, 0.25);
+            --border-glow-bright: rgba(34, 197, 94, 0.55);
+            --accent-green: #22c55e;
+            --accent-lime: #a3e635;
+            --accent-bayern: #dc2626;
+            --accent-augsburg: #166534;
+            --accent-ball: #f8fafc;
+            --accent-gold: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Top Header & Scoreboard */
+        .top-nav {
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .match-score-card {
+            pointer-events: auto;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 0.75rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(34, 197, 94, 0.1);
+        }
+
+        .team-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        .team-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .team-dot.bayern { background: var(--accent-bayern); box-shadow: 0 0 10px rgba(220, 38, 38, 0.6); }
+        .team-dot.augsburg { background: #ffffff; border: 2px solid var(--accent-augsburg); box-shadow: 0 0 10px rgba(22, 101, 52, 0.6); }
+
+        .score-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .score-nums {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            color: #fff;
+        }
+        .match-clock {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-lime);
+            letter-spacing: 0.05em;
+            background: rgba(163, 230, 53, 0.12);
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .header-actions {
+            pointer-events: auto;
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .action-btn {
+            background: var(--bg-panel);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glow);
+            color: var(--text-primary);
+            padding: 0.65rem 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+        .action-btn:hover {
+            background: var(--bg-panel-hover);
+            border-color: var(--border-glow-bright);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px -5px rgba(34, 197, 94, 0.3);
+        }
+        .action-btn.active {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            color: #fff;
+            border-color: var(--accent-lime);
+        }
+
+        /* Camera Mode Control Bar */
+        .camera-bar {
+            position: absolute;
+            top: 5.5rem;
+            left: 1.5rem;
+            z-index: 10;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            padding: 0.35rem;
+            display: flex;
+            gap: 0.35rem;
+        }
+        .cam-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.5rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+        }
+        .cam-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
+        .cam-btn.active {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--accent-lime);
+            font-weight: 700;
+            box-shadow: inset 0 0 10px rgba(34, 197, 94, 0.2);
+        }
+
+        /* Player POV HUD Banner */
+        .pov-banner {
+            display: none;
+            position: absolute;
+            top: 9.5rem;
+            left: 1.5rem;
+            z-index: 10;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            border-radius: 14px;
+            padding: 0.85rem 1.25rem;
+            width: 320px;
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+        .pov-banner.active { display: block; }
+        .pov-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .pov-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .pov-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            font-size: 0.78rem;
+        }
+        .pov-stat {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-label { color: var(--text-secondary); font-size: 0.68rem; }
+        .stat-val { color: #fff; font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+
+        /* Crosshair in POV mode */
+        .pov-crosshair {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .pov-crosshair::before, .pov-crosshair::after {
+            content: '';
+            position: absolute;
+            background: rgba(56, 189, 248, 0.45);
+        }
+        .pov-crosshair::before { top: 11px; left: 0; width: 24px; height: 2px; }
+        .pov-crosshair::after { top: 0; left: 11px; width: 2px; height: 24px; }
+        .pov-crosshair.active { display: block; }
+
+        /* Tactical 2D Radar / Minimap */
+        .radar-panel {
+            position: absolute;
+            bottom: 6.5rem;
+            right: 1.5rem;
+            z-index: 10;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 0.75rem;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.8);
+        }
+        .radar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-lime);
+        }
+        #radar-canvas {
+            display: block;
+            border-radius: 8px;
+            background: #06180b;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            cursor: crosshair;
+        }
+
+        /* Bottom Playback Dock */
+        .bottom-dock {
+            position: absolute;
+            bottom: 1.25rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            z-index: 10;
+            background: var(--bg-panel);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 0.85rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.85), 0 0 30px rgba(34, 197, 94, 0.1);
+        }
+
+        /* Scrubber Bar & Event Bookmarks */
+        .timeline-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+        .time-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-lime);
+            width: 45px;
+            text-align: center;
+        }
+        .timeline-bar-wrapper {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            height: 24px;
+        }
+        .timeline-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+        .timeline-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 12px var(--accent-green);
+            cursor: pointer;
+            border: 2px solid #fff;
+            transition: transform 0.1s;
+        }
+        .timeline-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Event Pips on the scrubber bar */
+        .event-pip {
+            position: absolute;
+            top: 2px;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            cursor: pointer;
+            z-index: 3;
+            transition: all 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .event-pip:hover {
+            transform: translateX(-50%) scale(1.3);
+            z-index: 5;
+        }
+        .event-pip.goal-bayern { background: var(--accent-bayern); box-shadow: 0 0 8px rgba(220, 38, 38, 0.8); }
+        .event-pip.goal-augsburg { background: var(--accent-augsburg); box-shadow: 0 0 8px rgba(22, 101, 52, 0.8); }
+        .event-pip.chance { background: var(--accent-gold); box-shadow: 0 0 8px rgba(245, 158, 11, 0.8); }
+
+        /* Controls Row */
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .playback-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .ctrl-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 0.5rem 0.9rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s;
+        }
+        .ctrl-btn:hover {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: var(--accent-green);
+            color: var(--accent-lime);
+        }
+        .ctrl-btn.play-btn {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            border: none;
+            padding: 0.5rem 1.4rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px -3px rgba(34, 197, 94, 0.5);
+        }
+        .ctrl-btn.play-btn:hover {
+            box-shadow: 0 6px 20px -2px rgba(34, 197, 94, 0.7);
+            transform: scale(1.02);
+        }
+
+        .speed-group {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .speed-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.55rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .speed-btn.active {
+            background: var(--accent-green);
+            color: #fff;
+        }
+
+        .jump-actions-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .event-tag-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.4rem 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .event-tag-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .event-tag-btn.active {
+            border-color: var(--accent-lime);
+            color: var(--accent-lime);
+            background: rgba(163, 230, 53, 0.1);
+        }
+
+        /* Player Dropdown */
+        .player-select-custom {
+            background: rgba(4, 9, 5, 0.9);
+            border: 1px solid var(--border-glow);
+            color: #fff;
+            border-radius: 10px;
+            padding: 0.45rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Floating Tactical Toggles Drawer */
+        .toggles-bar {
+            position: absolute;
+            top: 5.5rem;
+            right: 1.5rem;
+            z-index: 10;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            padding: 0.4rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.76rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .toggle-item input[type="checkbox"] {
+            accent-color: var(--accent-green);
+            cursor: pointer;
+        }
+        .toggle-item:hover { color: #fff; }
+
+        /* Notifications / Toast */
+        .toast-banner {
+            position: absolute;
+            top: 4.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(16, 185, 129, 0.92);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            padding: 0.5rem 1.25rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.5);
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+
+        /* Instructions overlay for first person */
+        .pov-instructions {
+            position: absolute;
+            bottom: 7.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.76rem;
+            color: #94a3b8;
+            pointer-events: none;
+            display: none;
+        }
+        .pov-instructions.active { display: block; }
+        .pov-instructions strong { color: #38bdf8; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Three.js Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- First Person Crosshair -->
+    <div class="pov-crosshair" id="pov-crosshair"></div>
+
+    <!-- Notification Toast -->
+    <div class="toast-banner" id="toast-banner">Event Loaded</div>
+
+    <!-- POV Instructions -->
+    <div class="pov-instructions" id="pov-instructions">
+        👁️ <strong>First-Person Vision:</strong> Drag mouse to turn head (Angles: Yaw ±120°, Pitch ±40°) | Running toward action
+    </div>
+
+    <!-- Top Header: Scoreboard & Top Actions -->
+    <header class="top-nav">
+        <div class="match-score-card">
+            <div class="team-badge">
+                <div class="team-dot augsburg"></div>
+                <span>FC Augsburg</span>
+            </div>
+            <div class="score-display">
+                <div class="score-nums">2 - 3</div>
+                <div class="match-clock" id="match-clock-display">28:40 • 1st Half</div>
+            </div>
+            <div class="team-badge">
+                <div class="team-dot bayern"></div>
+                <span>FC Bayern</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <button class="action-btn" id="audio-toggle-btn" onclick="toggleAudio()">
+                <i data-lucide="volume-2" size="16"></i>
+                <span id="audio-btn-text">Audio: ON</span>
+            </button>
+            <button class="action-btn" onclick="captureSnapshot()">
+                <i data-lucide="camera" size="16"></i>
+                <span>Snapshot</span>
+            </button>
+            <button class="action-btn" onclick="toggleFullScreen()">
+                <i data-lucide="maximize" size="16"></i>
+                <span>Full Screen</span>
+            </button>
+            <button class="action-btn active" onclick="window.location.href='index.html'">
+                <i data-lucide="arrow-left" size="16"></i>
+                <span>Dashboard</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Camera Mode Selector Bar -->
+    <div class="camera-bar">
+        <button class="cam-btn active" id="cam-orbit" onclick="setCameraMode('orbit')">
+            <i data-lucide="orbit" size="14"></i> Tactical Orbit
+        </button>
+        <button class="cam-btn" id="cam-broadcast" onclick="setCameraMode('broadcast')">
+            <i data-lucide="tv" size="14"></i> TV Broadcast
+        </button>
+        <button class="cam-btn" id="cam-sky" onclick="setCameraMode('sky')">
+            <i data-lucide="crosshair" size="14"></i> Overhead Sky
+        </button>
+        <button class="cam-btn" id="cam-goal" onclick="setCameraMode('goal')">
+            <i data-lucide="shield" size="14"></i> Behind Goal
+        </button>
+        <button class="cam-btn" id="cam-drone" onclick="setCameraMode('drone')">
+            <i data-lucide="video" size="14"></i> Action Drone
+        </button>
+        <button class="cam-btn" id="cam-pov" onclick="setCameraMode('pov')">
+            <i data-lucide="eye" size="14"></i> Player POV (1st Person)
+        </button>
+    </div>
+
+    <!-- Tactical Toggles Toolbar -->
+    <div class="toggles-bar">
+        <label class="toggle-item">
+            <input type="checkbox" id="toggle-names" checked onchange="togglePlayerNames(this.checked)">
+            <span>Names</span>
+        </label>
+        <label class="toggle-item">
+            <input type="checkbox" id="toggle-trail" checked onchange="toggleBallTrail(this.checked)">
+            <span>Ball Trail</span>
+        </label>
+        <label class="toggle-item">
+            <input type="checkbox" id="toggle-offside" checked onchange="toggleOffsideLine(this.checked)">
+            <span>Offside Line</span>
+        </label>
+        <label class="toggle-item">
+            <input type="checkbox" id="toggle-hull" onchange="toggleTeamShape(this.checked)">
+            <span>Shape Lines</span>
+        </label>
+        <label class="toggle-item">
+            <input type="checkbox" id="toggle-visors" checked onchange="toggleEyesightVisors(this.checked)">
+            <span>Gaze Visors</span>
+        </label>
+    </div>
+
+    <!-- Player First Person Telemetry HUD -->
+    <div class="pov-banner" id="pov-banner">
+        <div class="pov-header">
+            <div class="pov-name" id="hud-player-name">
+                <i data-lucide="user" size="16"></i> #9 Harry Kane
+            </div>
+            <span style="font-size: 0.72rem; color: #a3e635; font-weight: 700;" id="hud-player-role">Center Forward</span>
+        </div>
+        <div class="pov-stats-grid">
+            <div class="pov-stat">
+                <span class="stat-label">Velocity</span>
+                <span class="stat-val" id="hud-player-speed">24.8 km/h</span>
+            </div>
+            <div class="pov-stat">
+                <span class="stat-label">Distance Covered</span>
+                <span class="stat-val" id="hud-player-dist">8,640 m</span>
+            </div>
+            <div class="pov-stat">
+                <span class="stat-label">Head Yaw Angle</span>
+                <span class="stat-val" id="hud-head-yaw">0.0°</span>
+            </div>
+            <div class="pov-stat">
+                <span class="stat-label">Gaze Target</span>
+                <span class="stat-val" style="color: #38bdf8;" id="hud-gaze-status">Ball Tracking</span>
+            </div>
+        </div>
+        <div style="margin-top: 0.5rem; display: flex; gap: 0.4rem;">
+            <button class="ctrl-btn" style="flex:1; font-size: 0.72rem; padding: 0.3rem;" onclick="resetHeadAngle()">
+                <i data-lucide="rotate-ccw" size="12"></i> Center Head
+            </button>
+            <button class="ctrl-btn" style="flex:1; font-size: 0.72rem; padding: 0.3rem;" onclick="toggleBallGazeLock()" id="btn-gaze-lock">
+                <i data-lucide="lock" size="12"></i> Lock Ball Gaze
+            </button>
+        </div>
+    </div>
+
+    <!-- 2D Tactical Minimap / Radar -->
+    <div class="radar-panel">
+        <div class="radar-header">
+            <span>2D TACTICAL RADAR</span>
+            <span style="font-size: 0.68rem; color: var(--text-secondary);">105m × 68m</span>
+        </div>
+        <canvas id="radar-canvas" width="210" height="136"></canvas>
+    </div>
+
+    <!-- Bottom Playback Dock -->
+    <div class="bottom-dock">
+        <!-- Interactive Scrubber Timeline -->
+        <div class="timeline-container">
+            <span class="time-label" id="timeline-time-display">28:40</span>
+            <div class="timeline-bar-wrapper">
+                <input type="range" id="timeline-slider" class="timeline-slider" min="0" max="5400" value="1720" step="1" oninput="onTimelineScrub(this.value)">
+                
+                <!-- Event Bookmarks (Pips) -->
+                <div class="event-pip chance" style="left: 26.6%;" title="24' Chance: Lennart Karl shot" onclick="jumpToMatchTime(1440)">🔶</div>
+                <div class="event-pip goal-bayern" style="left: 31.8%;" title="28' GOAL: Serge Gnabry (0-1)" onclick="jumpToMatchTime(1720)">⚽</div>
+                <div class="event-pip goal-bayern" style="left: 51.0%;" title="45'+4 GOAL: Luis Díaz (0-2)" onclick="jumpToMatchTime(2750)">⚽</div>
+                <div class="event-pip goal-bayern" style="left: 53.3%;" title="48' GOAL: Michael Olise (0-3)" onclick="jumpToMatchTime(2880)">⚽</div>
+                <div class="event-pip goal-augsburg" style="left: 58.8%;" title="53' GOAL: Kristijan Jakić (1-3)" onclick="jumpToMatchTime(3180)">⚽</div>
+                <div class="event-pip chance" style="left: 77.7%;" title="70' Chance: Harry Kane header" onclick="jumpToMatchTime(4200)">🔶</div>
+                <div class="event-pip goal-augsburg" style="left: 84.4%;" title="76' GOAL: Mert Kömür (2-3)" onclick="jumpToMatchTime(4560)">⚽</div>
+            </div>
+            <span class="time-label" style="color: var(--text-secondary);">90:00</span>
+        </div>
+
+        <!-- Controls Row -->
+        <div class="controls-row">
+            <div class="playback-buttons">
+                <button class="ctrl-btn" onclick="stepTime(-10)" title="Rewind 10 seconds">
+                    <i data-lucide="rotate-ccw" size="14"></i> -10s
+                </button>
+                <button class="ctrl-btn play-btn" id="play-pause-btn" onclick="togglePlayPause()">
+                    <i data-lucide="pause" size="16" id="play-pause-icon"></i>
+                    <span id="play-pause-text">Pause</span>
+                </button>
+                <button class="ctrl-btn" onclick="stepTime(10)" title="Forward 10 seconds">
+                    <i data-lucide="rotate-cw" size="14"></i> +10s
+                </button>
+                <button class="ctrl-btn" onclick="replayCurrentAction()" title="Replay key action in slow-motion">
+                    <i data-lucide="rewind" size="14"></i> Replay
+                </button>
+
+                <!-- Speed Multiplier -->
+                <div class="speed-group">
+                    <button class="speed-btn" onclick="setPlaybackSpeed(0.5, this)">0.5x</button>
+                    <button class="speed-btn active" onclick="setPlaybackSpeed(1.0, this)">1x</button>
+                    <button class="speed-btn" onclick="setPlaybackSpeed(2.0, this)">2x</button>
+                    <button class="speed-btn" onclick="setPlaybackSpeed(4.0, this)">4x</button>
+                </div>
+            </div>
+
+            <!-- Key Action Jump Buttons -->
+            <div class="jump-actions-group">
+                <span style="font-size: 0.72rem; color: var(--text-secondary); font-weight: 700; margin-right: 0.2rem;">HIGHLIGHTS:</span>
+                <button class="event-tag-btn" onclick="jumpToMatchTime(1720)">28' ⚽ Gnabry 0-1</button>
+                <button class="event-tag-btn" onclick="jumpToMatchTime(2750)">45'+4 ⚽ Díaz 0-2</button>
+                <button class="event-tag-btn" onclick="jumpToMatchTime(2880)">48' ⚽ Olise 0-3</button>
+                <button class="event-tag-btn" onclick="jumpToMatchTime(3180)">53' ⚽ Jakić 1-3</button>
+                <button class="event-tag-btn" onclick="jumpToMatchTime(4560)">76' ⚽ Kömür 2-3</button>
+            </div>
+
+            <!-- Player Eye Selector -->
+            <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">Player View:</span>
+                <select id="player-selector" class="player-select-custom" onchange="onPlayerSelected(this.value)">
+                    <optgroup label="Bayern München (4-2-3-1)">
+                        <option value="bayern_9" selected>#9 Harry Kane (ST)</option>
+                        <option value="bayern_7">#7 Serge Gnabry (LW)</option>
+                        <option value="bayern_17">#17 Michael Olise (RW)</option>
+                        <option value="bayern_10">#10 Jamal Musiala (AM)</option>
+                        <option value="bayern_6">#6 Joshua Kimmich (CM)</option>
+                        <option value="bayern_8">#8 Leon Goretzka (CM)</option>
+                        <option value="bayern_19">#19 Alphonso Davies (LB)</option>
+                        <option value="bayern_27">#27 Konrad Laimer (RB)</option>
+                        <option value="bayern_2">#2 Dayot Upamecano (CB)</option>
+                        <option value="bayern_4">#4 Jonathan Tah (CB)</option>
+                        <option value="bayern_1">#1 Manuel Neuer (GK)</option>
+                    </optgroup>
+                    <optgroup label="FC Augsburg (3-4-2-1)">
+                        <option value="augsburg_9">#9 Samuel Essende (ST)</option>
+                        <option value="augsburg_10">#10 Arne Maier (AM)</option>
+                        <option value="augsburg_36">#36 Mert Kömür (AM)</option>
+                        <option value="augsburg_19">#19 Kristijan Jakić (CM)</option>
+                        <option value="augsburg_8">#8 Elvis Rexhbeçaj (CM)</option>
+                        <option value="augsburg_2">#2 Marius Wolf (RWB)</option>
+                        <option value="augsburg_13">#13 Dimitrios Giannoulis (LWB)</option>
+                        <option value="augsburg_5">#5 Chrislain Matsima (CB)</option>
+                        <option value="augsburg_6">#6 Jeffrey Gouweleeuw (CB)</option>
+                        <option value="augsburg_4">#4 Calvin Brackelmann (CB)</option>
+                        <option value="augsburg_1">#1 Finn Dahmen (GK)</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        /* =========================================================================
+           1. CORE VARIABLES & STATE MANAGEMENT
+           ========================================================================= */
+        const PITCH_LENGTH = 105.0; // X axis from -52.5 to +52.5
+        const PITCH_WIDTH = 68.0;   // Z axis from -34.0 to +34.0
+        const GOAL_WIDTH = 7.32;
+        const GOAL_HEIGHT = 2.44;
+
+        let scene, camera, renderer, controls;
+        let pitchMesh, ballMesh, ballShadowMesh;
+        let ballTrailPoints = [];
+        let ballTrailLine;
+        let offsideLineMesh, offsideAttackerAlert = false;
+        let shapeLinesBayern, shapeLinesAugsburg;
+        let playerObjects = {}; // key -> { mesh, visor, label, data, currentPos, prevPos, velocity, heading }
+        let selectedPlayerKey = 'bayern_9';
+
+        let cameraMode = 'orbit'; // 'orbit', 'broadcast', 'sky', 'goal', 'drone', 'pov'
+        let isPlaying = true;
+        let matchTime = 1720; // in seconds (starts at 28:40)
+        let playbackSpeed = 1.0;
+        let lastTimestamp = performance.now();
+
+        // First person head turning system
+        let headYaw = 0.0;    // radians, horizontal turn relative to running direction
+        let headPitch = 0.0;  // radians, vertical look up/down
+        let isDraggingHead = false;
+        let prevMousePos = { x: 0, y: 0 };
+        let lockBallGaze = true; // when true, head automatically aims towards ball
+
+        // Toggles
+        let showNames = true;
+        let showTrail = true;
+        let showOffside = true;
+        let showShape = false;
+        let showVisors = true;
+        let audioEnabled = true;
+
+        /* =========================================================================
+           2. PROCEDURAL SOUND ENGINE (Web Audio API - Zero Dependencies)
+           ========================================================================= */
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playWhistleSound() {
+            if (!audioEnabled || !audioCtx) return;
+            const now = audioCtx.currentTime;
+            const osc1 = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc1.type = 'sine'; osc1.frequency.setValueAtTime(2850, now);
+            osc2.type = 'sine'; osc2.frequency.setValueAtTime(2890, now);
+
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.3, now + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+
+            osc1.connect(gain); osc2.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc1.start(now); osc2.start(now);
+            osc1.stop(now + 0.7); osc2.stop(now + 0.7);
+        }
+
+        function playKickSound() {
+            if (!audioEnabled || !audioCtx) return;
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.frequency.setValueAtTime(140, now);
+            osc.frequency.exponentialRampToValueAtTime(35, now + 0.08);
+
+            gain.gain.setValueAtTime(0.25, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.1);
+        }
+
+        function playCheerSound() {
+            if (!audioEnabled || !audioCtx) return;
+            // Synthesize short crowd roar burst
+            const bufferSize = audioCtx.sampleRate * 1.5;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.7));
+            }
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(600, audioCtx.currentTime);
+            filter.Q.setValueAtTime(1.5, audioCtx.currentTime);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.5);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            noise.start();
+        }
+
+        function toggleAudio() {
+            initAudio();
+            audioEnabled = !audioEnabled;
+            document.getElementById('audio-btn-text').textContent = audioEnabled ? 'Audio: ON' : 'Audio: OFF';
+            document.getElementById('audio-toggle-btn').classList.toggle('active', audioEnabled);
+            showToast(audioEnabled ? 'Audio Soundscape Enabled' : 'Audio Muted');
+        }
+
+        /* =========================================================================
+           3. THREE.JS SCENE SETUP
+           ========================================================================= */
+        function initThree() {
+            const container = document.getElementById('canvas-container');
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x020704);
+            scene.fog = new THREE.FogExp2(0x020704, 0.005);
+
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 500);
+            camera.position.set(0, 32, 60);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, powerPreference: "high-performance" });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.05;
+            container.appendChild(renderer.domElement);
+
+            // Orbit Controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.08;
+            controls.maxPolarAngle = Math.PI / 2 - 0.02; // don't go below ground
+            controls.minDistance = 1.0;
+            controls.maxDistance = 160.0;
+            controls.target.set(0, 1.5, 0);
+
+            // Lighting Setup
+            const ambient = new THREE.AmbientLight(0xdcfce7, 0.6);
+            scene.add(ambient);
+
+            // 4 Corner Stadium Floodlight Towers
+            createFloodlight(-55, 30, -38, 0xecfdf5, 1.3);
+            createFloodlight(55, 30, -38, 0xecfdf5, 1.3);
+            createFloodlight(-55, 30, 38, 0xecfdf5, 1.3);
+            createFloodlight(55, 30, 38, 0xecfdf5, 1.3);
+
+            buildStadiumPitch();
+            build3DGoals();
+            buildStadiumPerimeter();
+            buildBall();
+            buildOffsideLine();
+            buildShapeLines();
+            buildPlayers();
+
+            // Window resize & interaction listeners
+            window.addEventListener('resize', onWindowResize);
+            setupMouseLookListeners();
+
+            // Initialize Lucide icons
+            lucide.createIcons();
+        }
+
+        function createFloodlight(x, y, z, color, intensity) {
+            const light = new THREE.SpotLight(color, intensity);
+            light.position.set(x, y, z);
+            light.target.position.set(x * 0.4, 0, z * 0.4);
+            light.angle = Math.PI / 3;
+            light.penumbra = 0.5;
+            light.castShadow = true;
+            light.shadow.mapSize.width = 1024;
+            light.shadow.mapSize.height = 1024;
+            light.shadow.bias = -0.001;
+            scene.add(light);
+            scene.add(light.target);
+
+            // Visual light fixture
+            const fixture = new THREE.Mesh(
+                new THREE.BoxGeometry(2, 2, 2),
+                new THREE.MeshBasicMaterial({ color: 0xffffff })
+            );
+            fixture.position.set(x, y, z);
+            scene.add(fixture);
+        }
+
+        /* =========================================================================
+           4. PROCEDURAL HIGH-RESOLUTION PITCH & STADIUM
+           ========================================================================= */
+        function generatePitchTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 2048;
+            canvas.height = 1360;
+            const ctx = canvas.getContext('2d');
+
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Pitch turf base green
+            ctx.fillStyle = '#1b5e20';
+            ctx.fillRect(0, 0, w, h);
+
+            // Alternating Mowing Stripes (15 stripes along the pitch)
+            const stripeCount = 18;
+            const stripeW = w / stripeCount;
+            for (let i = 0; i < stripeCount; i++) {
+                ctx.fillStyle = (i % 2 === 0) ? '#216a27' : '#1e6224';
+                ctx.fillRect(i * stripeW, 0, stripeW, h);
+            }
+
+            // Margin padding for pitch boundaries
+            const padX = 80;
+            const padY = 60;
+            const pw = w - padX * 2;
+            const ph = h - padY * 2;
+            const pLeft = padX;
+            const pRight = w - padX;
+            const pTop = padY;
+            const pBottom = h - padY;
+            const pCenterX = w / 2;
+            const pCenterY = h / 2;
+
+            // Drawing FIFA Lines in pristine crisp white
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 7;
+            ctx.lineCap = 'round';
+
+            // Outer Boundary
+            ctx.strokeRect(pLeft, pTop, pw, ph);
+
+            // Halfway Line
+            ctx.beginPath();
+            ctx.moveTo(pCenterX, pTop);
+            ctx.lineTo(pCenterX, pBottom);
+            ctx.stroke();
+
+            // Center Circle & Center Spot
+            const mScale = pw / 105.0; // pixels per meter
+            ctx.beginPath();
+            ctx.arc(pCenterX, pCenterY, 9.15 * mScale, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(pCenterX, pCenterY, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Left Penalty Box (Augsburg Defending)
+            const boxW = 16.5 * mScale;
+            const boxH = 40.32 * mScale;
+            ctx.strokeRect(pLeft, pCenterY - boxH / 2, boxW, boxH);
+
+            // Left 6-Yard Box
+            const sixW = 5.5 * mScale;
+            const sixH = 18.32 * mScale;
+            ctx.strokeRect(pLeft, pCenterY - sixH / 2, sixW, sixH);
+
+            // Left Penalty Spot & Arc
+            const penSpotX_L = pLeft + 11.0 * mScale;
+            ctx.beginPath(); ctx.arc(penSpotX_L, pCenterY, 4, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath();
+            ctx.arc(penSpotX_L, pCenterY, 9.15 * mScale, -0.93, 0.93);
+            ctx.stroke();
+
+            // Right Penalty Box (Bayern Defending)
+            ctx.strokeRect(pRight - boxW, pCenterY - boxH / 2, boxW, boxH);
+
+            // Right 6-Yard Box
+            ctx.strokeRect(pRight - sixW, pCenterY - sixH / 2, sixW, sixH);
+
+            // Right Penalty Spot & Arc
+            const penSpotX_R = pRight - 11.0 * mScale;
+            ctx.beginPath(); ctx.arc(penSpotX_R, pCenterY, 4, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath();
+            ctx.arc(penSpotX_R, pCenterY, 9.15 * mScale, Math.PI - 0.93, Math.PI + 0.93);
+            ctx.stroke();
+
+            // 4 Corner Arcs
+            const cornerR = 1.0 * mScale;
+            ctx.beginPath(); ctx.arc(pLeft, pTop, cornerR, 0, Math.PI / 2); ctx.stroke();
+            ctx.beginPath(); ctx.arc(pLeft, pBottom, cornerR, -Math.PI / 2, 0); ctx.stroke();
+            ctx.beginPath(); ctx.arc(pRight, pTop, cornerR, Math.PI / 2, Math.PI); ctx.stroke();
+            ctx.beginPath(); ctx.arc(pRight, pBottom, cornerR, Math.PI, 3 * Math.PI / 2); ctx.stroke();
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.anisotropy = 16;
+            return texture;
+        }
+
+        function buildStadiumPitch() {
+            const pitchGeo = new THREE.PlaneGeometry(PITCH_LENGTH + 12, PITCH_WIDTH + 10);
+            const pitchMat = new THREE.MeshStandardMaterial({
+                map: generatePitchTexture(),
+                roughness: 0.85,
+                metalness: 0.1
+            });
+            pitchMesh = new THREE.Mesh(pitchGeo, pitchMat);
+            pitchMesh.rotation.x = -Math.PI / 2;
+            pitchMesh.receiveShadow = true;
+            scene.add(pitchMesh);
+        }
+
+        function build3DGoals() {
+            const postRadius = 0.12;
+            const postMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.8 });
+            const netMat = new THREE.MeshBasicMaterial({ color: 0x94a3b8, wireframe: true, transparent: true, opacity: 0.45 });
+
+            function createGoal(x, rotationY) {
+                const goalGroup = new THREE.Group();
+
+                // Posts and Crossbar
+                const postGeo = new THREE.CylinderGeometry(postRadius, postRadius, GOAL_HEIGHT, 16);
+                const postL = new THREE.Mesh(postGeo, postMat);
+                postL.position.set(0, GOAL_HEIGHT / 2, -GOAL_WIDTH / 2);
+                postL.castShadow = true;
+
+                const postR = new THREE.Mesh(postGeo, postMat);
+                postR.position.set(0, GOAL_HEIGHT / 2, GOAL_WIDTH / 2);
+                postR.castShadow = true;
+
+                const barGeo = new THREE.CylinderGeometry(postRadius, postRadius, GOAL_WIDTH + postRadius * 2, 16);
+                const crossbar = new THREE.Mesh(barGeo, postMat);
+                crossbar.rotation.x = Math.PI / 2;
+                crossbar.position.set(0, GOAL_HEIGHT, 0);
+                crossbar.castShadow = true;
+
+                // 3D Hex Net Box
+                const netGeo = new THREE.BoxGeometry(2.0, GOAL_HEIGHT, GOAL_WIDTH);
+                const netMesh = new THREE.Mesh(netGeo, netMat);
+                netMesh.position.set(-1.0, GOAL_HEIGHT / 2, 0);
+
+                goalGroup.add(postL);
+                goalGroup.add(postR);
+                goalGroup.add(crossbar);
+                goalGroup.add(netMesh);
+
+                goalGroup.position.set(x, 0, 0);
+                goalGroup.rotation.y = rotationY;
+                scene.add(goalGroup);
+            }
+
+            // Left Goal (Augsburg net) at X = -52.5m
+            createGoal(-PITCH_LENGTH / 2, 0);
+            // Right Goal (Bayern net) at X = +52.5m
+            createGoal(PITCH_LENGTH / 2, Math.PI);
+        }
+
+        function buildStadiumPerimeter() {
+            // LED Digital Pitchside Ribbon
+            const ledMat = new THREE.MeshBasicMaterial({ color: 0x22c55e });
+            const ledGeoX = new THREE.BoxGeometry(PITCH_LENGTH + 8, 1.0, 0.4);
+            const ledGeoZ = new THREE.BoxGeometry(0.4, 1.0, PITCH_WIDTH + 6);
+
+            const ledNorth = new THREE.Mesh(ledGeoX, ledMat);
+            ledNorth.position.set(0, 0.5, -PITCH_WIDTH / 2 - 3.5);
+            scene.add(ledNorth);
+
+            const ledSouth = new THREE.Mesh(ledGeoX, ledMat);
+            ledSouth.position.set(0, 0.5, PITCH_WIDTH / 2 + 3.5);
+            scene.add(ledSouth);
+
+            const ledWest = new THREE.Mesh(ledGeoZ, ledMat);
+            ledWest.position.set(-PITCH_LENGTH / 2 - 4.5, 0.5, 0);
+            scene.add(ledWest);
+
+            const ledEast = new THREE.Mesh(ledGeoZ, ledMat);
+            ledEast.position.set(PITCH_LENGTH / 2 + 4.5, 0.5, 0);
+            scene.add(ledEast);
+        }
+
+        function buildBall() {
+            const ballRadius = 0.22;
+            const ballGeo = new THREE.SphereGeometry(ballRadius, 32, 32);
+            const ballMat = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                roughness: 0.3,
+                metalness: 0.2
+            });
+            ballMesh = new THREE.Mesh(ballGeo, ballMat);
+            ballMesh.castShadow = true;
+            ballMesh.position.set(0, ballRadius, 0);
+            scene.add(ballMesh);
+
+            // Ground shadow projected on grass
+            const shadowGeo = new THREE.CircleGeometry(0.35, 16);
+            const shadowMat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.6 });
+            ballShadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
+            ballShadowMesh.rotation.x = -Math.PI / 2;
+            ballShadowMesh.position.y = 0.02;
+            scene.add(ballShadowMesh);
+
+            // Dynamic Ball Trail
+            const maxTrail = 40;
+            const trailPositions = new Float32Array(maxTrail * 3);
+            const trailGeo = new THREE.BufferGeometry();
+            trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPositions, 3));
+            const trailMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.85, linewidth: 2 });
+            ballTrailLine = new THREE.Line(trailGeo, trailMat);
+            scene.add(ballTrailLine);
+        }
+
+        function buildOffsideLine() {
+            const offsideGeo = new THREE.PlaneGeometry(0.3, PITCH_WIDTH);
+            const offsideMat = new THREE.MeshBasicMaterial({
+                color: 0xef4444,
+                transparent: true,
+                opacity: 0.55,
+                side: THREE.DoubleSide
+            });
+            offsideLineMesh = new THREE.Mesh(offsideGeo, offsideMat);
+            offsideLineMesh.rotation.x = -Math.PI / 2;
+            offsideLineMesh.position.set(0, 0.03, 0);
+            scene.add(offsideLineMesh);
+        }
+
+        function buildShapeLines() {
+            // Bayern defensive lines
+            const geoB = new THREE.BufferGeometry();
+            const posB = new Float32Array(8 * 3);
+            geoB.setAttribute('position', new THREE.BufferAttribute(posB, 3));
+            shapeLinesBayern = new THREE.Line(geoB, new THREE.LineBasicMaterial({ color: 0xdc2626, transparent: true, opacity: 0.6, linewidth: 2 }));
+            shapeLinesBayern.visible = false;
+            scene.add(shapeLinesBayern);
+
+            // Augsburg defensive lines
+            const geoA = new THREE.BufferGeometry();
+            const posA = new Float32Array(8 * 3);
+            geoA.setAttribute('position', new THREE.BufferAttribute(posA, 3));
+            shapeLinesAugsburg = new THREE.Line(geoA, new THREE.LineBasicMaterial({ color: 0x22c55e, transparent: true, opacity: 0.6, linewidth: 2 }));
+            shapeLinesAugsburg.visible = false;
+            scene.add(shapeLinesAugsburg);
+        }
+
+        /* =========================================================================
+           5. PLAYERS AS VERTICAL CYLINDERS WITH 3D LABELS & VISORS
+           ========================================================================= */
+        function createPlayerLabel(number, name, color) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 96;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = 'rgba(10, 20, 14, 0.85)';
+            ctx.roundRect(10, 10, 236, 76, 16);
+            ctx.fill();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 4;
+            ctx.roundRect(10, 10, 236, 76, 16);
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 36px "Space Grotesk", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${number} ${name}`, 128, 62);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+            const sprite = new THREE.Sprite(spriteMat);
+            sprite.scale.set(3.2, 1.2, 1);
+            sprite.position.y = 2.4;
+            return sprite;
+        }
+
+        function buildPlayers() {
+            const playerHeight = 1.80;
+            const playerRadius = 0.38;
+
+            const bayernColor = 0xdc2626;   // Bavarian Red
+            const augsburgColor = 0xffffff; // White with green accent
+            const neuerColor = 0xfacc15;    // Neon Gold
+            const dahmenColor = 0x06b6d4;   // Neon Cyan
+
+            // 22 Real Players from Augsburg vs Bayern
+            const ROSTER = [
+                // Bayern Munich (Away / Right side attacking left)
+                { key: 'bayern_1', num: 1, name: 'Neuer', team: 'bayern', role: 'Goalkeeper', color: neuerColor, base: [48, 0] },
+                { key: 'bayern_2', num: 2, name: 'Upamecano', team: 'bayern', role: 'Center Back', color: bayernColor, base: [28, -8] },
+                { key: 'bayern_4', num: 4, name: 'Tah', team: 'bayern', role: 'Center Back', color: bayernColor, base: [28, 8] },
+                { key: 'bayern_19', num: 19, name: 'Davies', team: 'bayern', role: 'Left Back', color: bayernColor, base: [22, -24] },
+                { key: 'bayern_27', num: 27, name: 'Laimer', team: 'bayern', role: 'Right Back', color: bayernColor, base: [22, 24] },
+                { key: 'bayern_6', num: 6, name: 'Kimmich', team: 'bayern', role: 'Center Mid', color: bayernColor, base: [10, -7] },
+                { key: 'bayern_8', num: 8, name: 'Goretzka', team: 'bayern', role: 'Center Mid', color: bayernColor, base: [10, 7] },
+                { key: 'bayern_17', num: 17, name: 'Olise', team: 'bayern', role: 'Right Wing', color: bayernColor, base: [-14, 22] },
+                { key: 'bayern_10', num: 10, name: 'Musiala', team: 'bayern', role: 'Attacking Mid', color: bayernColor, base: [-10, 0] },
+                { key: 'bayern_7', num: 7, name: 'Gnabry', team: 'bayern', role: 'Left Wing', color: bayernColor, base: [-16, -22] },
+                { key: 'bayern_9', num: 9, name: 'Kane', team: 'bayern', role: 'Center Forward', color: bayernColor, base: [-24, 0] },
+
+                // FC Augsburg (Home / Left side defending left)
+                { key: 'augsburg_1', num: 1, name: 'Dahmen', team: 'augsburg', role: 'Goalkeeper', color: dahmenColor, base: [-48, 0] },
+                { key: 'augsburg_4', num: 4, name: 'Brackelmann', team: 'augsburg', role: 'Center Back', color: augsburgColor, base: [-32, -14] },
+                { key: 'augsburg_6', num: 6, name: 'Gouweleeuw', team: 'augsburg', role: 'Center Back', color: augsburgColor, base: [-33, 0] },
+                { key: 'augsburg_5', num: 5, name: 'Matsima', team: 'augsburg', role: 'Center Back', color: augsburgColor, base: [-32, 14] },
+                { key: 'augsburg_2', num: 2, name: 'Wolf', team: 'augsburg', role: 'Right Wing Back', color: augsburgColor, base: [-24, 25] },
+                { key: 'augsburg_13', num: 13, name: 'Giannoulis', team: 'augsburg', role: 'Left Wing Back', color: augsburgColor, base: [-24, -25] },
+                { key: 'augsburg_19', num: 19, name: 'Jakić', team: 'augsburg', role: 'Center Mid', color: augsburgColor, base: [-16, -8] },
+                { key: 'augsburg_8', num: 8, name: 'Rexhbeçaj', team: 'augsburg', role: 'Center Mid', color: augsburgColor, base: [-16, 8] },
+                { key: 'augsburg_10', num: 10, name: 'Maier', team: 'augsburg', role: 'Attacking Mid', color: augsburgColor, base: [-4, -12] },
+                { key: 'augsburg_36', num: 36, name: 'Kömür', team: 'augsburg', role: 'Attacking Mid', color: augsburgColor, base: [-4, 12] },
+                { key: 'augsburg_9', num: 9, name: 'Essende', team: 'augsburg', role: 'Center Forward', color: augsburgColor, base: [8, 0] }
+            ];
+
+            const cylGeo = new THREE.CylinderGeometry(playerRadius, playerRadius, playerHeight, 20);
+
+            ROSTER.forEach(p => {
+                const group = new THREE.Group();
+
+                // Player Body Cylinder
+                const mat = new THREE.MeshStandardMaterial({
+                    color: p.color,
+                    roughness: 0.4,
+                    metalness: 0.1
+                });
+                const body = new THREE.Mesh(cylGeo, mat);
+                body.position.y = playerHeight / 2;
+                body.castShadow = true;
+                group.add(body);
+
+                // Team Accent Ring around chest
+                const ringGeo = new THREE.TorusGeometry(playerRadius + 0.02, 0.04, 8, 24);
+                const ringMat = new THREE.MeshBasicMaterial({ color: p.team === 'bayern' ? 0xffffff : 0x166534 });
+                const ring = new THREE.Mesh(ringGeo, ringMat);
+                ring.rotation.x = Math.PI / 2;
+                ring.position.y = 1.35;
+                group.add(ring);
+
+                // Eyesight Visor (indicates where the player is looking)
+                const visorGeo = new THREE.ConeGeometry(0.2, 0.45, 12);
+                const visorMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+                const visor = new THREE.Mesh(visorGeo, visorMat);
+                visor.rotation.x = Math.PI / 2;
+                visor.position.set(0, 1.62, playerRadius + 0.15);
+                group.add(visor);
+
+                // 3D Floating Name & Number Sprite
+                const label = createPlayerLabel(p.num, p.name, p.team === 'bayern' ? '#ef4444' : '#22c55e');
+                group.add(label);
+
+                // Initial position
+                group.position.set(p.base[0], 0, p.base[1]);
+                scene.add(group);
+
+                playerObjects[p.key] = {
+                    group: group,
+                    visor: visor,
+                    label: label,
+                    data: p,
+                    currentPos: new THREE.Vector3(p.base[0], 0, p.base[1]),
+                    velocity: new THREE.Vector3(0, 0, 0),
+                    heading: 0,
+                    distanceRun: 4200 + Math.random() * 3000
+                };
+            });
+        }
+
+        /* =========================================================================
+           6. MATCH TIMELINE & KINEMATIC SIMULATION ENGINE
+           ========================================================================= */
+        // Key Sequences based on actual match highlights
+        const MATCH_SEQUENCES = [
+            // 24' Close Chance Karl (1440s)
+            { start: 1420, end: 1460, desc: "24' Chance: Lennart Karl shot saved by Neuer",
+              ballTrajectory: (p) => {
+                  const x = THREE.MathUtils.lerp(12, 45, p);
+                  const z = THREE.MathUtils.lerp(18, 2, p);
+                  const y = p < 0.8 ? Math.sin(p * Math.PI) * 1.5 : 0.22;
+                  return { x, y, z };
+              }
+            },
+            // 28' GOAL 0-1 Serge Gnabry (1720s)
+            { start: 1700, end: 1750, desc: "28' GOAL: Serge Gnabry (0-1) - Assist Harry Kane",
+              ballTrajectory: (p) => {
+                  // Kane through ball -> Gnabry sprint -> finish into left goal
+                  if (p < 0.4) {
+                      // Pass from Kane at (2, -5) to Gnabry at (-28, -18)
+                      const t = p / 0.4;
+                      return { x: THREE.MathUtils.lerp(2, -28, t), y: 0.22, z: THREE.MathUtils.lerp(-5, -18, t) };
+                  } else if (p < 0.75) {
+                      // Gnabry carry into the box
+                      const t = (p - 0.4) / 0.35;
+                      return { x: THREE.MathUtils.lerp(-28, -42, t), y: 0.22, z: THREE.MathUtils.lerp(-18, -6, t) };
+                  } else {
+                      // Clinical strike into net corner
+                      const t = (p - 0.75) / 0.25;
+                      return { x: THREE.MathUtils.lerp(-42, -52.4, t), y: 0.22 + Math.sin(t * Math.PI) * 1.2, z: THREE.MathUtils.lerp(-6, 2.5, t) };
+                  }
+              }
+            },
+            // 45'+4 GOAL 0-2 Luis Díaz (2750s)
+            { start: 2730, end: 2780, desc: "45'+4 GOAL: Luis Díaz (0-2) - Assist Konrad Laimer cutback",
+              ballTrajectory: (p) => {
+                  if (p < 0.5) {
+                      const t = p / 0.5;
+                      return { x: THREE.MathUtils.lerp(-15, -46, t), y: 0.22, z: THREE.MathUtils.lerp(20, 24, t) };
+                  } else {
+                      const t = (p - 0.5) / 0.5;
+                      return { x: THREE.MathUtils.lerp(-46, -52.4, t), y: 0.22 + Math.sin(t * Math.PI) * 0.8, z: THREE.MathUtils.lerp(24, -2.0, t) };
+                  }
+              }
+            },
+            // 48' GOAL 0-3 Michael Olise (2880s)
+            { start: 2860, end: 2910, desc: "48' GOAL: Michael Olise (0-3) - High press turnover curler",
+              ballTrajectory: (p) => {
+                  if (p < 0.4) {
+                      const t = p / 0.4;
+                      return { x: THREE.MathUtils.lerp(-25, -34, t), y: 0.22, z: THREE.MathUtils.lerp(14, 12, t) };
+                  } else {
+                      const t = (p - 0.4) / 0.6;
+                      return { x: THREE.MathUtils.lerp(-34, -52.4, t), y: 0.22 + Math.sin(t * Math.PI) * 2.1, z: THREE.MathUtils.lerp(12, 3.2, t) };
+                  }
+              }
+            },
+            // 53' GOAL 1-3 Kristijan Jakić (3180s)
+            { start: 3160, end: 3210, desc: "53' GOAL: Kristijan Jakić (1-3) - Augsburg transition strike",
+              ballTrajectory: (p) => {
+                  if (p < 0.5) {
+                      const t = p / 0.5;
+                      return { x: THREE.MathUtils.lerp(-10, 26, t), y: 0.22, z: THREE.MathUtils.lerp(18, 12, t) };
+                  } else {
+                      const t = (p - 0.5) / 0.5;
+                      return { x: THREE.MathUtils.lerp(26, 52.4, t), y: 0.22 + Math.sin(t * Math.PI) * 0.6, z: THREE.MathUtils.lerp(12, -2.8, t) };
+                  }
+              }
+            },
+            // 70' Close Header Kane (4200s)
+            { start: 4180, end: 4230, desc: "70' Chance: Harry Kane header from corner saved",
+              ballTrajectory: (p) => {
+                  const x = THREE.MathUtils.lerp(-52, -44, p);
+                  const z = THREE.MathUtils.lerp(34, 0, p);
+                  const y = Math.sin(p * Math.PI) * 4.2;
+                  return { x, y, z };
+              }
+            },
+            // 76' GOAL 2-3 Mert Kömür (4560s)
+            { start: 4540, end: 4590, desc: "76' GOAL: Mert Kömür (2-3) - 22m Long-range thunderbolt",
+              ballTrajectory: (p) => {
+                  if (p < 0.4) {
+                      const t = p / 0.4;
+                      return { x: THREE.MathUtils.lerp(14, 28, t), y: 0.22, z: THREE.MathUtils.lerp(-10, 2, t) };
+                  } else {
+                      const t = (p - 0.4) / 0.6;
+                      return { x: THREE.MathUtils.lerp(28, 52.4, t), y: 0.22 + Math.sin(t * Math.PI) * 2.3, z: THREE.MathUtils.lerp(2, 3.4, t) };
+                  }
+              }
+            }
+        ];
+
+        function getActiveSequence(t) {
+            for (const seq of MATCH_SEQUENCES) {
+                if (t >= seq.start && t <= seq.end) return seq;
+            }
+            return null;
+        }
+
+        function computeSimulationAtTime(timeSec) {
+            const seq = getActiveSequence(timeSec);
+            let ballPos = { x: 0, y: 0.22, z: 0 };
+
+            if (seq) {
+                const progress = (timeSec - seq.start) / (seq.end - seq.start);
+                ballPos = seq.ballTrajectory(progress);
+                if (progress > 0.74 && progress < 0.77 && Math.random() < 0.08) {
+                    playKickSound();
+                }
+                if (progress > 0.96 && seq.desc.includes('GOAL') && Math.random() < 0.05) {
+                    playWhistleSound();
+                    playCheerSound();
+                }
+            } else {
+                // Natural organic possession & positional oscillation
+                const wave = Math.sin(timeSec * 0.15);
+                const waveZ = Math.cos(timeSec * 0.22);
+                ballPos = {
+                    x: wave * 22.0,
+                    y: 0.22 + Math.abs(Math.sin(timeSec * 0.8)) * 0.35,
+                    z: waveZ * 14.0
+                };
+            }
+
+            // Update Ball mesh position
+            ballMesh.position.set(ballPos.x, ballPos.y, ballPos.z);
+            ballShadowMesh.position.set(ballPos.x, 0.02, ballPos.z);
+            const scale = Math.max(0.4, 1.0 - ballPos.y * 0.18);
+            ballShadowMesh.scale.set(scale, scale, 1);
+            ballShadowMesh.material.opacity = Math.max(0.15, 0.6 - ballPos.y * 0.1);
+
+            // Update Ball Trail points
+            if (showTrail) {
+                ballTrailPoints.push(new THREE.Vector3(ballPos.x, ballPos.y, ballPos.z));
+                if (ballTrailPoints.length > 35) ballTrailPoints.shift();
+                const posAttr = ballTrailLine.geometry.attributes.position;
+                for (let i = 0; i < 35; i++) {
+                    const pt = ballTrailPoints[i] || ballTrailPoints[ballTrailPoints.length - 1] || new THREE.Vector3();
+                    posAttr.setXYZ(i, pt.x, pt.y, pt.z);
+                }
+                posAttr.needsUpdate = true;
+            }
+
+            // Kinematic updates for all 22 players
+            let lastDefenderX_Augsburg = -PITCH_LENGTH / 2;
+            let lastDefenderX_Bayern = PITCH_LENGTH / 2;
+
+            for (const key in playerObjects) {
+                const p = playerObjects[key];
+                const base = p.data.base;
+
+                // Gravitational pull towards tactical zones & ball attraction
+                const ballDx = (ballPos.x - base[0]);
+                const ballDz = (ballPos.z - base[1]);
+                const distToBall = Math.hypot(ballDx, ballDz);
+
+                // Responsive movement towards tactical action
+                const pullStrength = Math.min(1.0, 15.0 / (distToBall + 5.0));
+                const targetX = base[0] + (ballPos.x - base[0]) * (p.data.role === 'Goalkeeper' ? 0.08 : 0.35 * pullStrength);
+                const targetZ = base[1] + (ballPos.z - base[1]) * (p.data.role === 'Goalkeeper' ? 0.12 : 0.40 * pullStrength);
+
+                // Smooth position update
+                const prevX = p.group.position.x;
+                const prevZ = p.group.position.z;
+
+                p.group.position.x += (targetX - prevX) * 0.12;
+                p.group.position.z += (targetZ - prevZ) * 0.12;
+
+                const vx = p.group.position.x - prevX;
+                const vz = p.group.position.z - prevZ;
+                p.velocity.set(vx * 60, 0, vz * 60); // m/s
+                p.currentPos.copy(p.group.position);
+
+                // Player Heading orientation
+                if (Math.hypot(vx, vz) > 0.005) {
+                    p.heading = Math.atan2(vx, vz); // running direction angle
+                } else {
+                    // Face ball if stationary
+                    p.heading = Math.atan2(ballPos.x - p.group.position.x, ballPos.z - p.group.position.z);
+                }
+                p.group.rotation.y = p.heading;
+
+                // Calculate offside lines
+                if (p.data.team === 'augsburg' && p.data.role !== 'Goalkeeper') {
+                    if (p.group.position.x > lastDefenderX_Augsburg) lastDefenderX_Augsburg = p.group.position.x;
+                }
+                if (p.data.team === 'bayern' && p.data.role !== 'Goalkeeper') {
+                    if (p.group.position.x < lastDefenderX_Bayern) lastDefenderX_Bayern = p.group.position.x;
+                }
+            }
+
+            // Update Dynamic Offside Line
+            if (showOffside) {
+                const offsideX = (ballPos.x < 0) ? lastDefenderX_Augsburg : lastDefenderX_Bayern;
+                offsideLineMesh.position.x = offsideX;
+                offsideLineMesh.visible = true;
+            } else {
+                offsideLineMesh.visible = false;
+            }
+
+            // Update Shape Lines
+            if (showShape) {
+                updateTeamShapes();
+            }
+        }
+
+        function updateTeamShapes() {
+            // Bayern defensive quadrilateral
+            const bKeys = ['bayern_19', 'bayern_2', 'bayern_4', 'bayern_27'];
+            const attrB = shapeLinesBayern.geometry.attributes.position;
+            bKeys.forEach((k, idx) => {
+                const p = playerObjects[k].group.position;
+                attrB.setXYZ(idx, p.x, 0.1, p.z);
+            });
+            attrB.needsUpdate = true;
+            shapeLinesBayern.visible = true;
+
+            // Augsburg backline
+            const aKeys = ['augsburg_13', 'augsburg_4', 'augsburg_6', 'augsburg_5', 'augsburg_2'];
+            const attrA = shapeLinesAugsburg.geometry.attributes.position;
+            aKeys.forEach((k, idx) => {
+                const p = playerObjects[k].group.position;
+                attrA.setXYZ(idx, p.x, 0.1, p.z);
+            });
+            attrA.needsUpdate = true;
+            shapeLinesAugsburg.visible = true;
+        }
+
+        /* =========================================================================
+           7. CAMERA SYSTEM & FIRST-PERSON PLAYER VIEW
+           ========================================================================= */
+        function setCameraMode(mode) {
+            cameraMode = mode;
+            document.querySelectorAll('.cam-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById(`cam-${mode}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const isPov = (mode === 'pov');
+            document.getElementById('pov-banner').classList.toggle('active', isPov);
+            document.getElementById('pov-crosshair').classList.toggle('active', isPov);
+            document.getElementById('pov-instructions').classList.toggle('active', isPov);
+
+            // Hide/Show player body for selected player in POV to avoid camera clipping inside own cylinder
+            for (const key in playerObjects) {
+                const p = playerObjects[key];
+                p.group.visible = true;
+            }
+            if (isPov && playerObjects[selectedPlayerKey]) {
+                // Keep label visible or hide mesh
+                controls.enabled = false;
+            } else {
+                controls.enabled = true;
+            }
+
+            if (mode === 'broadcast') {
+                camera.position.set(0, 24, 46);
+                controls.target.set(0, 1.5, 0);
+            } else if (mode === 'sky') {
+                camera.position.set(0, 68, 0.1);
+                controls.target.set(0, 0, 0);
+            } else if (mode === 'goal') {
+                camera.position.set(-58, 7, 0);
+                controls.target.set(-20, 1.5, 0);
+            } else if (mode === 'drone') {
+                camera.position.set(ballMesh.position.x + 12, 14, ballMesh.position.z + 18);
+                controls.target.copy(ballMesh.position);
+            }
+
+            showToast(`Camera: ${mode.toUpperCase()} Mode`);
+        }
+
+        function updateCamera() {
+            if (cameraMode === 'pov') {
+                const player = playerObjects[selectedPlayerKey];
+                if (!player) return;
+
+                const eyeY = 1.74; // human eye level in meters
+                const playerPos = player.group.position;
+                camera.position.set(playerPos.x, eyeY, playerPos.z);
+
+                // Base direction: player running heading
+                let effectiveYaw = player.heading + headYaw;
+
+                if (lockBallGaze) {
+                    // Smoothly turn head towards the ball
+                    const toBallX = ballMesh.position.x - playerPos.x;
+                    const toBallZ = ballMesh.position.z - playerPos.z;
+                    const ballAngle = Math.atan2(toBallX, toBallZ);
+                    effectiveYaw = ballAngle + headYaw;
+                }
+
+                // Eye forward target point
+                const forward = new THREE.Vector3(
+                    Math.sin(effectiveYaw) * Math.cos(headPitch),
+                    Math.sin(headPitch),
+                    Math.cos(effectiveYaw) * Math.cos(headPitch)
+                );
+
+                const lookTarget = camera.position.clone().add(forward.multiplyScalar(20.0));
+                camera.lookAt(lookTarget);
+
+                // Update HUD Telemetry
+                const speedKmh = (player.velocity.length() * 3.6).toFixed(1);
+                document.getElementById('hud-player-speed').textContent = `${speedKmh} km/h`;
+                document.getElementById('hud-head-yaw').textContent = `${(headYaw * 180 / Math.PI).toFixed(1)}°`;
+                document.getElementById('hud-gaze-status').textContent = lockBallGaze ? 'Ball Tracking' : 'Free Look';
+
+            } else if (cameraMode === 'drone') {
+                // Drone camera smoothly tracks ball
+                camera.position.x += (ballMesh.position.x + 10 - camera.position.x) * 0.05;
+                camera.position.z += (ballMesh.position.z + 16 - camera.position.z) * 0.05;
+                controls.target.copy(ballMesh.position);
+                controls.update();
+            } else {
+                controls.update();
+            }
+        }
+
+        /* Mouse Look in First Person */
+        function setupMouseLookListeners() {
+            const container = document.getElementById('canvas-container');
+
+            window.addEventListener('mousedown', (e) => {
+                if (cameraMode === 'pov') {
+                    isDraggingHead = true;
+                    prevMousePos = { x: e.clientX, y: e.clientY };
+                }
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDraggingHead = false;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (cameraMode === 'pov' && isDraggingHead) {
+                    const dx = e.clientX - prevMousePos.x;
+                    const dy = e.clientY - prevMousePos.y;
+
+                    // Turn head horizontally (Yaw: limit ±130 degrees)
+                    headYaw -= dx * 0.006;
+                    headYaw = THREE.MathUtils.clamp(headYaw, -Math.PI * 0.72, Math.PI * 0.72);
+
+                    // Look up/down (Pitch: limit -40 to +35 degrees)
+                    headPitch -= dy * 0.005;
+                    headPitch = THREE.MathUtils.clamp(headPitch, -Math.PI * 0.22, Math.PI * 0.20);
+
+                    prevMousePos = { x: e.clientX, y: e.clientY };
+                }
+            });
+        }
+
+        function resetHeadAngle() {
+            headYaw = 0.0;
+            headPitch = 0.0;
+            showToast('Head Look Centered');
+        }
+
+        function toggleBallGazeLock() {
+            lockBallGaze = !lockBallGaze;
+            document.getElementById('btn-gaze-lock').innerHTML = lockBallGaze ?
+                '<i data-lucide="lock" size="12"></i> Lock Ball Gaze' :
+                '<i data-lucide="unlock" size="12"></i> Free Head Gaze';
+            lucide.createIcons();
+            showToast(lockBallGaze ? 'Gaze Locked to Ball' : 'Free Head Orientation');
+        }
+
+        function onPlayerSelected(key) {
+            selectedPlayerKey = key;
+            const p = playerObjects[key];
+            if (!p) return;
+
+            document.getElementById('hud-player-name').textContent = `#${p.data.num} ${p.data.name}`;
+            document.getElementById('hud-player-role').textContent = p.data.role;
+            document.getElementById('hud-player-dist').textContent = `${Math.round(p.distanceRun)} m`;
+
+            if (cameraMode !== 'pov') {
+                setCameraMode('pov');
+            }
+            showToast(`Switched POV: #${p.data.num} ${p.data.name}`);
+        }
+
+        /* =========================================================================
+           8. 2D TACTICAL MINIMAP / RADAR WITH VISION CONE
+           ========================================================================= */
+        function drawRadar() {
+            const canvas = document.getElementById('radar-canvas');
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Clear pitch
+            ctx.fillStyle = '#06180b';
+            ctx.fillRect(0, 0, w, h);
+
+            // Mappings from 3D (-52.5..52.5, -34..34) to 2D canvas (0..w, 0..h)
+            function toX(x3d) { return ((x3d + PITCH_LENGTH / 2) / PITCH_LENGTH) * w; }
+            function toY(z3d) { return ((z3d + PITCH_WIDTH / 2) / PITCH_WIDTH) * h; }
+
+            // Pitch markings
+            ctx.strokeStyle = 'rgba(34, 197, 94, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(4, 4, w - 8, h - 8);
+            ctx.beginPath();
+            ctx.moveTo(w / 2, 4); ctx.lineTo(w / 2, h - 4);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(w / 2, h / 2, (9.15 / PITCH_WIDTH) * h, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Draw Players
+            for (const key in playerObjects) {
+                const p = playerObjects[key];
+                const px = toX(p.group.position.x);
+                const py = toY(p.group.position.z);
+
+                const isSelected = (key === selectedPlayerKey);
+
+                // Draw Vision Cone for selected player in POV
+                if (isSelected && cameraMode === 'pov') {
+                    ctx.save();
+                    ctx.fillStyle = 'rgba(56, 189, 248, 0.28)';
+                    ctx.strokeStyle = '#38bdf8';
+                    ctx.lineWidth = 1.5;
+
+                    const effectiveAngle = p.heading + headYaw;
+                    // Vision cone aperture 70 degrees
+                    const halfFov = (70 * Math.PI / 180) / 2;
+                    const coneLen = 38;
+
+                    ctx.beginPath();
+                    ctx.moveTo(px, py);
+                    // Angle in 2D canvas coordinates
+                    const angle2D = effectiveAngle - Math.PI / 2;
+                    ctx.arc(px, py, coneLen, angle2D - halfFov, angle2D + halfFov);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.restore();
+                }
+
+                // Player dot
+                ctx.fillStyle = (p.data.team === 'bayern') ? '#ef4444' : '#22c55e';
+                if (p.data.role === 'Goalkeeper') ctx.fillStyle = '#facc15';
+
+                ctx.beginPath();
+                ctx.arc(px, py, isSelected ? 4.5 : 3.0, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (isSelected) {
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+                }
+            }
+
+            // Draw Ball
+            const bx = toX(ballMesh.position.x);
+            const by = toY(ballMesh.position.z);
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(bx, by, 3.5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        /* =========================================================================
+           9. USER CONTROLS, TOGGLES & PLAYBACK HELPERS
+           ========================================================================= */
+        function togglePlayPause() {
+            initAudio();
+            isPlaying = !isPlaying;
+            document.getElementById('play-pause-icon').setAttribute('data-lucide', isPlaying ? 'pause' : 'play');
+            document.getElementById('play-pause-text').textContent = isPlaying ? 'Pause' : 'Play';
+            lucide.createIcons();
+            showToast(isPlaying ? 'Simulation Resumed' : 'Simulation Paused');
+        }
+
+        function setPlaybackSpeed(speed, btn) {
+            playbackSpeed = speed;
+            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            showToast(`Playback Speed: ${speed}x`);
+        }
+
+        function stepTime(seconds) {
+            matchTime = Math.max(0, Math.min(5400, matchTime + seconds));
+            updateTimelineUI();
+            computeSimulationAtTime(matchTime);
+        }
+
+        function jumpToMatchTime(seconds) {
+            initAudio();
+            matchTime = seconds;
+            updateTimelineUI();
+            computeSimulationAtTime(matchTime);
+            playWhistleSound();
+            showToast(`Jumped to ${formatTime(matchTime)}`);
+        }
+
+        function replayCurrentAction() {
+            initAudio();
+            matchTime = Math.max(0, matchTime - 12);
+            playbackSpeed = 0.5;
+            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+            const halfBtn = document.querySelectorAll('.speed-btn')[0];
+            if (halfBtn) halfBtn.classList.add('active');
+            updateTimelineUI();
+            showToast('Instant Replay (0.5x Slow Motion)');
+        }
+
+        function onTimelineScrub(val) {
+            matchTime = Number(val);
+            updateTimelineUI();
+            computeSimulationAtTime(matchTime);
+        }
+
+        function updateTimelineUI() {
+            document.getElementById('timeline-slider').value = matchTime;
+            const timeStr = formatTime(matchTime);
+            document.getElementById('timeline-time-display').textContent = timeStr;
+            const half = matchTime < 2700 ? '1st Half' : '2nd Half';
+            document.getElementById('match-clock-display').textContent = `${timeStr} • ${half}`;
+        }
+
+        function formatTime(totalSec) {
+            const m = Math.floor(totalSec / 60);
+            const s = Math.floor(totalSec % 60);
+            return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function togglePlayerNames(checked) {
+            showNames = checked;
+            for (const key in playerObjects) {
+                playerObjects[key].label.visible = checked;
+            }
+        }
+
+        function toggleBallTrail(checked) {
+            showTrail = checked;
+            ballTrailLine.visible = checked;
+            if (!checked) ballTrailPoints = [];
+        }
+
+        function toggleOffsideLine(checked) {
+            showOffside = checked;
+            offsideLineMesh.visible = checked;
+        }
+
+        function toggleTeamShape(checked) {
+            showShape = checked;
+            shapeLinesBayern.visible = checked;
+            shapeLinesAugsburg.visible = checked;
+        }
+
+        function toggleEyesightVisors(checked) {
+            showVisors = checked;
+            for (const key in playerObjects) {
+                playerObjects[key].visor.visible = checked;
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-banner');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2200);
+        }
+
+        function captureSnapshot() {
+            renderer.render(scene, camera);
+            const link = document.createElement('a');
+            link.download = `bundesliga-3d-tactical-${matchTime}s.png`;
+            link.href = renderer.domElement.toDataURL('image/png');
+            link.click();
+            showToast('High-Res Screenshot Captured!');
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        /* Keyboard Shortcuts */
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlayPause();
+            } else if (e.code === 'ArrowRight') {
+                stepTime(10);
+            } else if (e.code === 'ArrowLeft') {
+                stepTime(-10);
+            } else if (e.key === '1') setCameraMode('orbit');
+            else if (e.key === '2') setCameraMode('broadcast');
+            else if (e.key === '3') setCameraMode('sky');
+            else if (e.key === '4') setCameraMode('goal');
+            else if (e.key === '5') setCameraMode('pov');
+        });
+
+        /* =========================================================================
+           10. ANIMATION LOOP (60 FPS)
+           ========================================================================= */
+        function animate(timestamp) {
+            requestAnimationFrame(animate);
+
+            const dt = (timestamp - lastTimestamp) / 1000.0;
+            lastTimestamp = timestamp;
+
+            if (isPlaying) {
+                matchTime += dt * playbackSpeed;
+                if (matchTime > 5400) matchTime = 0; // loop match
+                updateTimelineUI();
+                computeSimulationAtTime(matchTime);
+            }
+
+            updateCamera();
+            drawRadar();
+            renderer.render(scene, camera);
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            initThree();
+            updateTimelineUI();
+            computeSimulationAtTime(matchTime);
+            animate(performance.now());
+        });
+    </script>
+</body>
+</html>
