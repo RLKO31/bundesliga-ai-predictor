@@ -300,6 +300,26 @@
                 </div>
             </div>
             
+            <!-- 3D Real Match Digital Twin Launch Banner -->
+            <div style="margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(8, 28, 14, 0.9), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 16px; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; box-shadow: 0 10px 25px -10px rgba(56, 189, 248, 0.2);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #38bdf8;">
+                        <i data-lucide="box" size="24"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: #fff; margin: 0 0 0.2rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                            3D Real Match Digital Twin: FC Augsburg vs FC Bayern (2-3)
+                            <span style="background: rgba(34, 197, 94, 0.15); color: #a3e635; border: 1px solid rgba(34, 197, 94, 0.3); font-size: 0.68rem; padding: 0.1rem 0.5rem; border-radius: 4px;">100% Real Match Tracking</span>
+                        </h4>
+                        <p style="margin: 0; color: var(--text-secondary); font-size: 0.82rem;">Experience all 30 real shots with 3D flight arcs, 22 player cylinders, free orbit camera, and switchable first-person player eye POV!</p>
+                    </div>
+                </div>
+                <a href="match3d.html" style="text-decoration: none; background: linear-gradient(135deg, var(--accent-green), #059669); color: #fff; font-weight: 700; font-size: 0.88rem; padding: 0.65rem 1.35rem; border-radius: 10px; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px -3px rgba(34, 197, 94, 0.5);">
+                    <span>Launch 3D Replayer</span>
+                    <i data-lucide="arrow-right" size="16"></i>
+                </a>
+            </div>
+
             <div class="matches-grid" id="fixtures-grid"></div>
         </section>
 
@@ -500,6 +520,7 @@
         <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
         <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
         <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
+    <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
     <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
     <!-- Tab 8: Tactical Vulnerability & Chance Creation Tool -->
     <section id="vulnerability-tab" class="content-section">
@@ -1550,6 +1571,93 @@
             drawUnifiedPitch();
         }
 
+        window.currentTacticalPerspective = 'unified';
+        window.currentTacticalFilter = 'all';
+        window.unifiedPlottedShots = [];
+
+        function resolveTeamData(teamName) {
+            if (!window.team_vulnerabilities_multiseason) return null;
+            const root = window.team_vulnerabilities_multiseason;
+            const teamsObj = root.teams || root;
+            if (teamsObj[teamName]) return teamsObj[teamName];
+            
+            const norm = (teamName || '').replace('FC ', '').replace('1. ', '').replace('SV ', '').replace('VfB ', '').replace('VfL ', '').replace('TSG ', '').trim().toLowerCase();
+            for (let k in teamsObj) {
+                const kNorm = k.replace('FC ', '').replace('1. ', '').replace('SV ', '').replace('VfB ', '').replace('VfL ', '').replace('TSG ', '').trim().toLowerCase();
+                if (kNorm.length > 2 && (kNorm.includes(norm) || norm.includes(kNorm))) {
+                    return teamsObj[k];
+                }
+            }
+            return teamsObj['Bayern Munich'] || Object.values(teamsObj)[0];
+        }
+
+        function updateTeamDropdown(season) {
+            const select = document.getElementById('vuln-team-select');
+            if (!select || !window.team_vulnerabilities_multiseason) return;
+            const root = window.team_vulnerabilities_multiseason;
+            const catalog = root.catalog || {};
+            const teamsObj = root.teams || root;
+            const teamsForSeason = catalog[season] || Object.keys(teamsObj).filter(t => teamsObj[t][season]);
+            
+            const currentVal = select.value;
+            select.innerHTML = '';
+            teamsForSeason.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t;
+                opt.textContent = t;
+                if (t === currentVal) opt.selected = true;
+                select.appendChild(opt);
+            });
+            if (!select.value && teamsForSeason.length > 0) {
+                select.value = teamsForSeason.includes("Bayern Munich") ? "Bayern Munich" : teamsForSeason[0];
+            }
+        }
+
+        function onVulnSeasonChange(season) {
+            updateTeamDropdown(season);
+            const team = document.getElementById('vuln-team-select').value;
+            renderTeamVulnerability(team, season);
+            populateAdaptabilityTable(season);
+        }
+
+        function setTacticalPerspective(mode) {
+            window.currentTacticalPerspective = mode;
+            const btnUni = document.getElementById('btn-persp-unified');
+            const btnDef = document.getElementById('btn-persp-def');
+            const btnOff = document.getElementById('btn-persp-off');
+            
+            [btnUni, btnDef, btnOff].forEach(b => {
+                if (b) {
+                    b.style.background = 'transparent';
+                    b.style.borderColor = 'rgba(255,255,255,0.15)';
+                    b.style.color = 'var(--text-secondary)';
+                }
+            });
+
+            if (mode === 'unified' && btnUni) {
+                btnUni.style.background = 'rgba(34, 197, 94, 0.2)';
+                btnUni.style.borderColor = 'var(--accent-green)';
+                btnUni.style.color = 'var(--accent-lime)';
+            } else if (mode === 'defense' && btnDef) {
+                btnDef.style.background = 'rgba(239, 68, 68, 0.2)';
+                btnDef.style.borderColor = '#ef4444';
+                btnDef.style.color = '#f87171';
+            } else if (mode === 'offense' && btnOff) {
+                btnOff.style.background = 'rgba(56, 189, 248, 0.2)';
+                btnOff.style.borderColor = '#38bdf8';
+                btnOff.style.color = '#38bdf8';
+            }
+
+            drawUnifiedPitch();
+        }
+
+        function setTacticalFilter(filter, btn) {
+            window.currentTacticalFilter = filter;
+            document.querySelectorAll('.vuln-filter-pill').forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            drawUnifiedPitch();
+        }
+
         function renderTeamVulnerability(teamName, seasonName) {
             teamName = teamName || (document.getElementById('vuln-team-select') ? document.getElementById('vuln-team-select').value : 'Bayern Munich');
             seasonName = seasonName || (document.getElementById('vuln-season-select') ? document.getElementById('vuln-season-select').value : '2026-2027');
@@ -1685,6 +1793,438 @@
             drawUnifiedPitch();
             if (window.lucide) window.lucide.createIcons();
         }
+
+        function drawUnifiedPitch() {
+            const teamName = document.getElementById('vuln-team-select') ? document.getElementById('vuln-team-select').value : 'Bayern Munich';
+            const seasonName = document.getElementById('vuln-season-select') ? document.getElementById('vuln-season-select').value : '2026-2027';
+            
+            const seasonData = resolveTeamData(teamName);
+            if (!seasonData) return;
+            const data = seasonData[seasonName] || seasonData['2026-2027'] || Object.values(seasonData)[0];
+            if (!data) return;
+
+            const def = data.defense || data;
+            const off = data.offense || data;
+            const mode = window.currentTacticalPerspective || 'unified';
+            const filter = window.currentTacticalFilter || 'all';
+
+            // Update Heading & Strip
+            const headEl = document.getElementById("tactical-pitch-heading");
+            const stripEl = document.getElementById("tactical-kpi-strip");
+            const orientEl = document.getElementById("tactical-orientation-indicator");
+
+            if (headEl) {
+                if (mode === 'unified') headEl.innerHTML = '<i data-lucide="map-pin" style="color: var(--accent-lime);"></i> Unified Tactical Pitch: Defense vs. Attack (105m x 68m)';
+                else if (mode === 'defense') headEl.innerHTML = '<i data-lucide="shield-alert" style="color: #ef4444;"></i> Defensive Vulnerabilities: Conceded Chances & Goals (105m x 68m)';
+                else headEl.innerHTML = '<i data-lucide="crosshair" style="color: var(--accent-lime);"></i> Attacking Weapons: Created Chances & Goals Scored (105m x 68m)';
+            }
+
+            if (stripEl) {
+                if (mode === 'unified') {
+                    stripEl.innerHTML = `
+                        <span style="background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Conceded: ${def.conceded_goals} (${def.big_chances_conceded} BC)</span>
+                        <span style="background: rgba(34, 197, 94, 0.18); color: var(--accent-lime); border: 1px solid rgba(34,197,94,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Scored: ${off.goals_scored} (${off.big_chances_created} BC)</span>
+                    `;
+                } else if (mode === 'defense') {
+                    stripEl.innerHTML = `
+                        <span style="background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Goals Conceded: ${def.conceded_goals}</span>
+                        <span style="background: rgba(251, 146, 60, 0.18); color: #fb923c; border: 1px solid rgba(251,146,60,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Big Chances: ${def.big_chances_conceded}</span>
+                        <span style="background: rgba(255,255,255,0.06); color: #9ca3af; border: 1px solid rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 6px;">xGA: ${def.xg_conceded || 'N/A'}</span>
+                    `;
+                } else {
+                    stripEl.innerHTML = `
+                        <span style="background: rgba(34, 197, 94, 0.18); color: var(--accent-lime); border: 1px solid rgba(34,197,94,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Goals Scored: ${off.goals_scored}</span>
+                        <span style="background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); padding: 0.2rem 0.5rem; border-radius: 6px;">Big Chances: ${off.big_chances_created}</span>
+                        <span style="background: rgba(255,255,255,0.06); color: #9ca3af; border: 1px solid rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 6px;">xG: ${off.xg_created || 'N/A'}</span>
+                    `;
+                }
+            }
+
+            if (orientEl) {
+                if (mode === 'unified') {
+                    orientEl.innerHTML = '<span style="color:#f87171;">🛡️ DEFENDING (Left [X=0m])</span> &nbsp;|&nbsp; <span style="color:var(--accent-lime);">🎯 ATTACKING (Right [X=105m])</span>';
+                } else if (mode === 'defense') {
+                    orientEl.innerHTML = '<span style="color:#f87171;">🛡️ DEFENDING NET (Left [X=0m])</span> &nbsp;⬅️ Opponent Infiltration';
+                } else {
+                    orientEl.innerHTML = '<span style="color:var(--accent-lime);">🎯 TARGET NET (Right [X=105m])</span> &nbsp;➡️ Attack Trajectory';
+                }
+            }
+
+            const canvas = document.getElementById("unified-pitch-canvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth || 900;
+            canvas.height = container.clientHeight || 380;
+            
+            const W = canvas.width;
+            const H = canvas.height;
+            ctx.clearRect(0, 0, W, H);
+
+            // Container turf background
+            ctx.fillStyle = "#051208";
+            ctx.fillRect(0, 0, W, H);
+
+            // Strict 105:68 aspect ratio
+            const pitchRatio = 105.0 / 68.0;
+            const margin = 16;
+            const maxPWidth = W - margin * 2;
+            const maxPHeight = H - margin * 2;
+            let pW, pH;
+            if (maxPWidth / maxPHeight > pitchRatio) {
+                pH = maxPHeight;
+                pW = pH * pitchRatio;
+            } else {
+                pW = maxPWidth;
+                pH = pW / pitchRatio;
+            }
+            const pitchX = (W - pW) / 2;
+            const pitchY = (H - pH) / 2;
+
+            // Grass Fill & Stripes
+            ctx.fillStyle = "#091c0f";
+            ctx.fillRect(pitchX, pitchY, pW, pH);
+
+            const numStripes = 10;
+            const stripeW = pW / numStripes;
+            for (let i = 0; i < numStripes; i++) {
+                if (i % 2 === 0) {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.03)";
+                    ctx.fillRect(pitchX + i * stripeW, pitchY, stripeW, pH);
+                }
+            }
+
+            const mapX = (x) => pitchX + (x / 105.0) * pW;
+            const mapY = (y) => pitchY + (y / 68.0) * pH;
+
+            function shotPassesFilter(sh) {
+                const isGoal = Array.isArray(sh) ? sh[3] === 1 : (sh.is_goal || false);
+                const xg = Array.isArray(sh) ? sh[2] : (sh.xg || 0);
+                const sit = Array.isArray(sh) ? sh[7] : (sh.situation || 'OpenPlay');
+                if (filter === 'goals') return isGoal;
+                if (filter === 'big') return xg >= 0.30;
+                if (filter === 'open') return sit === 'OpenPlay';
+                if (filter === 'setpiece') return sit !== 'OpenPlay';
+                return true;
+            }
+
+            const defShots = (def.shots || []).filter(shotPassesFilter);
+            const offShots = (off.shots || []).filter(shotPassesFilter);
+
+            // 1. Density Heatmaps (Radial Gaussian Glows under pitch lines)
+            if (mode === 'unified' || mode === 'defense') {
+                defShots.forEach(sh => {
+                    const sx = Array.isArray(sh) ? sh[0] : sh.x;
+                    const sy = Array.isArray(sh) ? sh[1] : sh.y;
+                    const xg = Array.isArray(sh) ? sh[2] : sh.xg;
+                    const sx_draw = (mode === 'unified') ? Math.min(51.5, sx) : sx;
+                    const px = mapX(sx_draw);
+                    const py = mapY(sy);
+                    const radius = Math.min(36, Math.max(16, xg * 50));
+                    const grad = ctx.createRadialGradient(px, py, 0, px, py, radius);
+                    grad.addColorStop(0, `rgba(239, 68, 68, ${Math.min(0.48, xg * 0.85)})`);
+                    grad.addColorStop(1, 'rgba(239, 68, 68, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(px, py, radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            }
+
+            if (mode === 'unified' || mode === 'offense') {
+                offShots.forEach(sh => {
+                    const sx = Array.isArray(sh) ? sh[0] : sh.x;
+                    const sy = Array.isArray(sh) ? sh[1] : sh.y;
+                    const xg = Array.isArray(sh) ? sh[2] : sh.xg;
+                    const sx_draw = (mode === 'unified') ? Math.max(53.5, sx) : sx;
+                    const px = mapX(sx_draw);
+                    const py = mapY(sy);
+                    const radius = Math.min(36, Math.max(16, xg * 50));
+                    const grad = ctx.createRadialGradient(px, py, 0, px, py, radius);
+                    grad.addColorStop(0, `rgba(34, 197, 94, ${Math.min(0.48, xg * 0.85)})`);
+                    grad.addColorStop(1, 'rgba(34, 197, 94, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(px, py, radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            }
+
+            // 2. Pitch Geometry Markings
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.45)";
+            ctx.lineWidth = 1.6;
+
+            // Boundary
+            ctx.strokeRect(pitchX, pitchY, pW, pH);
+
+            // Halfway Line
+            ctx.beginPath();
+            ctx.moveTo(mapX(52.5), pitchY);
+            ctx.lineTo(mapX(52.5), pitchY + pH);
+            ctx.stroke();
+
+            // Center Circle & Spot
+            ctx.beginPath();
+            ctx.arc(mapX(52.5), mapY(34.0), (9.15 / 68.0) * pH, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(mapX(52.5), mapY(34.0), 2.5, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // 18-Yard Boxes
+            ctx.strokeRect(mapX(0), mapY(13.84), mapX(16.5) - mapX(0), mapY(54.16) - mapY(13.84));
+            ctx.strokeRect(mapX(88.5), mapY(13.84), mapX(105) - mapX(88.5), mapY(54.16) - mapY(13.84));
+
+            // 6-Yard Boxes
+            ctx.strokeRect(mapX(0), mapY(24.84), mapX(5.5) - mapX(0), mapY(43.16) - mapY(24.84));
+            ctx.strokeRect(mapX(99.5), mapY(24.84), mapX(105) - mapX(99.5), mapY(43.16) - mapY(24.84));
+
+            // Penalty Spots (Exactly 11.0m from each goal line)
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath(); ctx.arc(mapX(11.0), mapY(34.0), 2.5, 0, 2 * Math.PI); ctx.fill();
+            ctx.beginPath(); ctx.arc(mapX(94.0), mapY(34.0), 2.5, 0, 2 * Math.PI); ctx.fill();
+
+            // Penalty D-Arcs
+            const dAlpha = Math.acos(5.5 / 9.15);
+            const dRadius = (9.15 / 68.0) * pH;
+            ctx.beginPath(); ctx.arc(mapX(11.0), mapY(34.0), dRadius, -dAlpha, dAlpha); ctx.stroke();
+            ctx.beginPath(); ctx.arc(mapX(94.0), mapY(34.0), dRadius, Math.PI - dAlpha, Math.PI + dAlpha); ctx.stroke();
+
+            // Goal Posts & Nets
+            const goalH = mapY(37.66) - mapY(30.34);
+            const goalY = mapY(30.34);
+            const netD = 7;
+
+            // Defending Goal (Left)
+            ctx.fillStyle = "rgba(239, 68, 68, 0.4)";
+            ctx.fillRect(pitchX - netD, goalY, netD, goalH);
+            ctx.strokeStyle = "#ef4444";
+            ctx.strokeRect(pitchX - netD, goalY, netD, goalH);
+
+            // Attacking Goal (Right)
+            ctx.fillStyle = "rgba(34, 197, 94, 0.4)";
+            ctx.fillRect(pitchX + pW, goalY, netD, goalH);
+            ctx.strokeStyle = "var(--accent-lime)";
+            ctx.strokeRect(pitchX + pW, goalY, netD, goalH);
+
+            // 3. Precise Shot Markers & Live Tooltip Cache
+            window.unifiedPlottedShots = [];
+
+            if (mode === 'unified' || mode === 'defense') {
+                defShots.forEach(sh => {
+                    const sx = Array.isArray(sh) ? sh[0] : sh.x;
+                    const sy = Array.isArray(sh) ? sh[1] : sh.y;
+                    const xg = Array.isArray(sh) ? sh[2] : sh.xg;
+                    const isGoal = Array.isArray(sh) ? sh[3] === 1 : sh.is_goal;
+
+                    const sx_draw = (mode === 'unified') ? Math.min(51.5, sx) : sx;
+                    const px = mapX(sx_draw);
+                    const py = mapY(sy);
+                    window.unifiedPlottedShots.push({ px, py, raw: sh, isDef: true });
+
+                    if (isGoal) {
+                        ctx.beginPath();
+                        ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
+                        ctx.fillStyle = "#ef4444";
+                        ctx.fill();
+                        ctx.lineWidth = 1.6;
+                        ctx.strokeStyle = "#ffffff";
+                        ctx.stroke();
+                        ctx.beginPath(); ctx.arc(px, py, 2, 0, 2 * Math.PI); ctx.fillStyle = "#ffffff"; ctx.fill();
+                    } else if (xg >= 0.30) {
+                        ctx.fillStyle = "#fb923c";
+                        ctx.beginPath();
+                        ctx.moveTo(px, py - 4.5); ctx.lineTo(px + 4.5, py); ctx.lineTo(px, py + 4.5); ctx.lineTo(px - 4.5, py);
+                        ctx.closePath(); ctx.fill();
+                        ctx.lineWidth = 1.2; ctx.strokeStyle = "#ffffff"; ctx.stroke();
+                    } else {
+                        const r = Math.min(4, Math.max(2.5, xg * 14));
+                        ctx.beginPath(); ctx.arc(px, py, r, 0, 2 * Math.PI);
+                        ctx.fillStyle = "#38bdf8"; ctx.fill();
+                        ctx.lineWidth = 0.8; ctx.strokeStyle = "rgba(255,255,255,0.7)"; ctx.stroke();
+                    }
+                });
+            }
+
+            if (mode === 'unified' || mode === 'offense') {
+                offShots.forEach(sh => {
+                    const sx = Array.isArray(sh) ? sh[0] : sh.x;
+                    const sy = Array.isArray(sh) ? sh[1] : sh.y;
+                    const xg = Array.isArray(sh) ? sh[2] : sh.xg;
+                    const isGoal = Array.isArray(sh) ? sh[3] === 1 : sh.is_goal;
+
+                    const sx_draw = (mode === 'unified') ? Math.max(53.5, sx) : sx;
+                    const px = mapX(sx_draw);
+                    const py = mapY(sy);
+                    window.unifiedPlottedShots.push({ px, py, raw: sh, isDef: false });
+
+                    if (isGoal) {
+                        ctx.beginPath();
+                        ctx.arc(px, py, 5.5, 0, 2 * Math.PI);
+                        ctx.fillStyle = "#10b981";
+                        ctx.fill();
+                        ctx.lineWidth = 1.6;
+                        ctx.strokeStyle = "#ffffff";
+                        ctx.stroke();
+                        ctx.beginPath(); ctx.arc(px, py, 2, 0, 2 * Math.PI); ctx.fillStyle = "#ffffff"; ctx.fill();
+                    } else if (xg >= 0.30) {
+                        ctx.fillStyle = "#38bdf8";
+                        ctx.beginPath();
+                        ctx.moveTo(px, py - 4.5); ctx.lineTo(px + 4.5, py); ctx.lineTo(px, py + 4.5); ctx.lineTo(px - 4.5, py);
+                        ctx.closePath(); ctx.fill();
+                        ctx.lineWidth = 1.2; ctx.strokeStyle = "#ffffff"; ctx.stroke();
+                    } else {
+                        const r = Math.min(4, Math.max(2.5, xg * 14));
+                        ctx.beginPath(); ctx.arc(px, py, r, 0, 2 * Math.PI);
+                        ctx.fillStyle = "#4ade80"; ctx.fill();
+                        ctx.lineWidth = 0.8; ctx.strokeStyle = "rgba(255,255,255,0.7)"; ctx.stroke();
+                    }
+                });
+            }
+
+            // 4. Goal Orientation Text Labels
+            ctx.font = "700 10px 'Space Grotesk', sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+
+            if (mode === 'unified' || mode === 'defense') {
+                ctx.fillStyle = "#ef4444";
+                ctx.fillText("DEFENDING GOAL", mapX(6.0), mapY(34.0));
+            }
+            if (mode === 'unified' || mode === 'offense') {
+                ctx.fillStyle = "var(--accent-lime)";
+                ctx.fillText("TARGET GOAL", mapX(99.0), mapY(34.0));
+            }
+
+            setupPitchTooltipEvents();
+        }
+
+        function setupPitchTooltipEvents() {
+            const canvas = document.getElementById("unified-pitch-canvas");
+            const tooltip = document.getElementById("unified-pitch-tooltip");
+            if (!canvas || !tooltip || canvas.dataset.tooltipBound) return;
+            canvas.dataset.tooltipBound = "true";
+
+            canvas.addEventListener("mousemove", (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const mx = e.clientX - rect.left;
+                const my = e.clientY - rect.top;
+
+                let closest = null;
+                let minDist = 14;
+
+                (window.unifiedPlottedShots || []).forEach(pt => {
+                    const dist = Math.hypot(pt.px - mx, pt.py - my);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        closest = pt;
+                    }
+                });
+
+                if (closest) {
+                    const sh = closest.raw;
+                    const isGoal = Array.isArray(sh) ? sh[3] === 1 : (sh.is_goal || false);
+                    const xg = Array.isArray(sh) ? sh[2] : (sh.xg || 0);
+                    const min = Array.isArray(sh) ? sh[4] : (sh.minute || 0);
+                    const player = Array.isArray(sh) ? sh[5] : (sh.player || 'Player');
+                    const opp = Array.isArray(sh) ? sh[6] : (sh.opponent || 'Opponent');
+                    const sit = Array.isArray(sh) ? sh[7] : (sh.situation || 'OpenPlay');
+                    const act = Array.isArray(sh) ? sh[8] : (sh.last_action || 'Action');
+                    const ch = Array.isArray(sh) ? sh[9] : (sh.channel || 'Channel');
+
+                    let tag = '';
+                    const isOG = String(player).includes('(OG)');
+                    if (isGoal) {
+                        if (isOG) {
+                            tag = closest.isDef ? 
+                                '<span style="color:#ef4444; font-weight:800;">⚽ GOAL (Own Goal Conceded)</span>' :
+                                '<span style="color:#10b981; font-weight:800;">⚽ GOAL (Opponent Own Goal)</span>';
+                        } else {
+                            tag = closest.isDef ?
+                                '<span style="color:#ef4444; font-weight:800;">⚽ GOAL (Conceded)</span>' :
+                                '<span style="color:#10b981; font-weight:800;">⚽ GOAL (Scored)</span>';
+                        }
+                    } else if (xg >= 0.3) {
+                        tag = closest.isDef ?
+                            '<span style="color:#fb923c; font-weight:700;">🔶 Big Chance Conceded</span>' :
+                            '<span style="color:#38bdf8; font-weight:700;">🔶 Big Chance Created</span>';
+                    } else {
+                        tag = closest.isDef ?
+                            '<span style="color:#94a3b8;">Conceded Shot</span>' :
+                            '<span style="color:#94a3b8;">Created Shot</span>';
+                    }
+
+                    tooltip.style.display = "block";
+                    tooltip.style.left = closest.px + "px";
+                    tooltip.style.top = closest.py + "px";
+                    tooltip.innerHTML = `
+                        <div style="font-weight:700; margin-bottom:0.25rem; display:flex; justify-content:space-between; gap:0.6rem;">
+                            <span>${player} (${min}')</span>
+                            <span>${tag}</span>
+                        </div>
+                        <div style="color:var(--text-secondary); font-size:0.73rem; line-height:1.35;">
+                            <div><strong>xG:</strong> <span style="color:var(--accent-lime);">${xg}</span> &nbsp;|&nbsp; <strong>${sit}</strong> (${act})</div>
+                            <div><strong>Channel:</strong> ${ch} &nbsp;|&nbsp; <strong>vs</strong> ${opp}</div>
+                        </div>
+                    `;
+                } else {
+                    tooltip.style.display = "none";
+                }
+            });
+
+            canvas.addEventListener("mouseleave", () => {
+                tooltip.style.display = "none";
+            });
+        }
+
+        function populateAdaptabilityTable(seasonName) {
+            const tbody = document.getElementById("adaptability-table-body");
+            if (!tbody || !window.team_vulnerabilities_multiseason) return;
+            seasonName = seasonName || (document.getElementById('vuln-season-select') ? document.getElementById('vuln-season-select').value : '2026-2027');
+            
+            const root = window.team_vulnerabilities_multiseason;
+            const teamsObj = root.teams || root;
+            
+            const list = [];
+            Object.keys(teamsObj).forEach(t => {
+                const sData = teamsObj[t][seasonName];
+                if (sData && sData.tactical_profile) {
+                    list.push({
+                        team_name: t,
+                        archetype: sData.tactical_profile.archetype || "Tactical Chameleon",
+                        plan_adherence: sData.tactical_profile.plan_adherence_score || 80.0,
+                        exploitation: sData.tactical_profile.opponent_exploitation_index || 80.0,
+                        motto: sData.tactical_profile.motto || "Dynamic adaptability."
+                    });
+                }
+            });
+
+            list.sort((a, b) => b.exploitation - a.exploitation);
+            
+            let html = "";
+            list.forEach((t, i) => {
+                const badgeColor = t.archetype.includes("Dominator") ? "var(--accent-lime)" : (t.archetype.includes("Infiltrator") ? "#ef4444" : (t.archetype.includes("Specialist") ? "#c084fc" : "#38bdf8"));
+                html += `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer;" onclick="renderTeamVulnerability('${t.team_name}', '${seasonName}'); document.getElementById('vuln-team-select').value='${t.team_name}'; window.scrollTo({top: document.getElementById('vulnerability-tab').offsetTop - 60, behavior: 'smooth'});">
+                        <td style="padding: 0.7rem; font-weight: 700; color: var(--text-secondary);">#${i+1}</td>
+                        <td style="padding: 0.7rem; font-weight: 600; color: #fff;">${t.team_name}</td>
+                        <td style="padding: 0.7rem;"><span style="color: ${badgeColor}; font-weight: 700; font-size: 0.82rem;">${t.archetype}</span></td>
+                        <td style="padding: 0.7rem; color: #9ca3af;">${t.plan_adherence}%</td>
+                        <td style="padding: 0.7rem; color: var(--accent-lime); font-weight: 800;">${t.exploitation}%</td>
+                        <td style="padding: 0.7rem; color: var(--text-secondary); font-size: 0.78rem;">${t.motto}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        window.addEventListener('resize', function() {
+            const vulnTab = document.getElementById('vulnerability-tab');
+            if (vulnTab && vulnTab.classList.contains('active')) {
+                drawUnifiedPitch();
+            }
+        });
 
         function drawUnifiedPitch() {
             const teamName = document.getElementById('vuln-team-select') ? document.getElementById('vuln-team-select').value : 'Bayern Munich';
