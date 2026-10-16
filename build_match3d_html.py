@@ -15,15 +15,20 @@ def generate_html():
     with open(json_path_2627, "r", encoding="utf-8") as f:
         real_data_2627 = json.load(f)
 
+    json_path_sc = os.path.join("data", "skillcorner_sydney_adelaide_tracking.json")
+    with open(json_path_sc, "r", encoding="utf-8") as f:
+        real_data_sc = json.load(f)
+
     data_2526_str = json.dumps(real_data_2526, separators=(',', ':'))
     data_2627_str = json.dumps(real_data_2627, separators=(',', ':'))
+    data_sc_str = json.dumps(real_data_sc, separators=(',', ':'))
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bundesliga Real Match Digital Twin | FC Augsburg vs FC Bayern München</title>
+    <title>3D Match Digital Twin | Real Optical Tracking & Kinematics</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -360,6 +365,8 @@ def generate_html():
         }}
         .player-chip.bayern {{ border-left: 3px solid var(--accent-bayern); }}
         .player-chip.augsburg {{ border-left: 3px solid var(--accent-augsburg); }}
+        .player-chip.sydney {{ border-left: 3px solid #38bdf8; }}
+        .player-chip.adelaide {{ border-left: 3px solid #dc2626; }}
 
         /* Player POV HUD Banner (Left Overlay) */
         .pov-banner {{
@@ -724,21 +731,22 @@ def generate_html():
     <header class="top-nav">
         <div class="match-score-card">
             <div class="team-badge">
-                <div class="team-dot augsburg"></div>
-                <span>FC Augsburg</span>
+                <div class="team-dot" id="team-home-dot" style="background: #38bdf8; box-shadow: 0 0 10px #38bdf8;"></div>
+                <span id="team-home-name">Sydney FC</span>
             </div>
             <div class="score-display">
-                <div class="score-nums" id="score-nums-display">2 - 2</div>
-                <div class="match-clock" id="match-clock-display">01:00 • 1st Half</div>
+                <div class="score-nums" id="score-nums-display">4 - 1</div>
+                <div class="match-clock" id="match-clock-display">35:00 • 1st Half</div>
             </div>
             <div class="team-badge">
-                <div class="team-dot bayern"></div>
-                <span>FC Bayern</span>
+                <div class="team-dot" id="team-away-dot" style="background: #dc2626; box-shadow: 0 0 10px #dc2626;"></div>
+                <span id="team-away-name">Adelaide United</span>
             </div>
             <div style="margin-left: 0.5rem; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 0.75rem;">
                 <select id="match-season-select" onchange="switchMatchDataset(this.value)" style="background: rgba(4, 9, 5, 0.95); color: var(--accent-lime); border: 1px solid var(--accent-green); padding: 0.35rem 0.65rem; border-radius: 8px; font-weight: 700; font-size: 0.78rem; cursor: pointer; outline: none;">
-                    <option value="2026_27" selected>Season 2026/27 (FCA 2 - 2 FCB)</option>
-                    <option value="2025_26">Season 2025/26 (FCA 2 - 3 FCB)</option>
+                    <option value="skillcorner_2025" selected>SkillCorner 10Hz Tracking: Sydney FC 4 - 1 Adelaide United</option>
+                    <option value="2026_27">Bundesliga 2026/27: FC Augsburg 2 - 2 FC Bayern (MD 5)</option>
+                    <option value="2025_26">Bundesliga 2025/26: FC Augsburg 2 - 3 FC Bayern (MD 2)</option>
                 </select>
             </div>
         </div>
@@ -941,14 +949,39 @@ def generate_html():
     <script>
         window.MATCH_DATA_2025_26 = {data_2526_str};
         window.MATCH_DATA_2026_27 = {data_2627_str};
-        window.REAL_MATCH_DATA = window.MATCH_DATA_2026_27;
+        window.MATCH_DATA_SKILLCORNER = {data_sc_str};
+        window.REAL_MATCH_DATA = window.MATCH_DATA_SKILLCORNER;
 
         function switchMatchDataset(seasonKey) {{
-            window.REAL_MATCH_DATA = (seasonKey === '2026_27') ? window.MATCH_DATA_2026_27 : window.MATCH_DATA_2025_26;
+            if (seasonKey === 'skillcorner_2025') {{
+                window.REAL_MATCH_DATA = window.MATCH_DATA_SKILLCORNER;
+            }} else if (seasonKey === '2026_27') {{
+                window.REAL_MATCH_DATA = window.MATCH_DATA_2026_27;
+            }} else {{
+                window.REAL_MATCH_DATA = window.MATCH_DATA_2025_26;
+            }}
 
             const meta = window.REAL_MATCH_DATA.metadata;
             const scoreEl = document.getElementById('score-nums-display');
             if (scoreEl) scoreEl.textContent = meta.score.replace(':', ' - ');
+
+            const homeNameEl = document.getElementById('team-home-name');
+            const awayNameEl = document.getElementById('team-away-name');
+            if (homeNameEl) homeNameEl.textContent = meta.home_team;
+            if (awayNameEl) awayNameEl.textContent = meta.away_team;
+
+            const homeDotEl = document.getElementById('team-home-dot');
+            const awayDotEl = document.getElementById('team-away-dot');
+            if (homeDotEl) {{
+                const col = (seasonKey === 'skillcorner_2025') ? '#38bdf8' : '#166534';
+                homeDotEl.style.background = col;
+                homeDotEl.style.boxShadow = `0 0 10px ${{col}}`;
+            }}
+            if (awayDotEl) {{
+                const col = '#dc2626';
+                awayDotEl.style.background = col;
+                awayDotEl.style.boxShadow = `0 0 10px ${{col}}`;
+            }}
 
             // Remove existing player groups from scene
             for (const pid in playerObjects) {{
@@ -966,17 +999,18 @@ def generate_html():
             buildRealEventsUI();
 
             // Default player selection
+            const rosters = window.REAL_MATCH_DATA.rosters;
             const allRoster = [
-                ...window.REAL_MATCH_DATA.rosters.bayern,
-                ...window.REAL_MATCH_DATA.rosters.augsburg
+                ...(rosters.sydney || rosters.bayern || []),
+                ...(rosters.adelaide || rosters.augsburg || [])
             ];
-            const kane = allRoster.find(p => p.short === 'Kane');
-            selectedPlayerKey = kane ? kane.id : allRoster[0].id;
+            const star = allRoster.find(p => p.short.includes('Klimala') || p.short.includes('Lolley') || p.short.includes('Kane')) || allRoster[0];
+            selectedPlayerKey = star.id;
             updateSelectedPlayerUI();
 
             // Jump to first event
             jumpToEventIndex(0);
-            showToast(`Loaded ${{meta.season}} Match: FCA ${{meta.score}} FCB`);
+            showToast(`Loaded ${{meta.home_team}} ${{meta.score}} ${{meta.away_team}}`);
         }}
 
         /* =========================================================================
@@ -1450,15 +1484,10 @@ def generate_html():
             const playerHeight = 1.80;
             const playerRadius = 0.38;
 
-            const bayernColor = 0xdc2626;
-            const augsburgColor = 0xffffff;
-            const neuerColor = 0xfacc15;
-            const dahmenColor = 0x06b6d4;
-
-            const allRoster = [
-                ...window.REAL_MATCH_DATA.rosters.bayern,
-                ...window.REAL_MATCH_DATA.rosters.augsburg
-            ];
+            const rosters = window.REAL_MATCH_DATA.rosters;
+            const homeRoster = rosters.sydney || rosters.bayern || rosters[Object.keys(rosters)[0]] || [];
+            const awayRoster = rosters.adelaide || rosters.augsburg || rosters[Object.keys(rosters)[1]] || [];
+            const allRoster = [...homeRoster, ...awayRoster];
 
             const cylGeo = new THREE.CylinderGeometry(playerRadius, playerRadius, playerHeight, 20);
 
@@ -1466,10 +1495,28 @@ def generate_html():
                 const group = new THREE.Group();
                 group.userData = {{ playerId: p.id, playerObj: p }};
 
-                // Player Body Cylinder
-                const pColor = (p.pos === 'GK') ?
-                    (p.team === 'bayern' ? neuerColor : dahmenColor) :
-                    (p.team === 'bayern' ? bayernColor : augsburgColor);
+                // Player Body Cylinder Color
+                let pColor = 0xffffff;
+                let ringColor = 0x166534;
+                let labelBorder = '#22c55e';
+
+                if (p.team === 'sydney') {{
+                    pColor = (p.pos === 'GK') ? 0xfacc15 : 0x38bdf8; // Sky Blue
+                    ringColor = 0x0284c7;
+                    labelBorder = '#38bdf8';
+                }} else if (p.team === 'adelaide') {{
+                    pColor = (p.pos === 'GK') ? 0x06b6d4 : 0xdc2626; // Red
+                    ringColor = 0x991b1b;
+                    labelBorder = '#ef4444';
+                }} else if (p.team === 'bayern') {{
+                    pColor = (p.pos === 'GK') ? 0xfacc15 : 0xdc2626;
+                    ringColor = 0xffffff;
+                    labelBorder = '#ef4444';
+                }} else {{
+                    pColor = (p.pos === 'GK') ? 0x06b6d4 : 0xffffff;
+                    ringColor = 0x166534;
+                    labelBorder = '#22c55e';
+                }}
 
                 const mat = new THREE.MeshStandardMaterial({{
                     color: pColor,
@@ -1483,7 +1530,7 @@ def generate_html():
 
                 // Team Accent Ring
                 const ringGeo = new THREE.TorusGeometry(playerRadius + 0.02, 0.04, 8, 24);
-                const ringMat = new THREE.MeshBasicMaterial({{ color: p.team === 'bayern' ? 0xffffff : 0x166534 }});
+                const ringMat = new THREE.MeshBasicMaterial({{ color: ringColor }});
                 const ring = new THREE.Mesh(ringGeo, ringMat);
                 ring.rotation.x = Math.PI / 2;
                 ring.position.y = 1.35;
@@ -1498,7 +1545,7 @@ def generate_html():
                 group.add(visor);
 
                 // 3D Floating Label
-                const label = createPlayerLabel(p.num, p.short, p.team === 'bayern' ? '#ef4444' : '#22c55e');
+                const label = createPlayerLabel(p.num, p.short, labelBorder);
                 group.add(label);
 
                 // Selection Pulsing Halo (Grass Ring)
@@ -1536,10 +1583,10 @@ def generate_html():
             const container = document.getElementById('squad-chips-container');
             container.innerHTML = '';
 
-            const allRoster = [
-                ...window.REAL_MATCH_DATA.rosters.bayern,
-                ...window.REAL_MATCH_DATA.rosters.augsburg
-            ];
+            const rosters = window.REAL_MATCH_DATA.rosters;
+            const homeRoster = rosters.sydney || rosters.bayern || rosters[Object.keys(rosters)[0]] || [];
+            const awayRoster = rosters.adelaide || rosters.augsburg || rosters[Object.keys(rosters)[1]] || [];
+            const allRoster = [...homeRoster, ...awayRoster];
 
             allRoster.forEach(p => {{
                 const chip = document.createElement('div');
@@ -1642,8 +1689,15 @@ def generate_html():
 
         function jumpToCurrentKeeperPOV() {{
             if (activeRealEvent) {{
-                const gkId = (activeRealEvent.team === 'bayern') ? 'augsburg_1' : 'bayern_1';
-                switchPlayerPOV(gkId);
+                let gkId = null;
+                for (const pid in playerObjects) {{
+                    const p = playerObjects[pid];
+                    if (p.data.team !== activeRealEvent.team && p.data.pos === 'GK') {{
+                        gkId = p.id;
+                        break;
+                    }}
+                }}
+                if (gkId) switchPlayerPOV(gkId);
             }}
         }}
 
@@ -1774,44 +1828,144 @@ def generate_html():
             document.getElementById('event-banner-sub').textContent = ev.subtitle;
             document.getElementById('real-events-select').value = evIdx;
 
-            const timeDiff = timeSec - ev.seconds; // seconds from shot moment (-12 to +6)
             let ballPos = {{ x: 0, y: 0.22, z: 0 }};
 
-            const shotPos = ev.shot_coord;
-            const assistPos = ev.assist_coord;
-            const goalPos = ev.target_goal_coord;
+            // Check if this event has authentic SkillCorner 10Hz optical tracking coordinates!
+            if (ev.tracking_frames && ev.tracking_frames.length > 0) {{
+                const maxDur = ev.tracking_frames[ev.tracking_frames.length - 1].time_sec;
+                const relSec = timeSec - ev.seconds;
+                const clampedSec = Math.max(0, Math.min(maxDur, relSec));
+                const exactIdx = clampedSec * 10.0;
+                const i0 = Math.min(ev.tracking_frames.length - 1, Math.floor(exactIdx));
+                const i1 = Math.min(ev.tracking_frames.length - 1, i0 + 1);
+                const alpha = exactIdx - i0;
 
-            if (timeDiff < -3.0) {{
-                // Phase 1: Assister carries / prepares delivery
-                const progress = (timeDiff + 12.0) / 9.0; // 0 to 1
-                ballPos.x = THREE.MathUtils.lerp(assistPos[0] - 4, assistPos[0], progress);
-                ballPos.z = THREE.MathUtils.lerp(assistPos[1] + 2, assistPos[1], progress);
-                ballPos.y = 0.22;
-            }} else if (timeDiff < 0.0) {{
-                // Phase 2: Delivery / Pass from assister to shooter
-                const progress = (timeDiff + 3.0) / 3.0; // 0 to 1
-                ballPos.x = THREE.MathUtils.lerp(assistPos[0], shotPos[0], progress);
-                ballPos.z = THREE.MathUtils.lerp(assistPos[1], shotPos[1], progress);
-                ballPos.y = (ev.last_action === 'Cross' || ev.situation === 'FromCorner') ?
-                    0.22 + Math.sin(progress * Math.PI) * 2.8 : 0.22;
-                if (progress > 0.95 && Math.random() < 0.05) playKickSound();
-            }} else if (timeDiff <= 2.2) {{
-                // Phase 3: Shot in flight towards net
-                const progress = timeDiff / 2.2;
-                ballPos.x = THREE.MathUtils.lerp(shotPos[0], goalPos[0], progress);
-                ballPos.z = THREE.MathUtils.lerp(shotPos[1], goalPos[1], progress);
-                const arcHeight = (ev.shot_type === 'Header') ? 2.1 : 1.4;
-                ballPos.y = 0.22 + Math.sin(progress * Math.PI) * arcHeight;
+                const f0 = ev.tracking_frames[i0];
+                const f1 = ev.tracking_frames[i1];
 
-                if (timeDiff > 1.8 && ev.is_goal && Math.random() < 0.06) {{
+                // 3D Ball Position (Height Y is tracked in meters by SkillCorner!)
+                ballPos.x = THREE.MathUtils.lerp(f0.ball.x, f1.ball.x, alpha);
+                ballPos.y = Math.max(0.22, THREE.MathUtils.lerp(f0.ball.y, f1.ball.y, alpha));
+                ballPos.z = THREE.MathUtils.lerp(f0.ball.z, f1.ball.z, alpha);
+
+                if (clampedSec > maxDur - 2.0 && ev.is_goal && Math.random() < 0.04) {{
                     playWhistleSound();
                     playCheerSound();
                 }}
+
+                // Update All 22 Players from 10Hz Optical Tracking
+                for (const key in playerObjects) {{
+                    const p = playerObjects[key];
+                    const p0 = f0.players[key];
+                    const p1 = f1.players[key];
+
+                    let targetX = p.currentPos.x;
+                    let targetZ = p.currentPos.z;
+
+                    if (p0 && p1) {{
+                        targetX = THREE.MathUtils.lerp(p0.x, p1.x, alpha);
+                        targetZ = THREE.MathUtils.lerp(p0.z, p1.z, alpha);
+                    }}
+
+                    const prevX = p.group.position.x;
+                    const prevZ = p.group.position.z;
+
+                    p.group.position.x = targetX;
+                    p.group.position.z = targetZ;
+
+                    const vx = targetX - prevX;
+                    const vz = targetZ - prevZ;
+                    p.velocity.set(vx * 60, 0, vz * 60);
+                    p.currentPos.copy(p.group.position);
+
+                    // Heading orientation: toward movement direction or toward ball
+                    if (Math.hypot(vx, vz) > 0.015) {{
+                        p.heading = Math.atan2(vx, vz);
+                    }} else {{
+                        p.heading = Math.atan2(ballPos.x - targetX, ballPos.z - targetZ);
+                    }}
+                    p.group.rotation.y = p.heading;
+                }}
             }} else {{
-                // Phase 4: Net rebound / celebration
-                ballPos.x = goalPos[0];
-                ballPos.z = goalPos[1];
-                ballPos.y = 0.22;
+                // Fallback for procedural Bundesliga shots
+                const shotPos = ev.shot_coord;
+                const assistPos = ev.assist_coord;
+                const goalPos = ev.target_goal_coord;
+                const timeDiff = timeSec - ev.seconds;
+
+                if (timeDiff < -3.0) {{
+                    const progress = (timeDiff + 12.0) / 9.0;
+                    ballPos.x = THREE.MathUtils.lerp(assistPos[0] - 4, assistPos[0], progress);
+                    ballPos.z = THREE.MathUtils.lerp(assistPos[1] + 2, assistPos[1], progress);
+                    ballPos.y = 0.22;
+                }} else if (timeDiff < 0.0) {{
+                    const progress = (timeDiff + 3.0) / 3.0;
+                    ballPos.x = THREE.MathUtils.lerp(assistPos[0], shotPos[0], progress);
+                    ballPos.z = THREE.MathUtils.lerp(assistPos[1], shotPos[1], progress);
+                    ballPos.y = (ev.last_action === 'Cross' || ev.situation === 'FromCorner') ?
+                        0.22 + Math.sin(progress * Math.PI) * 2.8 : 0.22;
+                    if (progress > 0.95 && Math.random() < 0.05) playKickSound();
+                }} else if (timeDiff <= 2.2) {{
+                    const progress = timeDiff / 2.2;
+                    ballPos.x = THREE.MathUtils.lerp(shotPos[0], goalPos[0], progress);
+                    ballPos.z = THREE.MathUtils.lerp(shotPos[1], goalPos[1], progress);
+                    const arcHeight = (ev.shot_type === 'Header') ? 2.1 : 1.4;
+                    ballPos.y = 0.22 + Math.sin(progress * Math.PI) * arcHeight;
+
+                    if (timeDiff > 1.8 && ev.is_goal && Math.random() < 0.06) {{
+                        playWhistleSound();
+                        playCheerSound();
+                    }}
+                }} else {{
+                    ballPos.x = goalPos[0];
+                    ballPos.z = goalPos[1];
+                    ballPos.y = 0.22;
+                }}
+
+                for (const key in playerObjects) {{
+                    const p = playerObjects[key];
+                    const base = [p.data.base_x, p.data.base_z];
+                    let targetX = base[0];
+                    let targetZ = base[1];
+
+                    if (key === ev.shooter_id) {{
+                        targetX = shotPos[0];
+                        targetZ = shotPos[1];
+                    }} else if (key === ev.assist_id) {{
+                        targetX = assistPos[0];
+                        targetZ = assistPos[1];
+                    }} else if (p.data.pos === 'GK') {{
+                        const isDefending = (p.data.team !== ev.team);
+                        if (isDefending) {{
+                            const gkGoalX = (p.data.team === 'augsburg') ? -49.5 : 49.5;
+                            targetX = gkGoalX;
+                            targetZ = THREE.MathUtils.lerp(0, goalPos[1], 0.7);
+                        }}
+                    }} else {{
+                        const pullX = (ballPos.x - base[0]) * 0.35;
+                        const pullZ = (ballPos.z - base[1]) * 0.38;
+                        targetX = base[0] + pullX;
+                        targetZ = base[1] + pullZ;
+                    }}
+
+                    const prevX = p.group.position.x;
+                    const prevZ = p.group.position.z;
+
+                    p.group.position.x += (targetX - prevX) * 0.14;
+                    p.group.position.z += (targetZ - prevZ) * 0.14;
+
+                    const vx = p.group.position.x - prevX;
+                    const vz = p.group.position.z - prevZ;
+                    p.velocity.set(vx * 60, 0, vz * 60);
+                    p.currentPos.copy(p.group.position);
+
+                    if (Math.hypot(vx, vz) > 0.005) {{
+                        p.heading = Math.atan2(vx, vz);
+                    }} else {{
+                        p.heading = Math.atan2(ballPos.x - p.group.position.x, ballPos.z - p.group.position.z);
+                    }}
+                    p.group.rotation.y = p.heading;
+                }}
             }}
 
             // Update Ball Mesh
@@ -1833,71 +1987,22 @@ def generate_html():
                 posAttr.needsUpdate = true;
             }}
 
-            // Update Players: Shooter, Assister, Goalkeeper, and Formation
-            let lastDefAugsburg = -PITCH_LENGTH / 2;
-            let lastDefBayern = PITCH_LENGTH / 2;
-
-            for (const key in playerObjects) {{
-                const p = playerObjects[key];
-                const base = [p.data.base_x, p.data.base_z];
-                let targetX = base[0];
-                let targetZ = base[1];
-
-                if (key === ev.shooter_id) {{
-                    // Shooter moves towards shot coordinates
-                    targetX = shotPos[0];
-                    targetZ = shotPos[1];
-                }} else if (key === ev.assist_id) {{
-                    // Assister at delivery coordinates
-                    targetX = assistPos[0];
-                    targetZ = assistPos[1];
-                }} else if (p.data.pos === 'GK') {{
-                    // Goalkeeper reacts and positions relative to shot
-                    const isDefending = (p.data.team !== ev.team);
-                    if (isDefending) {{
-                        const gkGoalX = (p.data.team === 'augsburg') ? -49.5 : 49.5;
-                        targetX = gkGoalX;
-                        targetZ = THREE.MathUtils.lerp(0, goalPos[1], 0.7);
-                    }}
-                }} else {{
-                    // Team Tactical Block shifts towards action zone
-                    const pullX = (ballPos.x - base[0]) * 0.35;
-                    const pullZ = (ballPos.z - base[1]) * 0.38;
-                    targetX = base[0] + pullX;
-                    targetZ = base[1] + pullZ;
-                }}
-
-                const prevX = p.group.position.x;
-                const prevZ = p.group.position.z;
-
-                p.group.position.x += (targetX - prevX) * 0.14;
-                p.group.position.z += (targetZ - prevZ) * 0.14;
-
-                const vx = p.group.position.x - prevX;
-                const vz = p.group.position.z - prevZ;
-                p.velocity.set(vx * 60, 0, vz * 60);
-                p.currentPos.copy(p.group.position);
-
-                // Heading orientation
-                if (Math.hypot(vx, vz) > 0.005) {{
-                    p.heading = Math.atan2(vx, vz);
-                }} else {{
-                    p.heading = Math.atan2(ballPos.x - p.group.position.x, ballPos.z - p.group.position.z);
-                }}
-                p.group.rotation.y = p.heading;
-
-                // Offside line computation
-                if (p.data.team === 'augsburg' && p.data.pos !== 'GK') {{
-                    if (p.group.position.x > lastDefAugsburg) lastDefAugsburg = p.group.position.x;
-                }}
-                if (p.data.team === 'bayern' && p.data.pos !== 'GK') {{
-                    if (p.group.position.x < lastDefBayern) lastDefBayern = p.group.position.x;
-                }}
-            }}
-
             // Dynamic Offside Line
             if (showOffside) {{
-                const offsideX = (ballPos.x < 0) ? lastDefAugsburg : lastDefBayern;
+                let lastDefLeft = -PITCH_LENGTH / 2;
+                let lastDefRight = PITCH_LENGTH / 2;
+                for (const key in playerObjects) {{
+                    const p = playerObjects[key];
+                    if (p.data.pos !== 'GK') {{
+                        if (p.group.position.x < 0 && p.group.position.x > lastDefLeft) {{
+                            lastDefLeft = p.group.position.x;
+                        }}
+                        if (p.group.position.x > 0 && p.group.position.x < lastDefRight) {{
+                            lastDefRight = p.group.position.x;
+                        }}
+                    }}
+                }}
+                const offsideX = (ballPos.x < 0) ? lastDefLeft : lastDefRight;
                 offsideLineMesh.position.x = offsideX;
                 offsideLineMesh.visible = true;
             }} else {{
@@ -1910,9 +2015,17 @@ def generate_html():
         }}
 
         function updateTeamShapes() {{
-            const bKeys = ['bayern_44', 'bayern_2', 'bayern_4', 'bayern_27'];
+            const rosters = window.REAL_MATCH_DATA.rosters;
+            let team1Keys = ['bayern_44', 'bayern_2', 'bayern_4', 'bayern_27'];
+            let team2Keys = ['augsburg_13', 'augsburg_31', 'augsburg_6', 'augsburg_5', 'augsburg_2'];
+
+            if (rosters.sydney) {{
+                team1Keys = ['sydney_4', 'sydney_42', 'sydney_23', 'sydney_21'];
+                team2Keys = ['adelaide_20', 'adelaide_3', 'adelaide_51', 'adelaide_62'];
+            }}
+
             const attrB = shapeLinesBayern.geometry.attributes.position;
-            bKeys.forEach((k, idx) => {{
+            team1Keys.forEach((k, idx) => {{
                 if (playerObjects[k]) {{
                     const p = playerObjects[k].group.position;
                     attrB.setXYZ(idx, p.x, 0.1, p.z);
@@ -1921,9 +2034,8 @@ def generate_html():
             attrB.needsUpdate = true;
             shapeLinesBayern.visible = true;
 
-            const aKeys = ['augsburg_13', 'augsburg_31', 'augsburg_6', 'augsburg_5', 'augsburg_2'];
             const attrA = shapeLinesAugsburg.geometry.attributes.position;
-            aKeys.forEach((k, idx) => {{
+            team2Keys.forEach((k, idx) => {{
                 if (playerObjects[k]) {{
                     const p = playerObjects[k].group.position;
                     attrA.setXYZ(idx, p.x, 0.1, p.z);
@@ -2065,8 +2177,15 @@ def generate_html():
                     ctx.restore();
                 }}
 
-                ctx.fillStyle = (p.data.team === 'bayern') ? '#ef4444' : '#22c55e';
-                if (p.data.pos === 'GK') ctx.fillStyle = '#facc15';
+                if (p.data.pos === 'GK') {{
+                    ctx.fillStyle = '#facc15';
+                }} else if (p.data.team === 'sydney') {{
+                    ctx.fillStyle = '#38bdf8';
+                }} else if (p.data.team === 'adelaide' || p.data.team === 'bayern') {{
+                    ctx.fillStyle = '#ef4444';
+                }} else {{
+                    ctx.fillStyle = '#22c55e';
+                }}
 
                 ctx.beginPath();
                 ctx.arc(px, py, isSelected ? 4.5 : 3.0, 0, Math.PI * 2);
@@ -2236,15 +2355,11 @@ def generate_html():
                 stepTime(10);
             }} else if (e.code === 'ArrowLeft') {{
                 stepTime(-10);
-            }} else if (e.key === '1') switchPlayerPOV('bayern_1');
-            else if (e.key === '2') switchPlayerPOV('augsburg_1');
-            else if (e.key === '3') switchPlayerPOV('bayern_9');
-            else if (e.key === '4') switchPlayerPOV('bayern_7');
-            else if (e.key === '5') switchPlayerPOV('bayern_17');
-            else if (e.key === '6') switchPlayerPOV('bayern_14');
-            else if (e.key === '7') switchPlayerPOV('bayern_6');
-            else if (e.key === '8') switchPlayerPOV('augsburg_36');
-            else if (e.key === '9') switchPlayerPOV('augsburg_19');
+            }} else if (e.key >= '1' && e.key <= '9') {{
+                const keys = Object.keys(playerObjects);
+                const idx = parseInt(e.key) - 1;
+                if (keys[idx]) switchPlayerPOV(keys[idx]);
+            }}
         }});
 
         /* =========================================================================
