@@ -1,4 +1,4 @@
-# ⚽ Bundesliga AI Predictor Engine
+# Bundesliga AI Predictor Engine
 
 [![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen?logo=github)](https://RLKO31.github.io/bundesliga-ai-predictor/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -10,32 +10,32 @@ Eine KI-gestützte Prognose- und Simulationsplattform für die **Fußball-Bundes
 
 Entwickelt als wissenschaftliches Portfolio-Projekt an der **Technischen Hochschule Würzburg-Schweinfurt (THWS)**.
 
-👉 **Live-Webseite:** [https://RLKO31.github.io/bundesliga-ai-predictor/](https://RLKO31.github.io/bundesliga-ai-predictor/)
+**Live-Webseite:** [https://RLKO31.github.io/bundesliga-ai-predictor/](https://RLKO31.github.io/bundesliga-ai-predictor/)
 
 ---
 
-## 🌟 Hauptfunktionen & Module
+## Hauptfunktionen & Module
 
-- 🎯 **Spieltagesprognosen:**
+- **Spieltagesprognosen:**
   - Berechnete Siegwahrscheinlichkeiten (Heim / Unentschieden / Auswärts)
   - Erwartete Torverteilungen (Expected Goals $xG$, Poisson-Marginals) und Over/Under-Schätzungen
   - Ausführliche KI-Begründung und Formkurvenanalyse für jede Paarung
-- 🏆 **Tabellen-Simulation:**
+- **Tabellen-Simulation:**
   - Dynamischer Monte-Carlo-Saisonverlauf
   - Prognostizierte Abschlusstabelle mit Meisterwahrscheinlichkeit, Europapokal-Plätzen und Abstiegswahrscheinlichkeiten
-- 🗺️ **Interaktive Geodaten- & Reisematrix (Leaflet & CARTO):**
+- **Interaktive Geodaten- & Reisematrix (Leaflet & CARTO):**
   - Kartografische Visualisierung aller Bundesligastadien
   - Distanz-, Reise- und Belastungsmatrix (Kilometerdistanzen und Reiseaufwand bei Auswärtsfahrten)
-- 🧠 **Modell- & Taktikanalyse:**
+- **Modell- & Taktikanalyse:**
   - Taktische Adaptabilität und Pressing-Indikatoren (PPDA - Passes per Defensive Action)
   - Tor-Komplexitätsmetriken und gegnerische Schwachstellenprofile
-- 📊 **Modell-Benchmarks & Reality-Check:**
+- **Modell-Benchmarks & Reality-Check:**
   - Transparente Validierung gegen reale Spieltagsdaten
   - Brier-Score, Log-Loss und Accuracy-Vergleiche
 
 ---
 
-## 🧠 Systemarchitektur & Methodik
+## Systemarchitektur & Methodik
 
 1. **Spatial AI & DINOv2 Vision Pipeline:**
    - Extraktion räumlicher Spielzug- und Heatmap-Repräsentationen via Transfer Learning.
@@ -46,7 +46,7 @@ Entwickelt als wissenschaftliches Portfolio-Projekt an der **Technischen Hochsch
 
 ---
 
-## ⚖️ Datenquellen, Danksagungen & Lizenzen (Credits)
+## Datenquellen, Danksagungen & Lizenzen (Credits)
 
 Alle in diesem Projekt verwendeten Datenquellen, APIs und Basiskarten dienen ausschließlich nicht-kommerziellen Forschungs- und Studienzwecken:
 
@@ -63,7 +63,7 @@ Alle in diesem Projekt verwendeten Datenquellen, APIs und Basiskarten dienen aus
 
 ---
 
-## 🚀 Lokale Ausführung
+## Lokale Ausführung
 
 ```bash
 # Repository klonen
@@ -76,7 +76,7 @@ start index.html
 
 ---
 
-## 📜 Impressum (§ 5 DDG) & Kontakt
+## Impressum (§ 5 DDG) & Kontakt
 
 - **Entwickler / Betreiber:** Ralf Oppel
 - **Akademische Einrichtung:** Technische Hochschule Würzburg-Schweinfurt (THWS)
