@@ -6,6 +6,93 @@
 [![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn-F7931E.svg)](https://scikit-learn.org/)
 [![Leaflet: 1.9.4](https://img.shields.io/badge/Geo-Leaflet%201.9.4-199900.svg)](https://leafletjs.com/)
 
+[English](#english-version) | [Deutsch](#deutsche-version)
+
+---
+
+## English Version
+
+An AI-driven forecasting and simulation platform for the **German Football Bundesliga**. The system integrates advanced machine learning models (DINOv2 spatial vision representations, gradient boosting, Poisson goal distribution modeling, and multi-competition Elo ratings) with interactive geospatial analytics (stadium travel and distance matrices) in a dynamic single-page web dashboard.
+
+Developed as an academic portfolio project at the **Technical University of Applied Sciences Würzburg-Schweinfurt (THWS)**.
+
+**Live Website:** [https://RLKO31.github.io/bundesliga-ai-predictor/](https://RLKO31.github.io/bundesliga-ai-predictor/)
+
+---
+
+### Core Modules & Features
+
+- **Matchday Forecasts:**
+  - Probabilistic match outcome estimates (Home Win / Draw / Away Win)
+  - Projected goal distributions (Expected Goals $xG$, Poisson marginals) and Over/Under scoring lines
+  - Comprehensive AI-generated tactical rationales and form trajectory breakdowns for each fixture
+- **Table Simulation:**
+  - Dynamic Monte Carlo full-season projections
+  - Predicted end-of-season table including championship probabilities, European qualification spots, and relegation risks
+- **Interactive Geospatial & Travel Matrix (Leaflet & CARTO):**
+  - Cartographic visualization of all Bundesliga stadiums
+  - Travel distance, routing, and fatigue matrix (kilometer distances and travel load for away fixtures)
+- **Tactical & Model Analytics:**
+  - Tactical adaptability indices and pressing intensity metrics (PPDA - Passes per Defensive Action)
+  - Goal complexity scores and opponent defensive vulnerability profiles
+- **Model Benchmarks & Reality Check:**
+  - Transparent validation against observed matchday ground truth
+  - Brier Score, Log-Loss, and Accuracy comparisons
+
+---
+
+### System Architecture & Methodology
+
+1. **Spatial AI & DINOv2 Vision Pipeline:**
+   - Transfer-learning feature extraction from spatial play layouts and tactical pitch heatmaps.
+2. **Tabular Machine Learning Engine:**
+   - Blended ensembles combining Random Forest, HistGradientBoosting, and Ridge Regression calibrated on historical performance and $xG$ data.
+3. **Multi-Competition Harmonization:**
+   - Workload modeling integrating fixture congestion and travel demands from DFB-Pokal and UEFA club competitions (Champions League, Europa League, Conference League).
+
+---
+
+### Data Sources, Credits & Licenses
+
+All data sources, APIs, and basemaps in this project are utilized exclusively for non-commercial research, academic study, and portfolio demonstration purposes:
+
+| Component | Source / Provider | License & Usage |
+|---|---|---|
+| **Real-Time Schedules & Scores** | [OpenLigaDB](https://www.openligadb.de) | Free community open-source API providing fixtures, kickoff times, and official Bundesliga match scores. |
+| **Tactical Metrics & $xG$ Statistics** | [Understat](https://understat.com) | Historical Expected Goals ($xG$), PPDA, and shot data for offline feature engineering under §§ 44b, 60d German UrhG (Text and Data Mining for academic research). |
+| **Cartography & Basemap Tiles** | [OpenStreetMap](https://www.openstreetmap.org/copyright) & [CARTO](https://carto.com/attributions) | OpenStreetMap contributors (ODbL) and CARTO Dark Matter basemap tiles for the interactive stadium map. |
+| **Club Crests & Vector Badges** | [Wikimedia Commons](https://commons.wikimedia.org) | Freely available vector crests used nominatively and editorially for team identification under § 23 German MarkenG. |
+| **Cup & European Match History** | Public Sports Archives (ESPN / DFB / UEFA) | Factual historic sporting records (public domain under German copyright law). |
+
+> [!NOTE]
+> **Disclaimer:** Strictly academic research and portfolio project. All predictions, probabilities, and score suggestions are statistical outputs and **do not constitute financial, betting, or gambling advice**. Gambling involves risk.
+
+---
+
+### Local Execution
+
+```bash
+# Clone the repository
+git clone https://github.com/RLKO31/bundesliga-ai-predictor.git
+cd bundesliga-ai-predictor
+
+# Open index.html directly in your default browser
+start index.html
+```
+
+---
+
+### Legal Notice (§ 5 DDG) & Contact
+
+- **Developer / Operator:** Ralf Oppel
+- **Academic Institution:** Technische Hochschule Würzburg-Schweinfurt (THWS)
+- **Contact:** [ralf.oppel@study.thws.de](mailto:ralf.oppel@study.thws.de)
+- **License:** [MIT License](LICENSE)
+
+---
+
+## Deutsche Version
+
 Eine KI-gestützte Prognose- und Simulationsplattform für die **Fußball-Bundesliga**. Das System kombiniert modernste Machine-Learning-Verfahren (DINOv2 Spatial Vision Features, Gradient Boosting, Poisson-Torverteilungen und Multi-Wettbewerbs-Elo) mit interaktiver Geodatenanalyse (Reise- und Distanzmatrizen) in einem dynamischen Single-Page-Web-Dashboard.
 
 Entwickelt als wissenschaftliches Portfolio-Projekt an der **Technischen Hochschule Würzburg-Schweinfurt (THWS)**.
@@ -14,7 +101,7 @@ Entwickelt als wissenschaftliches Portfolio-Projekt an der **Technischen Hochsch
 
 ---
 
-## Hauptfunktionen & Module
+### Hauptfunktionen & Module
 
 - **Spieltagesprognosen:**
   - Berechnete Siegwahrscheinlichkeiten (Heim / Unentschieden / Auswärts)
@@ -35,7 +122,7 @@ Entwickelt als wissenschaftliches Portfolio-Projekt an der **Technischen Hochsch
 
 ---
 
-## Systemarchitektur & Methodik
+### Systemarchitektur & Methodik
 
 1. **Spatial AI & DINOv2 Vision Pipeline:**
    - Extraktion räumlicher Spielzug- und Heatmap-Repräsentationen via Transfer Learning.
@@ -46,7 +133,7 @@ Entwickelt als wissenschaftliches Portfolio-Projekt an der **Technischen Hochsch
 
 ---
 
-## Datenquellen, Danksagungen & Lizenzen (Credits)
+### Datenquellen, Danksagungen & Lizenzen (Credits)
 
 Alle in diesem Projekt verwendeten Datenquellen, APIs und Basiskarten dienen ausschließlich nicht-kommerziellen Forschungs- und Studienzwecken:
 
@@ -63,7 +150,7 @@ Alle in diesem Projekt verwendeten Datenquellen, APIs und Basiskarten dienen aus
 
 ---
 
-## Lokale Ausführung
+### Lokale Ausführung
 
 ```bash
 # Repository klonen
@@ -76,7 +163,7 @@ start index.html
 
 ---
 
-## Impressum (§ 5 DDG) & Kontakt
+### Impressum (§ 5 DDG) & Kontakt
 
 - **Entwickler / Betreiber:** Ralf Oppel
 - **Akademische Einrichtung:** Technische Hochschule Würzburg-Schweinfurt (THWS)
