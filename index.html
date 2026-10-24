@@ -492,7 +492,87 @@
             position: relative;
         }
 
-    </style>
+    
+        /* Sabermetrics Legend Styling */
+        .stat-legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 0.9rem;
+        }
+        .stat-legend-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            padding: 1.1rem 1.25rem;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .stat-legend-item:hover {
+            border-color: rgba(34, 197, 94, 0.35);
+            background: rgba(34, 197, 94, 0.04);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.5);
+        }
+        .stat-legend-pill {
+            display: inline-block;
+            align-self: flex-start;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+        }
+        .stat-pill-offense {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+        }
+        .stat-pill-defense {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.35);
+        }
+        .stat-pill-keeper {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fde047;
+            border: 1px solid rgba(251, 191, 36, 0.35);
+        }
+        .stat-pill-war {
+            background: rgba(34, 197, 94, 0.18);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+        .stat-legend-title {
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.35rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .stat-legend-desc {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+        .stat-legend-formula {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.72rem;
+            color: #94a3b8;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.55rem;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: auto;
+        }
+
+</style>
 
     <script id="embedded-data-state">
         window.stadiums = {"Bayern Munich":{"name":"Allianz Arena","city":"Munich","lat":48.2188,"lng":11.6247},"Bayer Leverkusen":{"name":"BayArena","city":"Leverkusen","lat":51.0383,"lng":6.9839},"Borussia Dortmund":{"name":"Signal Iduna Park","city":"Dortmund","lat":51.4926,"lng":7.4518},"RB Leipzig":{"name":"Red Bull Arena","city":"Leipzig","lat":51.3458,"lng":12.3483},"VfB Stuttgart":{"name":"MHPArena","city":"Stuttgart","lat":48.7922,"lng":9.232},"Eintracht Frankfurt":{"name":"Deutsche Bank Park","city":"Frankfurt","lat":50.0686,"lng":8.6455},"SC Freiburg":{"name":"Europa-Park Stadion","city":"Freiburg","lat":48.0208,"lng":7.8228},"Borussia M.Gladbach":{"name":"BORUSSIA-PARK","city":"M\u00f6nchengladbach","lat":51.1747,"lng":6.3856},"Union Berlin":{"name":"Stadion An der Alten F\u00f6rsterei","city":"Berlin","lat":52.4572,"lng":13.5681},"Werder Bremen":{"name":"Weserstadion","city":"Bremen","lat":53.0664,"lng":8.8377},"Mainz 05":{"name":"MEWA ARENA","city":"Mainz","lat":49.9841,"lng":8.2242},"TSG Hoffenheim":{"name":"PreZero Arena","city":"Sinsheim","lat":49.2393,"lng":8.8872},"Augsburg":{"name":"WWK ARENA","city":"Augsburg","lat":48.3228,"lng":10.886},"FC Cologne":{"name":"RheinEnergieSTADION","city":"Cologne","lat":50.9335,"lng":6.8751},"Hamburger SV":{"name":"Volksparkstadion","city":"Hamburg","lat":53.5872,"lng":9.8986},"Paderborn":{"name":"Home Deluxe Arena","city":"Paderborn","lat":51.7308,"lng":8.7117},"Elversberg":{"name":"URSAPHARM-Arena","city":"Spiesen-Elversberg","lat":49.3131,"lng":7.1286},"Schalke 04":{"name":"VELTINS-Arena","city":"Gelsenkirchen","lat":51.5545,"lng":7.0675}};
@@ -545,8 +625,8 @@
 
         <!-- Navigation Tabs -->
         <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('predictions', this)">
-            <button class="tab-btn" onclick="switchTab('totw', this)"><i data-lucide="shield" size="16"></i> 11 der Woche</button><i data-lucide="calendar" size="16"></i> Matchday Predictions</button>
+            <button class="tab-btn active" onclick="switchTab('predictions', this)"><i data-lucide="calendar" size="16"></i> Matchday Predictions</button>
+            <button class="tab-btn" onclick="switchTab('totw', this)"><i data-lucide="shield" size="16"></i> 11 der Woche</button>
             <button class="tab-btn" onclick="switchTab('standings', this)"><i data-lucide="list-ordered" size="16"></i> Standings Comparison</button>
             <button class="tab-btn" onclick="switchTab('map', this)"><i data-lucide="map" size="16"></i> Matchday Travel Map</button>
             <button class="tab-btn" onclick="switchTab('tactical', this)"><i data-lucide="compass" size="16"></i> Tactical Pitch Map & Form</button>
@@ -1278,6 +1358,173 @@
                         </div>
                     </div>
 
+                <!-- Sabermetrics Legend & Glossar -->
+                <div class="totw-card" style="grid-column: 1 / -1; margin-top: 1.2rem; border: 1px solid rgba(34, 197, 94, 0.35); background: linear-gradient(135deg, rgba(8, 20, 12, 0.85), rgba(4, 12, 8, 0.9));">
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 0.8rem;">
+                        <div>
+                            <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: #fff; margin: 0 0 0.25rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                                <i data-lucide="book-open" size="20" style="color: var(--accent-green);"></i>
+                                Sabermetrics Glossar & Kennzahlen-Legende
+                            </h4>
+                            <p style="color: var(--text-secondary); font-size: 0.82rem; margin: 0;">
+                                Erklärung aller wissenschaftlichen Metriken der „11 der Woche“ für Feldspieler und Torhüter
+                            </p>
+                        </div>
+                        <span style="background: rgba(34, 197, 94, 0.15); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); font-size: 0.72rem; padding: 0.25rem 0.65rem; border-radius: 20px; font-weight: 700;">
+                            Wissenschaftlicher Sabermetric-Standard
+                        </span>
+                    </div>
+
+                    <!-- Category: Offensive & Playmaking -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.4rem; color: #38bdf8; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            <i data-lucide="zap" size="15"></i> Offensive, Spielaufbau & Chancenkreation
+                        </div>
+                        <div class="stat-legend-grid">
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-offense">TIP</span>
+                                    <div class="stat-legend-title">Team-Independent Performance Rating</div>
+                                    <div class="stat-legend-desc">
+                                        Misst die reine individuelle Torgefahr und Kreation bereinigt um die Ballbesitz-Dominanz des eigenen Teams. Verhindert, dass Topteam-Spieler allein durch Klub-Überlegenheit bevorteilt werden.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: (xG + 0.8×xA) ÷ (Team-Possession / 50%)</div>
+                            </div>
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-offense">TDI</span>
+                                    <div class="stat-legend-title">Team Drag Index ("Diamonds in the Rough")</div>
+                                    <div class="stat-legend-desc">
+                                        Der relative Offensiv- und Chancenanteil, den ein Einzelkönner im Gesamtkollektiv schultert. Werte über 2.0 identifizieren herausragende Unterschiedsspieler in defensiveren oder tabellarisch schwächeren Klubs.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: Spieler-xGI ÷ (Team-Schnitt xGI pro Feldspieler)</div>
+                            </div>
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-offense">BPS</span>
+                                    <div class="stat-legend-title">Bypassed Pressure Score</div>
+                                    <div class="stat-legend-desc">
+                                        Bewertet vertikale Pass- und Dribblingserfolge, die gegnerische Pressing- und Abwehrlinien unter direktem gegnerischen Druck überspielen und Raumgewinn in gefährliche Halbräume generieren.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: Progressive Pässe × Überwundene Verteidiger / Drucklevel</div>
+                            </div>
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-offense">Finishing / xG Buildup</span>
+                                    <div class="stat-legend-title">Abschluss-Delta & Buildup-Impact</div>
+                                    <div class="stat-legend-desc">
+                                        <strong>Finishing:</strong> Tatsächlich erzielte Tore abzüglich der Qualität der Torchancen (Tore − xG).<br>
+                                        <strong>xG Buildup:</strong> Beteiligung an Torgefahr in Ballbesitzphasen vor dem vorletzten Pass.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Finishing = Goals − xG | xG Buildup = Σ xG aller Sequenzen ohne Schuss/Assist</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category: Defensive & Positioning -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.4rem; color: #c084fc; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            <i data-lucide="shield-check" size="15"></i> Defensive Stabilität & Zweikampfführung
+                        </div>
+                        <div class="stat-legend-grid">
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-defense">BLS</span>
+                                    <div class="stat-legend-title">Back-Line Stabilizer ("Maldini-Index")</div>
+                                    <div class="stat-legend-desc">
+                                        Inspiriert von Paolo Maldini: Belohnt souveränes Stellungsspiel, Antizipation und sauberes Klären ohne Fouls. Exzellente Verteidiger lösen Gefahrensituationen durch Raumbeherrschung statt riskanter Grätschen.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: (Interceptions + Blocks + Ballgewinne) ÷ (Fouls + 0.5)</div>
+                            </div>
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-defense">CDE</span>
+                                    <div class="stat-legend-title">Clean Disruption Efficiency</div>
+                                    <div class="stat-legend-desc">
+                                        Effizienz der gegnerischen Angriffsunterbindung: Wie viele gewonnene Defensivaktionen glücken pro begangenem Foul oder Karte? Werte ab 5.0 stehen für außergewöhnliche Disziplin.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: (Tackles Won + Interceptions) ÷ (Fouls Committed + 1)</div>
+                            </div>
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-defense">DSI</span>
+                                    <div class="stat-legend-title">Defensive Security Index</div>
+                                    <div class="stat-legend-desc">
+                                        Ballbesitz-bereinigte Defensivlast (pAdj Defensive Actions). Normalisiert die Rettungs- und Abwehraktionen auf das gegnerische Ballbesitzvolumen, um Teams aller Spielphilosophien fair zu vergleichen.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: pAdj (Tackles + Interceptions + Clearances) pro 90 Min</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category: Goalkeepers -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.4rem; color: #facc15; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            <i data-lucide="hand" size="15"></i> Torhüter-Metriken & Shot-Stopping
+                        </div>
+                        <div class="stat-legend-grid">
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-keeper">GSAE</span>
+                                    <div class="stat-legend-title">Goals Saved Above Expected</div>
+                                    <div class="stat-legend-desc">
+                                        Tatsächlich verhinderte Gegentore basierend auf Post-Shot Expected Goals (PSxG / xGOT). Ein Wert von +1.50 bedeutet, dass der Keeper 1.5 Gegentore mehr vereitelt hat, als ein statistischer Durchschnittstorwart.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: Post-Shot xG (aufs Tor) − Tatsächliche Gegentore</div>
+                            </div>
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-keeper">QRSR</span>
+                                    <div class="stat-legend-title">Quality-Resilient Save Ratio</div>
+                                    <div class="stat-legend-desc">
+                                        Schussqualitäts-gewichtete Fang- und Abwehrquote, insbesondere gegen Großchancen (High-xG Schüsse & 1-gegen-1 Duelle). Beweist Nervenstärke bei freien Einschussmöglichkeiten des Gegners.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: Gewertete Saves (nach Schuss-xG gewichtet) ÷ Erwartete Saves</div>
+                            </div>
+                            <div class="stat-legend-item">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-keeper">CSD</span>
+                                    <div class="stat-legend-title">Clean Sheet Dominance</div>
+                                    <div class="stat-legend-desc">
+                                        Zu-Null-Qualitätsfaktor: Misst den Druck und die Qualität der abgewehrten Schüsse bei Spielen ohne Gegentor, um arbeitsarme Zu-Null-Spiele von wahren Heldentaten zu unterscheiden.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: (Zu-Null Bonus) × (Gesperrter xG-Wert des Gegners)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category: Match-xWAR -->
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.4rem; color: var(--accent-green); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            <i data-lucide="award" size="15"></i> Gesamtbewertung & MVP-Auszeichnung
+                        </div>
+                        <div class="stat-legend-grid">
+                            <div class="stat-legend-item" style="grid-column: 1 / -1; background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.25);">
+                                <div>
+                                    <span class="stat-legend-pill stat-pill-war">Match-xWAR</span>
+                                    <div class="stat-legend-title">Wins Above Replacement (Spieltags-Mehrwert)</div>
+                                    <div class="stat-legend-desc">
+                                        Der ganzheitliche rechnerische Beitrag eines Spielers zur Siegwahrscheinlichkeit seines Teams im Vergleich zu einem durchschnittlichen Bundesliga-Ersatzspieler (Replacement Level). Berücksichtigt Offensivkreation, Abwehrstabilität, Passsicherheit und Spielentscheidung. Der Spieler mit dem höchsten Match-xWAR wird als offizieller <strong>Spieler des Spieltags (MVP)</strong> gekürt.
+                                    </div>
+                                </div>
+                                <div class="stat-legend-formula">Formel: (Net Win Probability Added durch Sabermetrics) − Replacement-Level Baseline</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
                 </div>
 
             </div>
@@ -1356,6 +1603,7 @@
             if (targetSec) targetSec.classList.add('active');
             if (btnEl) btnEl.classList.add('active');
             
+            if (tabId === 'predictions') { loadMatchday(selectedMatchday || 6); }
             if (tabId === 'totw') initTeamOfTheWeek();
             if (tabId === 'standings') loadLiveTable();
             if (tabId === 'map') initMap();
@@ -1480,12 +1728,17 @@
 
         async function initMatchdaySelector() {
             const selector = document.getElementById("matchday-selector");
+            if (!selector) return;
             selector.innerHTML = "";
             for (let i = 1; i <= 34; i++) {
                 const opt = document.createElement("option");
                 opt.value = i; opt.textContent = `Matchday ${i}`;
                 selector.appendChild(opt);
             }
+
+            // Default to latest played matchday (MD6 for 2026/27)
+            if (!selectedMatchday) selectedMatchday = 6;
+            currentMatchday = selectedMatchday;
 
             try {
                 const controller = new AbortController();
@@ -1495,8 +1748,11 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data && data.groupOrderID) {
-                        currentMatchday = data.groupOrderID;
-                        selectedMatchday = currentMatchday;
+                        const ord = Number(data.groupOrderID);
+                        if (ord >= 1 && ord <= 34) {
+                            currentMatchday = ord;
+                            selectedMatchday = currentMatchday;
+                        }
                     }
                 }
             } catch (err) {}
@@ -1506,40 +1762,68 @@
         }
 
         function loadMatchday(matchday) {
-            selectedMatchday = matchday;
-            renderOfflinePredictions(matchday);
+            selectedMatchday = Number(matchday) || 6;
+            renderOfflinePredictions(selectedMatchday);
+
+            const selector = document.getElementById("matchday-selector");
+            if (selector && Number(selector.value) !== selectedMatchday) {
+                selector.value = selectedMatchday;
+            }
 
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 1500);
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-            fetch(`https://api.openligadb.de/getmatchdata/bl1/2026/${matchday}`, { signal: controller.signal })
+            fetch(`https://api.openligadb.de/getmatchdata/bl1/2026/${selectedMatchday}`, { signal: controller.signal })
                 .then(res => { clearTimeout(timeoutId); if (!res.ok) throw new Error("Fetch error"); return res.json(); })
-                .then(liveMatches => { renderMatchdayPredictions(liveMatches, matchday); })
-                .catch(err => {});
+                .then(liveMatches => {
+                    if (Array.isArray(liveMatches) && liveMatches.length > 0) {
+                        renderMatchdayPredictions(liveMatches, selectedMatchday);
+                    }
+                })
+                .catch(err => {
+                    // Offline predictions are already rendered and valid
+                });
         }
 
         function renderMatchdayPredictions(liveMatches, matchday) {
             const grid = document.getElementById("fixtures-grid");
-            grid.innerHTML = "";
-            let matchdayTotalPoints = 0; let finishedCount = 0;
+            if (!grid) return;
+            if (!Array.isArray(liveMatches) || liveMatches.length === 0) {
+                renderOfflinePredictions(matchday);
+                return;
+            }
+
+            let matchdayTotalPoints = 0; 
+            let finishedCount = 0;
             const activePreds = getActivePredictions();
-            liveMatches.sort((a,b) => new Date(a.matchDateTime) - new Date(b.matchDateTime));
+            
+            try {
+                liveMatches.sort((a,b) => new Date(a.matchDateTime) - new Date(b.matchDateTime));
+            } catch (e) {}
+
+            const tempCards = [];
 
             liveMatches.forEach(m => {
-                const homeNameRaw = m.team1.teamName; const awayNameRaw = m.team2.teamName;
-                const homeClean = cleanTeamName(homeNameRaw); const awayClean = cleanTeamName(awayNameRaw);
+                const homeNameRaw = (m.team1 && m.team1.teamName) ? m.team1.teamName : ""; 
+                const awayNameRaw = (m.team2 && m.team2.teamName) ? m.team2.teamName : "";
+                const homeClean = cleanTeamName(homeNameRaw); 
+                const awayClean = cleanTeamName(awayNameRaw);
 
                 const pred = activePreds.find(p => p.matchday === matchday && cleanTeamName(p.home_clean) === homeClean && cleanTeamName(p.away_clean) === awayClean);
                 if (!pred) return;
 
-                const hPct = (pred.p_home * 100).toFixed(1); const dPct = (pred.p_draw * 100).toFixed(1); const aPct = (pred.p_away * 100).toFixed(1);
+                const hPct = (pred.p_home * 100).toFixed(1); 
+                const dPct = (pred.p_draw * 100).toFixed(1); 
+                const aPct = (pred.p_away * 100).toFixed(1);
                 const badgeClass = pred.tip === "AWAY WIN" ? "tip-badge away-win" : "tip-badge";
 
-                let actualScoreHtml = ""; let pointsBadgeHtml = "";
+                let actualScoreHtml = ""; 
+                let pointsBadgeHtml = "";
                 if (m.matchIsFinished && m.matchResults && m.matchResults.length > 0) {
-                    const finalResult = m.matchResults.find(r => r.resultName === "Endergebnis") || m.matchResults[0];
+                    const finalResult = m.matchResults.find(r => r.resultName === "Endergebnis" || r.resultTypeKind === "After90Minutes") || m.matchResults[0];
                     if (finalResult) {
-                        const actHome = finalResult.pointsTeam1; const actAway = finalResult.pointsTeam2;
+                        const actHome = finalResult.pointsTeam1; 
+                        const actAway = finalResult.pointsTeam2;
                         actualScoreHtml = `<span style="font-size: 0.95rem; color: var(--text-secondary); font-weight:600;">Actual: <strong style="color:#fff;">${actHome}:${actAway}</strong></span>`;
                         
                         const [prHome, prAway] = pred.score.split(':').map(Number);
@@ -1551,13 +1835,15 @@
                             if (prO === actO) pts = (prHome - prAway) === (actHome - actAway) ? 3 : 2;
                         }
                         pointsBadgeHtml = `<span style="font-size:0.72rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:4px; background:rgba(16,185,129,0.15); color:var(--accent-win);">+${pts} pts</span>`;
-                        matchdayTotalPoints += pts; finishedCount++;
+                        matchdayTotalPoints += pts; 
+                        finishedCount++;
                     }
                 } else {
                     actualScoreHtml = `<span style="font-size: 0.8rem; color: #fbbf24; font-weight:600;">Scheduled</span>`;
                 }
 
-                const homeLogo = teamLogos[homeClean] || ""; const awayLogo = teamLogos[awayClean] || "";
+                const homeLogo = teamLogos[homeClean] || ""; 
+                const awayLogo = teamLogos[awayClean] || "";
                 const homeLogoHtml = homeLogo ? `<img class="logo-circle-img" src="${homeLogo}" referrerpolicy="no-referrer">` : `<div style="font-weight:700;">${homeNameRaw.substring(0,2)}</div>`;
                 const awayLogoHtml = awayLogo ? `<img class="logo-circle-img" src="${awayLogo}" referrerpolicy="no-referrer">` : `<div style="font-weight:700;">${awayNameRaw.substring(0,2)}</div>`;
 
@@ -1606,11 +1892,20 @@
                         </div>
                     </div>
                 `;
-                grid.appendChild(card);
+                tempCards.push(card);
             });
 
-            document.getElementById("matchday-points-total").textContent = `${matchdayTotalPoints} pts (${finishedCount}/9 played)`;
-            lucide.createIcons();
+            if (tempCards.length === 0) {
+                renderOfflinePredictions(matchday);
+                return;
+            }
+
+            grid.innerHTML = "";
+            tempCards.forEach(c => grid.appendChild(c));
+
+            const ptsEl = document.getElementById("matchday-points-total");
+            if (ptsEl) ptsEl.textContent = `${matchdayTotalPoints} pts (${finishedCount}/9 played)`;
+            if (window.lucide) lucide.createIcons();
         }
 
         function renderOfflinePredictions(matchday) {
