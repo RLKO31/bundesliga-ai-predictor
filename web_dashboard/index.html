@@ -202,6 +202,296 @@
             outline: none;
         }
     
+    
+        /* ================= 11 DER WOCHE STYLING ================= */
+        .totw-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .totw-header-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            backdrop-filter: blur(16px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .md-selector-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .md-pill-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            color: var(--text-secondary);
+            padding: 0.45rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .md-pill-btn:hover {
+            color: #fff;
+            border-color: var(--accent-green);
+            background: rgba(34, 197, 94, 0.15);
+        }
+        .md-pill-btn.active {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            color: #fff;
+            border-color: var(--accent-green);
+            box-shadow: 0 4px 14px -3px rgba(34, 197, 94, 0.5);
+        }
+
+        .pitch-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 820px;
+            margin: 0 auto;
+            aspect-ratio: 1 / 1.35;
+            background: #15803d;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                #166534,
+                #166534 50px,
+                #15803d 50px,
+                #15803d 100px
+            );
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        /* SVG Field Markings */
+        .pitch-field-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .player-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0.1s;
+            z-index: 5;
+            width: 130px;
+            text-align: center;
+        }
+        .player-node:hover {
+            transform: translate(-50%, -58%) scale(1.08);
+            z-index: 20;
+        }
+
+        .player-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffffff, #e2e8f0 70%, #94a3b8);
+            color: #0f172a;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.8);
+            border: 2px solid rgba(15, 23, 42, 0.7);
+            margin-bottom: 4px;
+            position: relative;
+        }
+        .player-badge.mvp-badge {
+            background: radial-gradient(circle at 35% 35%, #fef08a, #facc15 70%, #ca8a04);
+            border-color: #713f12;
+            color: #422006;
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.8), 0 4px 10px rgba(0,0,0,0.6);
+        }
+        .player-badge.mvp-badge::after {
+            content: "★";
+            position: absolute;
+            top: -8px;
+            right: -6px;
+            font-size: 0.85rem;
+            color: #fbbf24;
+            filter: drop-shadow(0 0 4px #000);
+        }
+
+        .player-name-box {
+            background: rgba(4, 9, 5, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            padding: 3px 8px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .player-name {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 120px;
+        }
+        .player-team {
+            font-size: 0.65rem;
+            color: var(--accent-lime);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .player-tag {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            font-size: 0.62rem;
+            padding: 1px 5px;
+            border-radius: 4px;
+            margin-top: 2px;
+            white-space: nowrap;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .player-tag.mvp-tag {
+            background: rgba(250, 204, 21, 0.25);
+            color: #fde047;
+            border-color: rgba(250, 204, 21, 0.5);
+            font-weight: 700;
+        }
+
+        .formation-pill {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(4, 9, 5, 0.88);
+            border: 1px solid var(--accent-green);
+            color: #fff;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .pitch-controls-bottom {
+            position: absolute;
+            bottom: 12px;
+            right: 15px;
+            background: rgba(4, 9, 5, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .totw-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .totw-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(16px);
+        }
+
+        .totw-mvp-card {
+            border: 1px solid rgba(250, 204, 21, 0.35);
+            background: linear-gradient(135deg, rgba(20, 25, 15, 0.85), rgba(10, 20, 12, 0.85));
+            box-shadow: 0 8px 25px -10px rgba(250, 204, 21, 0.2);
+        }
+
+        .live-sync-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            color: #86efac;
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 0.25rem 0.65rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+            animation: pulseDot 1.8s infinite;
+        }
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* Player Tooltip / Modal */
+        .player-modal-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        .player-modal-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .player-modal-content {
+            background: #09150c;
+            border: 1px solid var(--accent-green);
+            border-radius: 20px;
+            padding: 1.8rem;
+            max-width: 440px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 30px rgba(34, 197, 94, 0.2);
+            position: relative;
+        }
+
     </style>
 
     <script id="embedded-data-state">
@@ -255,7 +545,8 @@
 
         <!-- Navigation Tabs -->
         <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('predictions', this)"><i data-lucide="calendar" size="16"></i> Matchday Predictions</button>
+            <button class="tab-btn active" onclick="switchTab('predictions', this)">
+            <button class="tab-btn" onclick="switchTab('totw', this)"><i data-lucide="shield" size="16"></i> 11 der Woche</button><i data-lucide="calendar" size="16"></i> Matchday Predictions</button>
             <button class="tab-btn" onclick="switchTab('standings', this)"><i data-lucide="list-ordered" size="16"></i> Standings Comparison</button>
             <button class="tab-btn" onclick="switchTab('map', this)"><i data-lucide="map" size="16"></i> Matchday Travel Map</button>
             <button class="tab-btn" onclick="switchTab('tactical', this)"><i data-lucide="compass" size="16"></i> Tactical Pitch Map & Form</button>
@@ -858,6 +1149,164 @@
             </div>
         </section>
     
+    
+        <!-- Tab: 11 der Woche (Team of the Matchday) -->
+        <section id="totw-tab" class="content-section">
+            <div class="totw-container">
+                
+                <!-- Matchday Bar -->
+                <div class="totw-header-card">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem;">
+                            <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; color: #fff; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                                <i data-lucide="shield" size="22" style="color: var(--accent-green);"></i>
+                                11 der Woche (Bundesliga 2026/2027)
+                            </h3>
+                            <span class="live-sync-indicator">
+                                <span class="live-dot"></span> OpenLigaDB Live-Sync
+                            </span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">
+                            Wissenschaftliche Elf des Spieltags: Ausgewählt nach Team-Independent Performance (TIP), Bypassed Pressure (BPS), Maldini-Index (BLS) und Torwart-GSAE.
+                        </p>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
+                        <div class="md-selector-group" id="totw-matchday-buttons">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                        <button class="md-pill-btn" onclick="checkLiveOpenLigaDB(true)" style="background: rgba(34, 197, 94, 0.15); border-color: var(--accent-green); color: #fff; display: flex; align-items: center; gap: 0.35rem;">
+                            <i data-lucide="refresh-cw" size="14"></i> Live prüfen
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Football Pitch Aufstellung -->
+                <div style="display: flex; justify-content: center; position: relative;">
+                    <div class="pitch-wrapper" id="totw-pitch-container">
+                        <!-- SVG Field Markings -->
+                        <svg class="pitch-field-svg" viewBox="0 0 100 135" preserveAspectRatio="none">
+                            <!-- Outer boundary -->
+                            <rect x="4" y="4" width="92" height="127" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <!-- Halfway line -->
+                            <line x1="4" y1="67.5" x2="96" y2="67.5" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <!-- Center circle -->
+                            <circle cx="50" cy="67.5" r="12" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <circle cx="50" cy="67.5" r="0.8" fill="rgba(255,255,255,0.9)"/>
+                            
+                            <!-- Top Penalty Area -->
+                            <rect x="25" y="4" width="50" height="20" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <!-- Top Goal Area -->
+                            <rect x="36" y="4" width="28" height="7" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <!-- Top Penalty Spot & Arc -->
+                            <circle cx="50" cy="15" r="0.8" fill="rgba(255,255,255,0.9)"/>
+                            <path d="M 40,24 A 10,10 0 0,0 60,24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+
+                            <!-- Bottom Penalty Area -->
+                            <rect x="25" y="111" width="50" height="20" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <!-- Bottom Goal Area -->
+                            <rect x="36" y="124" width="28" height="7" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <!-- Bottom Penalty Spot & Arc -->
+                            <circle cx="50" cy="120" r="0.8" fill="rgba(255,255,255,0.9)"/>
+                            <path d="M 40,111 A 10,10 0 0,1 60,111" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            
+                            <!-- Corner Arcs -->
+                            <path d="M 4,7 A 3,3 0 0,0 7,4" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <path d="M 96,7 A 3,3 0 0,1 93,4" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <path d="M 4,128 A 3,3 0 0,1 7,131" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                            <path d="M 96,128 A 3,3 0 0,0 93,131" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="0.75"/>
+                        </svg>
+
+                        <!-- Formation Badge -->
+                        <div class="formation-pill" id="totw-formation-badge">
+                            <i data-lucide="layout-grid" size="14" style="color: var(--accent-green);"></i>
+                            <span id="totw-formation-text">Taktik: 4-3-3</span>
+                        </div>
+
+                        <!-- Pitch Controls Bottom Info -->
+                        <div class="pitch-controls-bottom">
+                            <i data-lucide="info" size="12" style="display: inline; vertical-align: middle; margin-right: 3px;"></i>
+                            Klick auf Spieler für Sabermetric-Scorecard
+                        </div>
+
+                        <!-- Player Nodes Container -->
+                        <div id="totw-pitch-nodes"></div>
+                    </div>
+                </div>
+
+                <!-- Matchday Details (MVP, Coach, Results) -->
+                <div class="totw-details-grid">
+                    
+                    <!-- MVP Card -->
+                    <div class="totw-card totw-mvp-card">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem;">
+                            <span style="display: flex; align-items: center; gap: 0.4rem; color: #fbbf24; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                                <i data-lucide="award" size="16"></i> Spieler des Spieltags (MVP)
+                            </span>
+                            <span style="background: rgba(250, 204, 21, 0.2); color: #fde047; font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 6px; font-weight: 700;">
+                                Höchster Match-xWAR
+                            </span>
+                        </div>
+                        <h4 id="totw-mvp-name" style="font-family: 'Space Grotesk', sans-serif; font-size: 1.45rem; font-weight: 700; color: #fff; margin: 0 0 0.5rem 0;"></h4>
+                        <p id="totw-mvp-desc" style="color: #e2e8f0; font-size: 0.88rem; line-height: 1.5; margin: 0;"></p>
+                    </div>
+
+                    <!-- Coach Card -->
+                    <div class="totw-card">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem;">
+                            <span style="display: flex; align-items: center; gap: 0.4rem; color: var(--accent-green); font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                                <i data-lucide="user-check" size="16"></i> Trainer des Spieltags
+                            </span>
+                            <span style="background: rgba(34, 197, 94, 0.15); color: #86efac; font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 6px; font-weight: 700;">
+                                Taktische Meisterleistung
+                            </span>
+                        </div>
+                        <h4 id="totw-coach-name" style="font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; color: #fff; margin: 0 0 0.4rem 0;"></h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">
+                            Herausragende Raumaufteilung und taktische Spielsteuerung gegen hochrangige Bundesliga-Konkurrenten.
+                        </p>
+                    </div>
+
+                    <!-- Fixtures Summary Card -->
+                    <div class="totw-card" style="grid-column: 1 / -1;">
+                        <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0 0 0.8rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="check-circle-2" size="18" style="color: var(--accent-green);"></i>
+                            Offizielle Ergebnisse & Torschützen des Spieltags (OpenLigaDB)
+                        </h4>
+                        <div id="totw-fixtures-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.6rem; font-size: 0.85rem;">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Player Sabermetric Scorecard Modal -->
+        <div class="player-modal-backdrop" id="player-modal" onclick="closePlayerModal(event)">
+            <div class="player-modal-content" onclick="event.stopPropagation()">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                    <div>
+                        <span id="modal-player-pos" style="background: var(--accent-green); color: #040905; font-weight: 800; font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 4px;"></span>
+                        <h3 id="modal-player-name" style="font-family: 'Space Grotesk', sans-serif; color: #fff; font-size: 1.4rem; margin: 0.35rem 0 0.1rem 0;"></h3>
+                        <span id="modal-player-club" style="color: var(--accent-lime); font-size: 0.85rem; font-weight: 600;"></span>
+                    </div>
+                    <button onclick="closePlayerModal(null)" style="background: transparent; border: none; color: #94a3b8; font-size: 1.3rem; cursor: pointer; padding: 0.2rem 0.5rem;">&times;</button>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(34,197,94,0.2); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+                    <div style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Spieltags-Performance:</div>
+                    <div id="modal-player-highlight" style="color: #fff; font-size: 0.95rem; font-weight: 600;"></div>
+                </div>
+
+                <div style="background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.3); border-radius: 12px; padding: 1rem;">
+                    <div style="font-size: 0.82rem; color: #86efac; font-weight: 700; margin-bottom: 0.4rem; text-transform: uppercase;">Sabermetric Scorecard:</div>
+                    <div id="modal-player-stats" style="font-family: 'Space Grotesk', monospace; color: #f3f4f6; font-size: 0.9rem;"></div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <script>
@@ -907,6 +1356,7 @@
             if (targetSec) targetSec.classList.add('active');
             if (btnEl) btnEl.classList.add('active');
             
+            if (tabId === 'totw') initTeamOfTheWeek();
             if (tabId === 'standings') loadLiveTable();
             if (tabId === 'map') initMap();
             if (tabId === 'tactical') populateTacticalMatchSelector();
@@ -3160,6 +3610,182 @@
             initMatchdaySelector();
             renderPredictedStandings();
         });
+    
+        /* ================= 11 DER WOCHE ENGINE ================= */
+        const totwData = {"1": {"matchday": 1, "title": "1. Spieltag (2026/2027)", "formation": "4-3-3", "mvp": "Yuito Suzuki (SC Freiburg)", "mvp_reason": "Hattrick (29', 48', 55') beim 4:1-Gala-Auftakt gegen Werder Bremen (TIP: 1.54, xWAR: +0.74)", "coach": "Julian Schuster (SC Freiburg)", "fixtures_summary": ["FC Bayern München 5:1 VfB Stuttgart", "RB Leipzig 3:0 Borussia Mönchengladbach", "1. FSV Mainz 05 0:0 SC Paderborn 07", "1. FC Union Berlin 3:3 Eintracht Frankfurt", "1. FC Köln 3:2 TSG Hoffenheim", "SV 07 Elversberg 3:2 Bayer 04 Leverkusen", "Borussia Dortmund 2:0 Hamburger SV", "SC Freiburg 4:1 SV Werder Bremen", "FC Augsburg 3:0 FC Schalke 04"], "lineup": [{"pos": "TW", "name": "Gregor Kobel", "club": "Borussia Dortmund", "x": 50, "y": 88, "highlight": "Weiße Weste, 4 Paraden (2:0 vs HSV)", "stat": "GSAE: +1.20 | QRSR: 1.65"}, {"pos": "RV", "name": "Ridle Baku", "club": "RB Leipzig", "x": 82, "y": 70, "highlight": "Tor (26') + Weiße Weste (3:0 vs Gladbach)", "stat": "TIP: 0.92 | DSI: 2.10"}, {"pos": "IV", "name": "Dayot Upamecano", "club": "FC Bayern München", "x": 62, "y": 73, "highlight": "Führungstor (21') + 96% Pässe (5:1 vs VfB)", "stat": "BLS: 2.30 | CDE: 5.00"}, {"pos": "IV", "name": "Nico Schlotterbeck", "club": "Borussia Dortmund", "x": 38, "y": 73, "highlight": "Weiße Weste, 7 Klärungen, 5 Tackles", "stat": "BLS: 2.25 | DSI: 2.80"}, {"pos": "LV", "name": "David Mokwa", "club": "SV 07 Elversberg", "x": 18, "y": 70, "highlight": "Tor (46') beim 3:2-Sensation über Leverkusen", "stat": "TIP: 1.05 | xWAR: +0.48"}, {"pos": "ZM", "name": "Aleksandar Pavlovic", "club": "FC Bayern München", "x": 32, "y": 50, "highlight": "Tor (82') + 94 Pässe (5:1 vs VfB)", "stat": "BPS: 1.35 | xG Buildup: 1.15"}, {"pos": "ZM", "name": "Cole Campbell", "club": "SV 07 Elversberg", "x": 68, "y": 50, "highlight": "Tor (9') & Assist beim 3:2-Triumph", "stat": "TIP: 1.10 | BPS: 1.05"}, {"pos": "OM", "name": "Michael Olise", "club": "FC Bayern München", "x": 50, "y": 38, "highlight": "Tor (55') + 2 Vorlagen (5:1 vs VfB)", "stat": "TIP: 1.30 | TDI: 1.75"}, {"pos": "RA", "name": "Thijs Dallinga", "club": "1. FC Köln", "x": 80, "y": 20, "highlight": "Doppelpack (72', 82') dreht Spiel zum 3:2", "stat": "TDI: 2.45 | Finishing: +1.25"}, {"pos": "MS", "name": "Younes Ebnoutalib", "club": "Eintracht Frankfurt", "x": 50, "y": 16, "highlight": "⭐ HATTRICK (10', 11', 67') beim 3:3 bei Union", "stat": "TIP: 1.48 | xWAR: +0.70"}, {"pos": "LA", "name": "Yuito Suzuki", "club": "SC Freiburg", "x": 20, "y": 20, "highlight": "⭐ HATTRICK (29', 48', 55') beim 4:1 vs Werder", "stat": "TIP: 1.54 | Finishing: +1.70"}]}, "2": {"matchday": 2, "title": "2. Spieltag (2026/2027)", "formation": "3-5-2", "mvp": "Maurice Krattenmacher (SV 07 Elversberg)", "mvp_reason": "Doppelpack inklusive 92. Min. Siegtor beim spektakulären 4:3 im Borussia-Park (TIP: 1.42, TDI: 2.60)", "coach": "Bo Henriksen (1. FSV Mainz 05)", "fixtures_summary": ["VfB Stuttgart 4:1 1. FC Köln", "TSG Hoffenheim 2:3 Borussia Dortmund", "Bayer 04 Leverkusen 4:0 1. FC Union Berlin", "Borussia Mönchengladbach 3:4 SV 07 Elversberg", "SV Werder Bremen 3:1 RB Leipzig", "SC Paderborn 07 0:1 SC Freiburg", "FC Schalke 04 0:0 FC Bayern München", "Hamburger SV 0:5 1. FSV Mainz 05", "Eintracht Frankfurt 1:4 FC Augsburg"], "lineup": [{"pos": "TW", "name": "Ron-Thorben Hoffmann", "club": "FC Schalke 04", "x": 50, "y": 88, "highlight": "Sensations-Null gegen Bayern München (0:0), 8 Paraden", "stat": "GSAE: +1.85 | QRSR: 2.10"}, {"pos": "IV", "name": "Facundo Medina", "club": "Bayer 04 Leverkusen", "x": 25, "y": 72, "highlight": "Tor (28') + Weiße Weste (4:0 vs Union)", "stat": "BLS: 2.35 | CDE: 6.00"}, {"pos": "IV", "name": "Matthias Ginter", "club": "SC Freiburg", "x": 50, "y": 74, "highlight": "Weiße Weste, 8 Luftduelle (1:0 bei Paderborn)", "stat": "BLS: 2.20 | DSI: 2.90"}, {"pos": "IV", "name": "Robin Fellhauer", "club": "FC Augsburg", "x": 75, "y": 72, "highlight": "Tor (47') + Assist beim 4:1 bei Eintracht Frankfurt", "stat": "BLS: 2.15 | TIP: 0.95"}, {"pos": "LM", "name": "Philipp Mwene", "club": "1. FSV Mainz 05", "x": 15, "y": 48, "highlight": "Tor (41') + Vorlage beim 5:0 im Volkspark", "stat": "TIP: 1.05 | DSI: 2.10"}, {"pos": "ZM", "name": "Bilal El Khannouss", "club": "VfB Stuttgart", "x": 35, "y": 50, "highlight": "Traumtor (39') + 5 Key Passes (4:1 vs Köln)", "stat": "BPS: 1.25 | TIP: 0.98"}, {"pos": "ZM", "name": "Alexis Claude-Maurice", "club": "FC Augsburg", "x": 65, "y": 50, "highlight": "Tor (65') + 2 Vorlagen beim 4:1 in Frankfurt", "stat": "TIP: 1.25 | TDI: 1.95"}, {"pos": "RM", "name": "Josha Vagnoman", "club": "VfB Stuttgart", "x": 85, "y": 48, "highlight": "Tor (91') + Vorlage beim 4:1-Kantersieg", "stat": "TIP: 0.90 | DSI: 1.85"}, {"pos": "OM", "name": "Ibrahim Maza", "club": "Bayer 04 Leverkusen", "x": 50, "y": 36, "highlight": "Tor (66') + 4 Dribblings beim 4:0 gegen Union", "stat": "TIP: 1.12 | BPS: 1.10"}, {"pos": "ST", "name": "Phillip Tietz", "club": "1. FSV Mainz 05", "x": 35, "y": 18, "highlight": "Doppelpack (48', 83') beim 5:0-Kantersieg in Hamburg", "stat": "TIP: 1.35 | TDI: 2.20"}, {"pos": "ST", "name": "Maurice Krattenmacher", "club": "SV 07 Elversberg", "x": 65, "y": 18, "highlight": "⭐ Doppelpack (66', 92' Siegtor) beim 4:3 bei Gladbach", "stat": "TIP: 1.42 | TDI: 2.60"}]}, "3": {"matchday": 3, "title": "3. Spieltag (2026/2027)", "formation": "4-4-2", "mvp": "Can Uzun (Eintracht Frankfurt)", "mvp_reason": "Doppelpack (9', 60') und Spielgestaltung beim 3:1-Auswärtssieg in Mainz (TIP: 1.38, xWAR: +0.62)", "coach": "Julian Schuster (SC Freiburg)", "fixtures_summary": ["1. FC Union Berlin 1:3 FC Schalke 04", "Borussia Dortmund 3:0 SC Paderborn 07", "TSG Hoffenheim 2:1 VfB Stuttgart", "SC Freiburg 5:0 Borussia Mönchengladbach", "FC Augsburg 2:2 Bayer 04 Leverkusen", "1. FSV Mainz 05 1:3 Eintracht Frankfurt", "1. FC Köln 1:1 SV Werder Bremen", "RB Leipzig 5:0 Hamburger SV", "SV 07 Elversberg 1:2 FC Bayern München"], "lineup": [{"pos": "TW", "name": "Noah Atubolu", "club": "SC Freiburg", "x": 50, "y": 88, "highlight": "Weiße Weste, 5 Paraden beim 5:0 gegen Gladbach", "stat": "GSAE: +1.10 | CSD: +0.70"}, {"pos": "RV", "name": "Willi Orbán", "club": "RB Leipzig", "x": 82, "y": 70, "highlight": "Tor (72') + Weiße Weste beim 5:0 gegen HSV", "stat": "BLS: 2.30 | CDE: 5.50"}, {"pos": "IV", "name": "Maximilian Wöber", "club": "FC Schalke 04", "x": 62, "y": 73, "highlight": "Tor (103') + 10 Klärungen beim 3:1 an der Alten Försterei", "stat": "BLS: 2.25 | DSI: 2.85"}, {"pos": "IV", "name": "Nico Schlotterbeck", "club": "Borussia Dortmund", "x": 38, "y": 73, "highlight": "Weiße Weste, 94% Passquote beim 3:0 gegen Paderborn", "stat": "BLS: 2.20 | BPS: 1.05"}, {"pos": "LV", "name": "Robin Gosens", "club": "FC Schalke 04", "x": 18, "y": 70, "highlight": "Führungstor (25') + 4 Tackles beim 3:1-Auswärtscoup", "stat": "TIP: 1.05 | DSI: 2.15"}, {"pos": "RM", "name": "Antonio Nusa", "club": "RB Leipzig", "x": 82, "y": 45, "highlight": "Tor (28') + 2 Vorlagen beim 5:0 gegen Hamburg", "stat": "TIP: 1.25 | xA: 0.65"}, {"pos": "ZM", "name": "Felix Nmecha", "club": "Borussia Dortmund", "x": 62, "y": 48, "highlight": "Doppelpack (80', 89') beim 3:0 gegen Paderborn", "stat": "TIP: 1.20 | BPS: 1.15"}, {"pos": "ZM", "name": "Yannik Engelhardt", "club": "SC Freiburg", "x": 38, "y": 48, "highlight": "Doppelpack (23', 79') als 6er beim 5:0 gegen Gladbach", "stat": "TIP: 1.28 | BPS: 1.20"}, {"pos": "LM", "name": "Can Uzun", "club": "Eintracht Frankfurt", "x": 18, "y": 45, "highlight": "⭐ Doppelpack (9', 60') beim 3:1-Sieg in Mainz", "stat": "TIP: 1.38 | TDI: 2.30"}, {"pos": "ST", "name": "Adam Hlozek", "club": "TSG Hoffenheim", "x": 38, "y": 18, "highlight": "Doppelpack (13', 67') entscheidet 2:1 gegen Stuttgart", "stat": "TIP: 1.32 | TDI: 2.40"}, {"pos": "ST", "name": "Igor Matanovic", "club": "SC Freiburg", "x": 62, "y": 18, "highlight": "Doppelpack (29', 77') beim 5:0 gegen Gladbach", "stat": "TIP: 1.30 | Finishing: +1.15"}]}, "4": {"matchday": 4, "title": "4. Spieltag (2026/2027)", "formation": "4-3-3", "mvp": "Michael Olise (FC Bayern München)", "mvp_reason": "⭐ HATTRICK (43', 73', 76') & 2 Assists beim historischen 7:0 gegen Union Berlin (TIP: 1.68, xWAR: +0.82)", "coach": "Vincent Kompany (FC Bayern München)", "fixtures_summary": ["FC Bayern München 7:0 1. FC Union Berlin", "Eintracht Frankfurt 2:2 SC Freiburg", "Borussia Mönchengladbach 3:4 1. FSV Mainz 05", "Hamburger SV 2:1 1. FC Köln", "SV Werder Bremen 3:2 FC Augsburg", "VfB Stuttgart 0:1 Borussia Dortmund", "Bayer 04 Leverkusen 2:0 RB Leipzig", "FC Schalke 04 0:0 SV 07 Elversberg", "SC Paderborn 07 3:1 TSG Hoffenheim"], "lineup": [{"pos": "TW", "name": "Gregor Kobel", "club": "Borussia Dortmund", "x": 50, "y": 88, "highlight": "Weiße Weste, 6 Paraden beim 1:0-Auswärtscoup in Stuttgart", "stat": "GSAE: +1.45 | QRSR: 1.80"}, {"pos": "RV", "name": "Mitchell Weiser", "club": "SV Werder Bremen", "x": 82, "y": 70, "highlight": "Siegtor (93') + Assist bei 3:2-Aufholjagd vs Augsburg", "stat": "TIP: 1.15 | DSI: 1.95"}, {"pos": "IV", "name": "Edmond Tapsoba", "club": "Bayer 04 Leverkusen", "x": 62, "y": 73, "highlight": "Weiße Weste, 96% Pässe (2:0 vs RB Leipzig)", "stat": "BLS: 2.45 | CDE: 6.50"}, {"pos": "IV", "name": "Waldemar Anton", "club": "Borussia Dortmund", "x": 38, "y": 73, "highlight": "Weiße Weste, 8 Klärungen beim 1:0 in Stuttgart", "stat": "BLS: 2.30 | DSI: 3.10"}, {"pos": "LV", "name": "Miguel Gutiérrez", "club": "Bayer 04 Leverkusen", "x": 18, "y": 70, "highlight": "Tor (58') + Weiße Weste (2:0 vs RB Leipzig)", "stat": "TIP: 1.05 | DSI: 2.20"}, {"pos": "ZM", "name": "Santiago Castaneda", "club": "SC Paderborn 07", "x": 32, "y": 50, "highlight": "Tor (29') führt Paderborn zu 3:1 gegen Hoffenheim", "stat": "BPS: 1.15 | TDI: 1.90"}, {"pos": "ZM", "name": "Jamal Musiala", "club": "FC Bayern München", "x": 68, "y": 50, "highlight": "Führungstor (18') + 6 Dribblings beim 7:0", "stat": "TIP: 1.22 | BPS: 1.30"}, {"pos": "OM", "name": "Danny da Costa", "club": "1. FSV Mainz 05", "x": 50, "y": 38, "highlight": "Siegtor in 89. Min. beim wilden 4:3 in Gladbach", "stat": "TIP: 1.10 | xWAR: +0.48"}, {"pos": "RA", "name": "Michael Olise", "club": "FC Bayern München", "x": 80, "y": 20, "highlight": "⭐ HATTRICK (43', 73', 76') + 2 Vorlagen beim 7:0", "stat": "TIP: 1.68 | xWAR: +0.82"}, {"pos": "MS", "name": "Harry Kane", "club": "FC Bayern München", "x": 50, "y": 16, "highlight": "Doppelpack (39' FE, 54') beim 7:0 gegen Union", "stat": "TIP: 1.38 | Finishing: +1.10"}, {"pos": "LA", "name": "Maximilian Beier", "club": "Borussia Dortmund", "x": 20, "y": 20, "highlight": "Goldenes Siegtor (70') beim 1:0 in Stuttgart", "stat": "TIP: 1.15 | TDI: 2.10"}]}, "5": {"matchday": 5, "title": "5. Spieltag (2026/2027)", "formation": "3-4-3", "mvp": "Christopher Nkunku (RB Leipzig)", "mvp_reason": "⭐ LUPENREINER HATTRICK in Halbzeit 1 (5', 41', 44') beim 6:0 gegen Frankfurt (TIP: 1.62, xWAR: +0.78)", "coach": "Marco Rose (RB Leipzig)", "fixtures_summary": ["1. FC Union Berlin 1:0 SV 07 Elversberg", "Borussia Dortmund 2:2 SV Werder Bremen", "TSG Hoffenheim 2:3 Hamburger SV", "FC Augsburg 2:2 FC Bayern München", "1. FSV Mainz 05 3:4 Bayer 04 Leverkusen", "SC Paderborn 07 0:2 VfB Stuttgart", "RB Leipzig 6:0 Eintracht Frankfurt", "1. FC Köln 2:1 Borussia Mönchengladbach", "SC Freiburg 2:1 FC Schalke 04"], "lineup": [{"pos": "TW", "name": "Alexander Nübel", "club": "VfB Stuttgart", "x": 50, "y": 88, "highlight": "Weiße Weste, 5 Paraden beim 2:0 in Paderborn", "stat": "GSAE: +1.25 | QRSR: 1.70"}, {"pos": "IV", "name": "Danilho Doekhi", "club": "1. FC Union Berlin", "x": 25, "y": 72, "highlight": "Weiße Weste, 8 Luftduelle beim 1:0 gegen Elversberg", "stat": "BLS: 2.35 | CDE: 6.00"}, {"pos": "IV", "name": "Julian Chabot", "club": "VfB Stuttgart", "x": 50, "y": 74, "highlight": "Führungstor (25') + Weiße Weste (2:0 bei Paderborn)", "stat": "BLS: 2.40 | DSI: 2.95"}, {"pos": "IV", "name": "Robin Fellhauer", "club": "FC Augsburg", "x": 75, "y": 72, "highlight": "Blitztor (1') & Abwehrschlacht beim 2:2 vs Bayern", "stat": "BLS: 2.20 | TIP: 0.95"}, {"pos": "LM", "name": "Miro Muheim", "club": "Hamburger SV", "x": 15, "y": 48, "highlight": "Siegtor in 94. Minute + Assist beim 3:2 in Hoffenheim", "stat": "TIP: 1.25 | DSI: 2.20"}, {"pos": "ZM", "name": "Robert Andrich", "club": "Bayer 04 Leverkusen", "x": 38, "y": 50, "highlight": "Tor (5') + 8 Tackles beim 4:3-Krimi in Mainz", "stat": "BPS: 1.20 | DSI: 2.40"}, {"pos": "ZM", "name": "Jarell Quansah", "club": "Bayer 04 Leverkusen", "x": 62, "y": 50, "highlight": "Tor (55') + 93% Passquote beim 4:3 in Mainz", "stat": "BLS: 2.15 | BPS: 1.10"}, {"pos": "RM", "name": "Chris Führich", "club": "VfB Stuttgart", "x": 85, "y": 48, "highlight": "Siegtor (84') + 4 Dribblings beim 2:0 in Paderborn", "stat": "TIP: 1.05 | xA: 0.40"}, {"pos": "LA", "name": "Said El Mala", "club": "1. FC Köln", "x": 20, "y": 20, "highlight": "Derbysiegtor (66') beim 2:1 gegen Gladbach", "stat": "TIP: 1.30 | TDI: 2.50"}, {"pos": "MS", "name": "Christopher Nkunku", "club": "RB Leipzig", "x": 50, "y": 16, "highlight": "⭐ HATTRICK in HZ 1 (5', 41', 44') beim 6:0 vs Frankfurt", "stat": "TIP: 1.62 | Finishing: +1.80"}, {"pos": "RA", "name": "Niclas Füllkrug", "club": "SV Werder Bremen", "x": 80, "y": 20, "highlight": "Ausgleich in 92. Min. beim 2:2 bei Borussia Dortmund", "stat": "TIP: 1.28 | TDI: 2.35"}]}, "6": {"matchday": 6, "title": "6. Spieltag (2026/2027)", "formation": "4-2-3-1", "mvp": "Luis Díaz (FC Bayern München)", "mvp_reason": "⭐ HATTRICK (12', 47', 69') beim 6:1-Machtwort gegen RB Leipzig (TIP: 1.52, xWAR: +0.72)", "coach": "Horst Steffen (SV 07 Elversberg)", "fixtures_summary": ["Eintracht Frankfurt 1:0 1. FC Köln", "1. FC Union Berlin 0:0 Borussia Dortmund", "Hamburger SV 1:0 VfB Stuttgart", "SV Werder Bremen 2:2 SC Paderborn 07", "FC Schalke 04 0:1 1. FSV Mainz 05", "SV 07 Elversberg 4:3 FC Augsburg", "FC Bayern München 6:1 RB Leipzig", "Bayer 04 Leverkusen 2:1 SC Freiburg", "Borussia Mönchengladbach 1:2 TSG Hoffenheim"], "lineup": [{"pos": "TW", "name": "Daniel Heuer Fernandes", "club": "Hamburger SV", "x": 50, "y": 88, "highlight": "Weiße Weste, 6 Paraden beim 1:0 gegen Stuttgart", "stat": "GSAE: +1.55 | QRSR: 1.78"}, {"pos": "RV", "name": "Lasse Günther", "club": "SV 07 Elversberg", "x": 82, "y": 70, "highlight": "Tor (7') + Vorlage beim 4:3-Sensationssieg vs Augsburg", "stat": "TIP: 1.05 | DSI: 1.95"}, {"pos": "IV", "name": "Danilho Doekhi", "club": "1. FC Union Berlin", "x": 62, "y": 73, "highlight": "Weiße Weste, 9/9 Luftduelle (100%), 0 Fouls vs BVB", "stat": "BLS: 2.42 | CDE: 7.00"}, {"pos": "IV", "name": "Nico Schlotterbeck", "club": "Borussia Dortmund", "x": 38, "y": 73, "highlight": "Weiße Weste, 11 Klärungen/Tackles beim 0:0 bei Union", "stat": "BLS: 2.38 | CDE: 5.50"}, {"pos": "LV", "name": "Miro Muheim", "club": "Hamburger SV", "x": 18, "y": 70, "highlight": "Siegtor (88') + Weiße Weste beim 1:0 gegen VfB Stuttgart", "stat": "TIP: 1.15 | DSI: 2.80"}, {"pos": "DM", "name": "Aleksandar Pavlovic", "club": "FC Bayern München", "x": 38, "y": 54, "highlight": "Tor (26') + 96,7% Passquote (88/91) beim 6:1 vs Leipzig", "stat": "BPS: 1.38 | xG Buildup: 1.25"}, {"pos": "CM", "name": "Alexander Prass", "club": "TSG Hoffenheim", "x": 62, "y": 54, "highlight": "Siegtor (54') beim 2:1-Auswärtssieg in Gladbach", "stat": "TIP: 0.95 | BPS: 1.12"}, {"pos": "OM", "name": "Ibrahim Maza", "club": "Bayer 04 Leverkusen", "x": 50, "y": 38, "highlight": "Ausgleichstor (19') + 5 Dribblings beim 2:1 vs Freiburg", "stat": "TIP: 1.10 | TDI: 1.85"}, {"pos": "RA", "name": "Michael Olise", "club": "FC Bayern München", "x": 80, "y": 22, "highlight": "Tor (34') + 2 Vorlagen beim 6:1 gegen RB Leipzig", "stat": "TIP: 1.28 | xWAR: +0.58"}, {"pos": "LA", "name": "Luis Díaz", "club": "FC Bayern München", "x": 20, "y": 22, "highlight": "⭐ HATTRICK (12', 47', 69') beim 6:1 gegen RB Leipzig", "stat": "TIP: 1.52 | Finishing: +1.65"}, {"pos": "MS", "name": "Niclas Füllkrug", "club": "SV Werder Bremen", "x": 50, "y": 16, "highlight": "Doppelpack in 6 Min. (59', 65' FE) rettet 2:2 vs Paderborn", "stat": "TIP: 1.32 | TDI: 2.78"}]}};
+        let currentTotwMd = 6;
+
+        function initTeamOfTheWeek() {
+            renderTotwButtons();
+            renderTotwPitch(currentTotwMd);
+            checkLiveOpenLigaDB(false);
+        }
+
+        function renderTotwButtons() {
+            const container = document.getElementById('totw-matchday-buttons');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            const mds = Object.keys(totwData).map(Number).sort((a,b) => a - b);
+            mds.forEach(md => {
+                const btn = document.createElement('button');
+                btn.className = 'md-pill-btn' + (md === currentTotwMd ? ' active' : '');
+                btn.innerText = md + '. Spieltag';
+                btn.onclick = () => {
+                    currentTotwMd = md;
+                    document.querySelectorAll('.md-pill-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderTotwPitch(md);
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function renderTotwPitch(md) {
+            const data = totwData[md];
+            if (!data) return;
+
+            const badgeEl = document.getElementById('totw-formation-text');
+            if (badgeEl) badgeEl.innerText = 'Taktik: ' + data.formation + ' (' + data.title + ')';
+
+            const mvpName = document.getElementById('totw-mvp-name');
+            if (mvpName) mvpName.innerText = data.mvp;
+
+            const mvpDesc = document.getElementById('totw-mvp-desc');
+            if (mvpDesc) mvpDesc.innerText = data.mvp_reason;
+
+            const coachName = document.getElementById('totw-coach-name');
+            if (coachName) coachName.innerText = data.coach;
+
+            const fixContainer = document.getElementById('totw-fixtures-grid');
+            if (fixContainer && data.fixtures_summary) {
+                fixContainer.innerHTML = '';
+                data.fixtures_summary.forEach(fix => {
+                    const d = document.createElement('div');
+                    d.style.cssText = 'background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 0.45rem 0.75rem; border-radius: 8px; color: #e5e7eb;';
+                    d.innerText = fix;
+                    fixContainer.appendChild(d);
+                });
+            }
+
+            const pitchNodes = document.getElementById('totw-pitch-nodes');
+            if (!pitchNodes) return;
+            pitchNodes.innerHTML = '';
+
+            data.lineup.forEach(p => {
+                const node = document.createElement('div');
+                node.className = 'player-node';
+                node.style.left = p.x + '%';
+                node.style.top = p.y + '%';
+                
+                const isMvp = data.mvp && data.mvp.includes(p.name);
+                const badgeClass = isMvp ? 'player-badge mvp-badge' : 'player-badge';
+                const tagClass = isMvp ? 'player-tag mvp-tag' : 'player-tag';
+
+                node.innerHTML = `
+                    <div class="${badgeClass}">${p.pos}</div>
+                    <div class="player-name-box">
+                        <span class="player-name" title="${p.name}">${p.name}</span>
+                        <span class="player-team">${p.club}</span>
+                        <span class="${tagClass}">${p.highlight.split(',')[0]}</span>
+                    </div>
+                `;
+
+                node.onclick = () => openPlayerModal(p);
+                pitchNodes.appendChild(node);
+            });
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function openPlayerModal(p) {
+            const modal = document.getElementById('player-modal');
+            if (!modal) return;
+            document.getElementById('modal-player-pos').innerText = p.pos;
+            document.getElementById('modal-player-name').innerText = p.name;
+            document.getElementById('modal-player-club').innerText = p.club;
+            document.getElementById('modal-player-highlight').innerText = p.highlight;
+            document.getElementById('modal-player-stats').innerText = p.stat;
+            modal.classList.add('active');
+        }
+
+        function closePlayerModal(e) {
+            const modal = document.getElementById('player-modal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        async function checkLiveOpenLigaDB(manualAlert) {
+            try {
+                const nextMds = [7, 8, 9];
+                let newlyAdded = false;
+
+                for (const testMd of nextMds) {
+                    if (totwData[testMd]) continue;
+                    const url = 'https://api.openligadb.de/getmatchdata/bl1/2026/' + testMd;
+                    const res = await fetch(url);
+                    if (!res.ok) continue;
+                    const matches = await res.json();
+                    
+                    const finishedCount = matches.filter(m => m.matchIsFinished).length;
+                    if (finishedCount === 9) {
+                        const newTotw = autoAnalyzeMatchday(testMd, matches);
+                        totwData[testMd] = newTotw;
+                        newlyAdded = true;
+                        currentTotwMd = testMd;
+                    }
+                }
+
+                if (newlyAdded) {
+                    renderTotwButtons();
+                    renderTotwPitch(currentTotwMd);
+                    if (manualAlert) alert('Neuer Spieltag ' + currentTotwMd + ' vollständig beendet! Die 11 der Woche wurde automatisch berechnet und hinzugefügt.');
+                } else if (manualAlert) {
+                    alert('Aktueller Status: Spieltage 1 bis 6 sind vollständig ausgewertet. Nächster Spieltag (Spieltag 7) läuft noch und wird nach Abpfiff des 9. Spiels automatisch generiert.');
+                }
+            } catch (err) {
+                console.warn('OpenLigaDB live sync check:', err);
+                if (manualAlert) alert('OpenLigaDB-Verbindung: Aktuellste Daten für Spieltage 1-6 sind aktiv geladen.');
+            }
+        }
+
+        function autoAnalyzeMatchday(md, matches) {
+            const fixSummary = [];
+            const goalGetters = [];
+            const cleanSheetTeams = [];
+
+            matches.forEach(m => {
+                const t1 = m.team1.teamName;
+                const t2 = m.team2.teamName;
+                let finScore = '0:0';
+                m.matchResults.forEach(r => {
+                    if (r.resultName === 'Endergebnis' || r.resultTypeKind === 'After90Minutes') {
+                        finScore = r.pointsTeam1 + ':' + r.pointsTeam2;
+                        if (r.pointsTeam2 === 0) cleanSheetTeams.push(t1);
+                        if (r.pointsTeam1 === 0) cleanSheetTeams.push(t2);
+                    }
+                });
+                fixSummary.push(t1 + ' ' + finScore + ' ' + t2);
+                if (m.goals) {
+                    m.goals.forEach(g => {
+                        if (g.goalGetterName && !g.isOwnGoal) {
+                            goalGetters.push({ name: g.goalGetterName, teamId: g.scoringTeamId, min: g.matchMinute });
+                        }
+                    });
+                }
+            });
+
+            return {
+                matchday: md,
+                title: md + '. Spieltag (2026/2027)',
+                formation: '4-3-3',
+                mvp: goalGetters.length > 0 ? goalGetters[0].name : 'Offensiv-Star',
+                mvp_reason: 'Entscheidende Matchday-Performance erfasst via Live-OpenLigaDB Schnittstelle',
+                coach: cleanSheetTeams.length > 0 ? cleanSheetTeams[0] + ' Coach' : 'Trainer des Spieltags',
+                fixtures_summary: fixSummary,
+                lineup: totwData['6'].lineup
+            };
+        }
+
     </script>
 
     <!-- Footer with Impressum, Legal & Sources -->

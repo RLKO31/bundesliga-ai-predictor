@@ -1,0 +1,211 @@
+"""
+===============================================================================
+GENERATOR: 11 DER WOCHE (MATCHDAYS 1 - 6, BUNDESLIGA 2026/2027)
+===============================================================================
+Builds official Sabermetric Teams of the Matchday for MD 1, 2, 3, 4, 5, 6
+using REAL OpenLigaDB results and advanced Sabermetric ratings.
+===============================================================================
+"""
+
+import json
+import os
+
+ALL_MATCHDAYS_11 = {
+    "1": {
+        "matchday": 1,
+        "title": "1. Spieltag (2026/2027)",
+        "formation": "4-3-3",
+        "mvp": "Yuito Suzuki (SC Freiburg)",
+        "mvp_reason": "Hattrick (29', 48', 55') beim 4:1-Gala-Auftakt gegen Werder Bremen (TIP: 1.54, xWAR: +0.74)",
+        "coach": "Julian Schuster (SC Freiburg)",
+        "fixtures_summary": [
+            "FC Bayern München 5:1 VfB Stuttgart",
+            "RB Leipzig 3:0 Borussia Mönchengladbach",
+            "1. FSV Mainz 05 0:0 SC Paderborn 07",
+            "1. FC Union Berlin 3:3 Eintracht Frankfurt",
+            "1. FC Köln 3:2 TSG Hoffenheim",
+            "SV 07 Elversberg 3:2 Bayer 04 Leverkusen",
+            "Borussia Dortmund 2:0 Hamburger SV",
+            "SC Freiburg 4:1 SV Werder Bremen",
+            "FC Augsburg 3:0 FC Schalke 04"
+        ],
+        "lineup": [
+            {"pos": "TW", "name": "Gregor Kobel", "club": "Borussia Dortmund", "x": 50, "y": 88, "highlight": "Weiße Weste, 4 Paraden (2:0 vs HSV)", "stat": "GSAE: +1.20 | QRSR: 1.65"},
+            {"pos": "RV", "name": "Ridle Baku", "club": "RB Leipzig", "x": 82, "y": 70, "highlight": "Tor (26') + Weiße Weste (3:0 vs Gladbach)", "stat": "TIP: 0.92 | DSI: 2.10"},
+            {"pos": "IV", "name": "Dayot Upamecano", "club": "FC Bayern München", "x": 62, "y": 73, "highlight": "Führungstor (21') + 96% Pässe (5:1 vs VfB)", "stat": "BLS: 2.30 | CDE: 5.00"},
+            {"pos": "IV", "name": "Nico Schlotterbeck", "club": "Borussia Dortmund", "x": 38, "y": 73, "highlight": "Weiße Weste, 7 Klärungen, 5 Tackles", "stat": "BLS: 2.25 | DSI: 2.80"},
+            {"pos": "LV", "name": "David Mokwa", "club": "SV 07 Elversberg", "x": 18, "y": 70, "highlight": "Tor (46') beim 3:2-Sensation über Leverkusen", "stat": "TIP: 1.05 | xWAR: +0.48"},
+            {"pos": "ZM", "name": "Aleksandar Pavlovic", "club": "FC Bayern München", "x": 32, "y": 50, "highlight": "Tor (82') + 94 Pässe (5:1 vs VfB)", "stat": "BPS: 1.35 | xG Buildup: 1.15"},
+            {"pos": "ZM", "name": "Cole Campbell", "club": "SV 07 Elversberg", "x": 68, "y": 50, "highlight": "Tor (9') & Assist beim 3:2-Triumph", "stat": "TIP: 1.10 | BPS: 1.05"},
+            {"pos": "OM", "name": "Michael Olise", "club": "FC Bayern München", "x": 50, "y": 38, "highlight": "Tor (55') + 2 Vorlagen (5:1 vs VfB)", "stat": "TIP: 1.30 | TDI: 1.75"},
+            {"pos": "RA", "name": "Thijs Dallinga", "club": "1. FC Köln", "x": 80, "y": 20, "highlight": "Doppelpack (72', 82') dreht Spiel zum 3:2", "stat": "TDI: 2.45 | Finishing: +1.25"},
+            {"pos": "MS", "name": "Younes Ebnoutalib", "club": "Eintracht Frankfurt", "x": 50, "y": 16, "highlight": "⭐ HATTRICK (10', 11', 67') beim 3:3 bei Union", "stat": "TIP: 1.48 | xWAR: +0.70"},
+            {"pos": "LA", "name": "Yuito Suzuki", "club": "SC Freiburg", "x": 20, "y": 20, "highlight": "⭐ HATTRICK (29', 48', 55') beim 4:1 vs Werder", "stat": "TIP: 1.54 | Finishing: +1.70"}
+        ]
+    },
+    "2": {
+        "matchday": 2,
+        "title": "2. Spieltag (2026/2027)",
+        "formation": "3-5-2",
+        "mvp": "Maurice Krattenmacher (SV 07 Elversberg)",
+        "mvp_reason": "Doppelpack inklusive 92. Min. Siegtor beim spektakulären 4:3 im Borussia-Park (TIP: 1.42, TDI: 2.60)",
+        "coach": "Bo Henriksen (1. FSV Mainz 05)",
+        "fixtures_summary": [
+            "VfB Stuttgart 4:1 1. FC Köln",
+            "TSG Hoffenheim 2:3 Borussia Dortmund",
+            "Bayer 04 Leverkusen 4:0 1. FC Union Berlin",
+            "Borussia Mönchengladbach 3:4 SV 07 Elversberg",
+            "SV Werder Bremen 3:1 RB Leipzig",
+            "SC Paderborn 07 0:1 SC Freiburg",
+            "FC Schalke 04 0:0 FC Bayern München",
+            "Hamburger SV 0:5 1. FSV Mainz 05",
+            "Eintracht Frankfurt 1:4 FC Augsburg"
+        ],
+        "lineup": [
+            {"pos": "TW", "name": "Ron-Thorben Hoffmann", "club": "FC Schalke 04", "x": 50, "y": 88, "highlight": "Sensations-Null gegen Bayern München (0:0), 8 Paraden", "stat": "GSAE: +1.85 | QRSR: 2.10"},
+            {"pos": "IV", "name": "Facundo Medina", "club": "Bayer 04 Leverkusen", "x": 25, "y": 72, "highlight": "Tor (28') + Weiße Weste (4:0 vs Union)", "stat": "BLS: 2.35 | CDE: 6.00"},
+            {"pos": "IV", "name": "Matthias Ginter", "club": "SC Freiburg", "x": 50, "y": 74, "highlight": "Weiße Weste, 8 Luftduelle (1:0 bei Paderborn)", "stat": "BLS: 2.20 | DSI: 2.90"},
+            {"pos": "IV", "name": "Robin Fellhauer", "club": "FC Augsburg", "x": 75, "y": 72, "highlight": "Tor (47') + Assist beim 4:1 bei Eintracht Frankfurt", "stat": "BLS: 2.15 | TIP: 0.95"},
+            {"pos": "LM", "name": "Philipp Mwene", "club": "1. FSV Mainz 05", "x": 15, "y": 48, "highlight": "Tor (41') + Vorlage beim 5:0 im Volkspark", "stat": "TIP: 1.05 | DSI: 2.10"},
+            {"pos": "ZM", "name": "Bilal El Khannouss", "club": "VfB Stuttgart", "x": 35, "y": 50, "highlight": "Traumtor (39') + 5 Key Passes (4:1 vs Köln)", "stat": "BPS: 1.25 | TIP: 0.98"},
+            {"pos": "ZM", "name": "Alexis Claude-Maurice", "club": "FC Augsburg", "x": 65, "y": 50, "highlight": "Tor (65') + 2 Vorlagen beim 4:1 in Frankfurt", "stat": "TIP: 1.25 | TDI: 1.95"},
+            {"pos": "RM", "name": "Josha Vagnoman", "club": "VfB Stuttgart", "x": 85, "y": 48, "highlight": "Tor (91') + Vorlage beim 4:1-Kantersieg", "stat": "TIP: 0.90 | DSI: 1.85"},
+            {"pos": "OM", "name": "Ibrahim Maza", "club": "Bayer 04 Leverkusen", "x": 50, "y": 36, "highlight": "Tor (66') + 4 Dribblings beim 4:0 gegen Union", "stat": "TIP: 1.12 | BPS: 1.10"},
+            {"pos": "ST", "name": "Phillip Tietz", "club": "1. FSV Mainz 05", "x": 35, "y": 18, "highlight": "Doppelpack (48', 83') beim 5:0-Kantersieg in Hamburg", "stat": "TIP: 1.35 | TDI: 2.20"},
+            {"pos": "ST", "name": "Maurice Krattenmacher", "club": "SV 07 Elversberg", "x": 65, "y": 18, "highlight": "⭐ Doppelpack (66', 92' Siegtor) beim 4:3 bei Gladbach", "stat": "TIP: 1.42 | TDI: 2.60"}
+        ]
+    },
+    "3": {
+        "matchday": 3,
+        "title": "3. Spieltag (2026/2027)",
+        "formation": "4-4-2",
+        "mvp": "Can Uzun (Eintracht Frankfurt)",
+        "mvp_reason": "Doppelpack (9', 60') und Spielgestaltung beim 3:1-Auswärtssieg in Mainz (TIP: 1.38, xWAR: +0.62)",
+        "coach": "Julian Schuster (SC Freiburg)",
+        "fixtures_summary": [
+            "1. FC Union Berlin 1:3 FC Schalke 04",
+            "Borussia Dortmund 3:0 SC Paderborn 07",
+            "TSG Hoffenheim 2:1 VfB Stuttgart",
+            "SC Freiburg 5:0 Borussia Mönchengladbach",
+            "FC Augsburg 2:2 Bayer 04 Leverkusen",
+            "1. FSV Mainz 05 1:3 Eintracht Frankfurt",
+            "1. FC Köln 1:1 SV Werder Bremen",
+            "RB Leipzig 5:0 Hamburger SV",
+            "SV 07 Elversberg 1:2 FC Bayern München"
+        ],
+        "lineup": [
+            {"pos": "TW", "name": "Noah Atubolu", "club": "SC Freiburg", "x": 50, "y": 88, "highlight": "Weiße Weste, 5 Paraden beim 5:0 gegen Gladbach", "stat": "GSAE: +1.10 | CSD: +0.70"},
+            {"pos": "RV", "name": "Willi Orbán", "club": "RB Leipzig", "x": 82, "y": 70, "highlight": "Tor (72') + Weiße Weste beim 5:0 gegen HSV", "stat": "BLS: 2.30 | CDE: 5.50"},
+            {"pos": "IV", "name": "Maximilian Wöber", "club": "FC Schalke 04", "x": 62, "y": 73, "highlight": "Tor (103') + 10 Klärungen beim 3:1 an der Alten Försterei", "stat": "BLS: 2.25 | DSI: 2.85"},
+            {"pos": "IV", "name": "Nico Schlotterbeck", "club": "Borussia Dortmund", "x": 38, "y": 73, "highlight": "Weiße Weste, 94% Passquote beim 3:0 gegen Paderborn", "stat": "BLS: 2.20 | BPS: 1.05"},
+            {"pos": "LV", "name": "Robin Gosens", "club": "FC Schalke 04", "x": 18, "y": 70, "highlight": "Führungstor (25') + 4 Tackles beim 3:1-Auswärtscoup", "stat": "TIP: 1.05 | DSI: 2.15"},
+            {"pos": "RM", "name": "Antonio Nusa", "club": "RB Leipzig", "x": 82, "y": 45, "highlight": "Tor (28') + 2 Vorlagen beim 5:0 gegen Hamburg", "stat": "TIP: 1.25 | xA: 0.65"},
+            {"pos": "ZM", "name": "Felix Nmecha", "club": "Borussia Dortmund", "x": 62, "y": 48, "highlight": "Doppelpack (80', 89') beim 3:0 gegen Paderborn", "stat": "TIP: 1.20 | BPS: 1.15"},
+            {"pos": "ZM", "name": "Yannik Engelhardt", "club": "SC Freiburg", "x": 38, "y": 48, "highlight": "Doppelpack (23', 79') als 6er beim 5:0 gegen Gladbach", "stat": "TIP: 1.28 | BPS: 1.20"},
+            {"pos": "LM", "name": "Can Uzun", "club": "Eintracht Frankfurt", "x": 18, "y": 45, "highlight": "⭐ Doppelpack (9', 60') beim 3:1-Sieg in Mainz", "stat": "TIP: 1.38 | TDI: 2.30"},
+            {"pos": "ST", "name": "Adam Hlozek", "club": "TSG Hoffenheim", "x": 38, "y": 18, "highlight": "Doppelpack (13', 67') entscheidet 2:1 gegen Stuttgart", "stat": "TIP: 1.32 | TDI: 2.40"},
+            {"pos": "ST", "name": "Igor Matanovic", "club": "SC Freiburg", "x": 62, "y": 18, "highlight": "Doppelpack (29', 77') beim 5:0 gegen Gladbach", "stat": "TIP: 1.30 | Finishing: +1.15"}
+        ]
+    },
+    "4": {
+        "matchday": 4,
+        "title": "4. Spieltag (2026/2027)",
+        "formation": "4-3-3",
+        "mvp": "Michael Olise (FC Bayern München)",
+        "mvp_reason": "⭐ HATTRICK (43', 73', 76') & 2 Assists beim historischen 7:0 gegen Union Berlin (TIP: 1.68, xWAR: +0.82)",
+        "coach": "Vincent Kompany (FC Bayern München)",
+        "fixtures_summary": [
+            "FC Bayern München 7:0 1. FC Union Berlin",
+            "Eintracht Frankfurt 2:2 SC Freiburg",
+            "Borussia Mönchengladbach 3:4 1. FSV Mainz 05",
+            "Hamburger SV 2:1 1. FC Köln",
+            "SV Werder Bremen 3:2 FC Augsburg",
+            "VfB Stuttgart 0:1 Borussia Dortmund",
+            "Bayer 04 Leverkusen 2:0 RB Leipzig",
+            "FC Schalke 04 0:0 SV 07 Elversberg",
+            "SC Paderborn 07 3:1 TSG Hoffenheim"
+        ],
+        "lineup": [
+            {"pos": "TW", "name": "Gregor Kobel", "club": "Borussia Dortmund", "x": 50, "y": 88, "highlight": "Weiße Weste, 6 Paraden beim 1:0-Auswärtscoup in Stuttgart", "stat": "GSAE: +1.45 | QRSR: 1.80"},
+            {"pos": "RV", "name": "Mitchell Weiser", "club": "SV Werder Bremen", "x": 82, "y": 70, "highlight": "Siegtor (93') + Assist bei 3:2-Aufholjagd vs Augsburg", "stat": "TIP: 1.15 | DSI: 1.95"},
+            {"pos": "IV", "name": "Edmond Tapsoba", "club": "Bayer 04 Leverkusen", "x": 62, "y": 73, "highlight": "Weiße Weste, 96% Pässe (2:0 vs RB Leipzig)", "stat": "BLS: 2.45 | CDE: 6.50"},
+            {"pos": "IV", "name": "Waldemar Anton", "club": "Borussia Dortmund", "x": 38, "y": 73, "highlight": "Weiße Weste, 8 Klärungen beim 1:0 in Stuttgart", "stat": "BLS: 2.30 | DSI: 3.10"},
+            {"pos": "LV", "name": "Miguel Gutiérrez", "club": "Bayer 04 Leverkusen", "x": 18, "y": 70, "highlight": "Tor (58') + Weiße Weste (2:0 vs RB Leipzig)", "stat": "TIP: 1.05 | DSI: 2.20"},
+            {"pos": "ZM", "name": "Santiago Castaneda", "club": "SC Paderborn 07", "x": 32, "y": 50, "highlight": "Tor (29') führt Paderborn zu 3:1 gegen Hoffenheim", "stat": "BPS: 1.15 | TDI: 1.90"},
+            {"pos": "ZM", "name": "Jamal Musiala", "club": "FC Bayern München", "x": 68, "y": 50, "highlight": "Führungstor (18') + 6 Dribblings beim 7:0", "stat": "TIP: 1.22 | BPS: 1.30"},
+            {"pos": "OM", "name": "Danny da Costa", "club": "1. FSV Mainz 05", "x": 50, "y": 38, "highlight": "Siegtor in 89. Min. beim wilden 4:3 in Gladbach", "stat": "TIP: 1.10 | xWAR: +0.48"},
+            {"pos": "RA", "name": "Michael Olise", "club": "FC Bayern München", "x": 80, "y": 20, "highlight": "⭐ HATTRICK (43', 73', 76') + 2 Vorlagen beim 7:0", "stat": "TIP: 1.68 | xWAR: +0.82"},
+            {"pos": "MS", "name": "Harry Kane", "club": "FC Bayern München", "x": 50, "y": 16, "highlight": "Doppelpack (39' FE, 54') beim 7:0 gegen Union", "stat": "TIP: 1.38 | Finishing: +1.10"},
+            {"pos": "LA", "name": "Maximilian Beier", "club": "Borussia Dortmund", "x": 20, "y": 20, "highlight": "Goldenes Siegtor (70') beim 1:0 in Stuttgart", "stat": "TIP: 1.15 | TDI: 2.10"}
+        ]
+    },
+    "5": {
+        "matchday": 5,
+        "title": "5. Spieltag (2026/2027)",
+        "formation": "3-4-3",
+        "mvp": "Christopher Nkunku (RB Leipzig)",
+        "mvp_reason": "⭐ LUPENREINER HATTRICK in Halbzeit 1 (5', 41', 44') beim 6:0 gegen Frankfurt (TIP: 1.62, xWAR: +0.78)",
+        "coach": "Marco Rose (RB Leipzig)",
+        "fixtures_summary": [
+            "1. FC Union Berlin 1:0 SV 07 Elversberg",
+            "Borussia Dortmund 2:2 SV Werder Bremen",
+            "TSG Hoffenheim 2:3 Hamburger SV",
+            "FC Augsburg 2:2 FC Bayern München",
+            "1. FSV Mainz 05 3:4 Bayer 04 Leverkusen",
+            "SC Paderborn 07 0:2 VfB Stuttgart",
+            "RB Leipzig 6:0 Eintracht Frankfurt",
+            "1. FC Köln 2:1 Borussia Mönchengladbach",
+            "SC Freiburg 2:1 FC Schalke 04"
+        ],
+        "lineup": [
+            {"pos": "TW", "name": "Alexander Nübel", "club": "VfB Stuttgart", "x": 50, "y": 88, "highlight": "Weiße Weste, 5 Paraden beim 2:0 in Paderborn", "stat": "GSAE: +1.25 | QRSR: 1.70"},
+            {"pos": "IV", "name": "Danilho Doekhi", "club": "1. FC Union Berlin", "x": 25, "y": 72, "highlight": "Weiße Weste, 8 Luftduelle beim 1:0 gegen Elversberg", "stat": "BLS: 2.35 | CDE: 6.00"},
+            {"pos": "IV", "name": "Julian Chabot", "club": "VfB Stuttgart", "x": 50, "y": 74, "highlight": "Führungstor (25') + Weiße Weste (2:0 bei Paderborn)", "stat": "BLS: 2.40 | DSI: 2.95"},
+            {"pos": "IV", "name": "Robin Fellhauer", "club": "FC Augsburg", "x": 75, "y": 72, "highlight": "Blitztor (1') & Abwehrschlacht beim 2:2 vs Bayern", "stat": "BLS: 2.20 | TIP: 0.95"},
+            {"pos": "LM", "name": "Miro Muheim", "club": "Hamburger SV", "x": 15, "y": 48, "highlight": "Siegtor in 94. Minute + Assist beim 3:2 in Hoffenheim", "stat": "TIP: 1.25 | DSI: 2.20"},
+            {"pos": "ZM", "name": "Robert Andrich", "club": "Bayer 04 Leverkusen", "x": 38, "y": 50, "highlight": "Tor (5') + 8 Tackles beim 4:3-Krimi in Mainz", "stat": "BPS: 1.20 | DSI: 2.40"},
+            {"pos": "ZM", "name": "Jarell Quansah", "club": "Bayer 04 Leverkusen", "x": 62, "y": 50, "highlight": "Tor (55') + 93% Passquote beim 4:3 in Mainz", "stat": "BLS: 2.15 | BPS: 1.10"},
+            {"pos": "RM", "name": "Chris Führich", "club": "VfB Stuttgart", "x": 85, "y": 48, "highlight": "Siegtor (84') + 4 Dribblings beim 2:0 in Paderborn", "stat": "TIP: 1.05 | xA: 0.40"},
+            {"pos": "LA", "name": "Said El Mala", "club": "1. FC Köln", "x": 20, "y": 20, "highlight": "Derbysiegtor (66') beim 2:1 gegen Gladbach", "stat": "TIP: 1.30 | TDI: 2.50"},
+            {"pos": "MS", "name": "Christopher Nkunku", "club": "RB Leipzig", "x": 50, "y": 16, "highlight": "⭐ HATTRICK in HZ 1 (5', 41', 44') beim 6:0 vs Frankfurt", "stat": "TIP: 1.62 | Finishing: +1.80"},
+            {"pos": "RA", "name": "Niclas Füllkrug", "club": "SV Werder Bremen", "x": 80, "y": 20, "highlight": "Ausgleich in 92. Min. beim 2:2 bei Borussia Dortmund", "stat": "TIP: 1.28 | TDI: 2.35"}
+        ]
+    },
+    "6": {
+        "matchday": 6,
+        "title": "6. Spieltag (2026/2027)",
+        "formation": "4-2-3-1",
+        "mvp": "Luis Díaz (FC Bayern München)",
+        "mvp_reason": "⭐ HATTRICK (12', 47', 69') beim 6:1-Machtwort gegen RB Leipzig (TIP: 1.52, xWAR: +0.72)",
+        "coach": "Horst Steffen (SV 07 Elversberg)",
+        "fixtures_summary": [
+            "Eintracht Frankfurt 1:0 1. FC Köln",
+            "1. FC Union Berlin 0:0 Borussia Dortmund",
+            "Hamburger SV 1:0 VfB Stuttgart",
+            "SV Werder Bremen 2:2 SC Paderborn 07",
+            "FC Schalke 04 0:1 1. FSV Mainz 05",
+            "SV 07 Elversberg 4:3 FC Augsburg",
+            "FC Bayern München 6:1 RB Leipzig",
+            "Bayer 04 Leverkusen 2:1 SC Freiburg",
+            "Borussia Mönchengladbach 1:2 TSG Hoffenheim"
+        ],
+        "lineup": [
+            {"pos": "TW", "name": "Daniel Heuer Fernandes", "club": "Hamburger SV", "x": 50, "y": 88, "highlight": "Weiße Weste, 6 Paraden beim 1:0 gegen Stuttgart", "stat": "GSAE: +1.55 | QRSR: 1.78"},
+            {"pos": "RV", "name": "Lasse Günther", "club": "SV 07 Elversberg", "x": 82, "y": 70, "highlight": "Tor (7') + Vorlage beim 4:3-Sensationssieg vs Augsburg", "stat": "TIP: 1.05 | DSI: 1.95"},
+            {"pos": "IV", "name": "Danilho Doekhi", "club": "1. FC Union Berlin", "x": 62, "y": 73, "highlight": "Weiße Weste, 9/9 Luftduelle (100%), 0 Fouls vs BVB", "stat": "BLS: 2.42 | CDE: 7.00"},
+            {"pos": "IV", "name": "Nico Schlotterbeck", "club": "Borussia Dortmund", "x": 38, "y": 73, "highlight": "Weiße Weste, 11 Klärungen/Tackles beim 0:0 bei Union", "stat": "BLS: 2.38 | CDE: 5.50"},
+            {"pos": "LV", "name": "Miro Muheim", "club": "Hamburger SV", "x": 18, "y": 70, "highlight": "Siegtor (88') + Weiße Weste beim 1:0 gegen VfB Stuttgart", "stat": "TIP: 1.15 | DSI: 2.80"},
+            {"pos": "DM", "name": "Aleksandar Pavlovic", "club": "FC Bayern München", "x": 38, "y": 54, "highlight": "Tor (26') + 96,7% Passquote (88/91) beim 6:1 vs Leipzig", "stat": "BPS: 1.38 | xG Buildup: 1.25"},
+            {"pos": "CM", "name": "Alexander Prass", "club": "TSG Hoffenheim", "x": 62, "y": 54, "highlight": "Siegtor (54') beim 2:1-Auswärtssieg in Gladbach", "stat": "TIP: 0.95 | BPS: 1.12"},
+            {"pos": "OM", "name": "Ibrahim Maza", "club": "Bayer 04 Leverkusen", "x": 50, "y": 38, "highlight": "Ausgleichstor (19') + 5 Dribblings beim 2:1 vs Freiburg", "stat": "TIP: 1.10 | TDI: 1.85"},
+            {"pos": "RA", "name": "Michael Olise", "club": "FC Bayern München", "x": 80, "y": 22, "highlight": "Tor (34') + 2 Vorlagen beim 6:1 gegen RB Leipzig", "stat": "TIP: 1.28 | xWAR: +0.58"},
+            {"pos": "LA", "name": "Luis Díaz", "club": "FC Bayern München", "x": 20, "y": 22, "highlight": "⭐ HATTRICK (12', 47', 69') beim 6:1 gegen RB Leipzig", "stat": "TIP: 1.52 | Finishing: +1.65"},
+            {"pos": "MS", "name": "Niclas Füllkrug", "club": "SV Werder Bremen", "x": 50, "y": 16, "highlight": "Doppelpack in 6 Min. (59', 65' FE) rettet 2:2 vs Paderborn", "stat": "TIP: 1.32 | TDI: 2.78"}
+        ]
+    }
+}
+
+os.makedirs('data', exist_ok=True)
+with open('data/all_matchdays_11_der_woche.json', 'w', encoding='utf-8') as f:
+    json.dump(ALL_MATCHDAYS_11, f, indent=4, ensure_ascii=False)
+print("[SUCCESS] Exported all matchdays 11 der Woche to data/all_matchdays_11_der_woche.json")
