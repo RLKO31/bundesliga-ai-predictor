@@ -1,0 +1,2209 @@
+{
+  "1": [
+    {
+      "match_id": 83156,
+      "match_date": "2026-08-28T20:30:00",
+      "home_team": "FC Bayern München",
+      "away_team": "VfB Stuttgart",
+      "is_finished": true,
+      "score": "5:1",
+      "goals": [
+        {
+          "minute": 21,
+          "scorer": "D. Upamecano",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 52,
+          "scorer": "J. Vagnoman",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 55,
+          "scorer": "M. Olise",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 57,
+          "scorer": "J. Vagnoman",
+          "score": "3:1",
+          "is_penalty": false,
+          "is_own_goal": true
+        },
+        {
+          "minute": 82,
+          "scorer": "Aleksandar Pavlovic",
+          "score": "4:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 92,
+          "scorer": "Luis Díaz",
+          "score": "5:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83158,
+      "match_date": "2026-08-29T15:30:00",
+      "home_team": "RB Leipzig",
+      "away_team": "Borussia Mönchengladbach",
+      "is_finished": true,
+      "score": "3:0",
+      "goals": [
+        {
+          "minute": 26,
+          "scorer": "R. Baku",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 49,
+          "scorer": "A. Nusa",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 66,
+          "scorer": "R. Reitz",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83161,
+      "match_date": "2026-08-29T15:30:00",
+      "home_team": "1. FSV Mainz 05",
+      "away_team": "SC Paderborn 07",
+      "is_finished": true,
+      "score": "0:0",
+      "goals": []
+    },
+    {
+      "match_id": 83162,
+      "match_date": "2026-08-29T15:30:00",
+      "home_team": "1. FC Union Berlin",
+      "away_team": "Eintracht Frankfurt",
+      "is_finished": true,
+      "score": "3:3",
+      "goals": [
+        {
+          "minute": 3,
+          "scorer": "Emmanuel Latte Lath",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 10,
+          "scorer": "Younes Ebnoutalib",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 11,
+          "scorer": "Younes Ebnoutalib",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 67,
+          "scorer": "Younes Ebnoutalib",
+          "score": "1:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 79,
+          "scorer": "L. Querfeld",
+          "score": "2:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 92,
+          "scorer": "T. Skarke",
+          "score": "3:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83163,
+      "match_date": "2026-08-29T15:30:00",
+      "home_team": "1. FC Köln",
+      "away_team": "TSG Hoffenheim",
+      "is_finished": true,
+      "score": "3:2",
+      "goals": [
+        {
+          "minute": 27,
+          "scorer": "A. Daghim",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 51,
+          "scorer": "S. El Mala",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 67,
+          "scorer": "O. Kabak",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 72,
+          "scorer": "Thijs Dallinga",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 82,
+          "scorer": "Thijs Dallinga",
+          "score": "3:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83164,
+      "match_date": "2026-08-29T15:30:00",
+      "home_team": "SV 07 Elversberg",
+      "away_team": "Bayer 04 Leverkusen",
+      "is_finished": true,
+      "score": "3:2",
+      "goals": [
+        {
+          "minute": 8,
+          "scorer": "L. Petkov",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 9,
+          "scorer": "Cole Campbell",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 46,
+          "scorer": "David Mokwa Ntusu",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 77,
+          "scorer": "P. Schick",
+          "score": "3:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 91,
+          "scorer": "C. Kofane",
+          "score": "3:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83157,
+      "match_date": "2026-08-29T18:30:00",
+      "home_team": "Borussia Dortmund",
+      "away_team": "Hamburger SV",
+      "is_finished": true,
+      "score": "2:0",
+      "goals": [
+        {
+          "minute": 9,
+          "scorer": "S. Guirassy",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 46,
+          "scorer": "Giannis Konstantelias",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83159,
+      "match_date": "2026-08-30T15:30:00",
+      "home_team": "SC Freiburg",
+      "away_team": "SV Werder Bremen",
+      "is_finished": true,
+      "score": "4:1",
+      "goals": [
+        {
+          "minute": 29,
+          "scorer": "Y. Suzuki",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 45,
+          "scorer": "I. Matanovic",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 48,
+          "scorer": "Y. Suzuki",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 55,
+          "scorer": "Y. Suzuki",
+          "score": "4:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 76,
+          "scorer": "D. Stalmach",
+          "score": "4:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83160,
+      "match_date": "2026-08-30T17:30:00",
+      "home_team": "FC Augsburg",
+      "away_team": "FC Schalke 04",
+      "is_finished": true,
+      "score": "3:0",
+      "goals": [
+        {
+          "minute": 18,
+          "scorer": "M. Gregoritsch",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 79,
+          "scorer": "A. Kade",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 92,
+          "scorer": "Rodrigo Ribeiro",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    }
+  ],
+  "2": [
+    {
+      "match_id": 83165,
+      "match_date": "2026-09-04T20:30:00",
+      "home_team": "VfB Stuttgart",
+      "away_team": "1. FC Köln",
+      "is_finished": true,
+      "score": "4:1",
+      "goals": [
+        {
+          "minute": 39,
+          "scorer": "B. El Khannouss",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 60,
+          "scorer": "G. Prömel",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 76,
+          "scorer": "E. Demirovic",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 81,
+          "scorer": "R. Hendriks",
+          "score": "3:1",
+          "is_penalty": false,
+          "is_own_goal": true
+        },
+        {
+          "minute": 91,
+          "scorer": "J. Vagnoman",
+          "score": "4:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83166,
+      "match_date": "2026-09-05T15:30:00",
+      "home_team": "TSG Hoffenheim",
+      "away_team": "Borussia Dortmund",
+      "is_finished": true,
+      "score": "2:3",
+      "goals": [
+        {
+          "minute": 45,
+          "scorer": "L. Avdullahu",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 54,
+          "scorer": "T. Lemperle",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 61,
+          "scorer": "S. Guirassy",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 66,
+          "scorer": "Fabio Silva",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 87,
+          "scorer": "A. Hajdari",
+          "score": "2:3",
+          "is_penalty": false,
+          "is_own_goal": true
+        }
+      ]
+    },
+    {
+      "match_id": 83167,
+      "match_date": "2026-09-05T15:30:00",
+      "home_team": "Bayer 04 Leverkusen",
+      "away_team": "1. FC Union Berlin",
+      "is_finished": true,
+      "score": "4:0",
+      "goals": [
+        {
+          "minute": 1,
+          "scorer": "E. Fernández",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 28,
+          "scorer": "Facundo Medina",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 48,
+          "scorer": "P. Schick",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 66,
+          "scorer": "Ibrahim Maza",
+          "score": "4:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83169,
+      "match_date": "2026-09-05T15:30:00",
+      "home_team": "Borussia Mönchengladbach",
+      "away_team": "SV 07 Elversberg",
+      "is_finished": true,
+      "score": "3:4",
+      "goals": [
+        {
+          "minute": 12,
+          "scorer": "H. Bolin",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 29,
+          "scorer": "D. Mokwa",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 44,
+          "scorer": "H. Bolin",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 56,
+          "scorer": "J. Scally",
+          "score": "3:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 66,
+          "scorer": "M. Krattenmacher",
+          "score": "3:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 80,
+          "scorer": "F. Keidel",
+          "score": "3:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 92,
+          "scorer": "M. Krattenmacher",
+          "score": "3:4",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83171,
+      "match_date": "2026-09-05T15:30:00",
+      "home_team": "SV Werder Bremen",
+      "away_team": "RB Leipzig",
+      "is_finished": true,
+      "score": "3:1",
+      "goals": [
+        {
+          "minute": 4,
+          "scorer": "E. Dinkçi",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 68,
+          "scorer": "N. Füllkrug",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 80,
+          "scorer": "M. Grüll",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 95,
+          "scorer": "R. Baku",
+          "score": "3:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83173,
+      "match_date": "2026-09-05T15:30:00",
+      "home_team": "SC Paderborn 07",
+      "away_team": "SC Freiburg",
+      "is_finished": true,
+      "score": "0:1",
+      "goals": [
+        {
+          "minute": 26,
+          "scorer": "M. Eggestein",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83172,
+      "match_date": "2026-09-05T18:30:00",
+      "home_team": "FC Schalke 04",
+      "away_team": "FC Bayern München",
+      "is_finished": true,
+      "score": "0:0",
+      "goals": []
+    },
+    {
+      "match_id": 83170,
+      "match_date": "2026-09-06T15:30:00",
+      "home_team": "Hamburger SV",
+      "away_team": "1. FSV Mainz 05",
+      "is_finished": true,
+      "score": "0:5",
+      "goals": [
+        {
+          "minute": 20,
+          "scorer": "S. Becker",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 41,
+          "scorer": "P. Mwene",
+          "score": "0:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 48,
+          "scorer": "P. Tietz",
+          "score": "0:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 83,
+          "scorer": "P. Tietz",
+          "score": "0:4",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 92,
+          "scorer": "R. Königsdörffer",
+          "score": "0:5",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83168,
+      "match_date": "2026-09-06T17:30:00",
+      "home_team": "Eintracht Frankfurt",
+      "away_team": "FC Augsburg",
+      "is_finished": true,
+      "score": "1:4",
+      "goals": [
+        {
+          "minute": 6,
+          "scorer": "J. Burkardt",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 46,
+          "scorer": "A. Ibrahimovic",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 47,
+          "scorer": "R. Fellhauer",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 65,
+          "scorer": "Alexis Claude-Maurice",
+          "score": "1:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 89,
+          "scorer": "F. Rieder",
+          "score": "1:4",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    }
+  ],
+  "3": [
+    {
+      "match_id": 83180,
+      "match_date": "2026-09-11T20:30:00",
+      "home_team": "1. FC Union Berlin",
+      "away_team": "FC Schalke 04",
+      "is_finished": true,
+      "score": "1:3",
+      "goals": [
+        {
+          "minute": 25,
+          "scorer": "R. Gosens",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 46,
+          "scorer": "A. Aouchiche",
+          "score": "0:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 96,
+          "scorer": "T. Skarke",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 103,
+          "scorer": "M. Wöber",
+          "score": "1:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83174,
+      "match_date": "2026-09-12T15:30:00",
+      "home_team": "Borussia Dortmund",
+      "away_team": "SC Paderborn 07",
+      "is_finished": true,
+      "score": "3:0",
+      "goals": [
+        {
+          "minute": 5,
+          "scorer": "Fabio Silva",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 80,
+          "scorer": "F. Nmecha",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 89,
+          "scorer": "F. Nmecha",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83176,
+      "match_date": "2026-09-12T15:30:00",
+      "home_team": "TSG Hoffenheim",
+      "away_team": "VfB Stuttgart",
+      "is_finished": true,
+      "score": "2:1",
+      "goals": [
+        {
+          "minute": 13,
+          "scorer": "A. Hložek",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 48,
+          "scorer": "M. Mittelstädt",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 67,
+          "scorer": "A. Hložek",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83177,
+      "match_date": "2026-09-12T15:30:00",
+      "home_team": "SC Freiburg",
+      "away_team": "Borussia Mönchengladbach",
+      "is_finished": true,
+      "score": "5:0",
+      "goals": [
+        {
+          "minute": 23,
+          "scorer": "Y. Engelhardt",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 29,
+          "scorer": "I. Matanovic",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 77,
+          "scorer": "I. Matanovic",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 79,
+          "scorer": "Y. Engelhardt",
+          "score": "4:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 86,
+          "scorer": "M. Eggestein",
+          "score": "5:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83178,
+      "match_date": "2026-09-12T15:30:00",
+      "home_team": "FC Augsburg",
+      "away_team": "Bayer 04 Leverkusen",
+      "is_finished": true,
+      "score": "2:2",
+      "goals": [
+        {
+          "minute": 18,
+          "scorer": "C. Kofane",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 50,
+          "scorer": "M. Gregoritsch",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 55,
+          "scorer": "M. Gregoritsch",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 89,
+          "scorer": "P. Schick",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83179,
+      "match_date": "2026-09-12T15:30:00",
+      "home_team": "1. FSV Mainz 05",
+      "away_team": "Eintracht Frankfurt",
+      "is_finished": true,
+      "score": "1:3",
+      "goals": [
+        {
+          "minute": 9,
+          "scorer": "C. Uzun",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 46,
+          "scorer": "J. Burkardt",
+          "score": "0:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 60,
+          "scorer": "C. Uzun",
+          "score": "0:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 89,
+          "scorer": "P. Tietz",
+          "score": "1:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83181,
+      "match_date": "2026-09-12T18:30:00",
+      "home_team": "1. FC Köln",
+      "away_team": "SV Werder Bremen",
+      "is_finished": true,
+      "score": "1:1",
+      "goals": [
+        {
+          "minute": 11,
+          "scorer": "L. Maina",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 70,
+          "scorer": "N. Füllkrug",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83175,
+      "match_date": "2026-09-13T15:30:00",
+      "home_team": "RB Leipzig",
+      "away_team": "Hamburger SV",
+      "is_finished": true,
+      "score": "5:0",
+      "goals": [
+        {
+          "minute": 17,
+          "scorer": "T. Gomis",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 28,
+          "scorer": "A. Nusa",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 72,
+          "scorer": "W. Orbán",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 74,
+          "scorer": "C. Nkunku",
+          "score": "4:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 77,
+          "scorer": "Romulo",
+          "score": "5:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83182,
+      "match_date": "2026-09-13T17:30:00",
+      "home_team": "SV 07 Elversberg",
+      "away_team": "FC Bayern München",
+      "is_finished": true,
+      "score": "1:2",
+      "goals": [
+        {
+          "minute": 26,
+          "scorer": "Lennart Karl",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 61,
+          "scorer": "M. Krattenmacher",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 72,
+          "scorer": "H. Kane",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    }
+  ],
+  "4": [
+    {
+      "match_id": 83183,
+      "match_date": "2026-09-18T20:30:00",
+      "home_team": "FC Bayern München",
+      "away_team": "1. FC Union Berlin",
+      "is_finished": true,
+      "score": "7:0",
+      "goals": [
+        {
+          "minute": 18,
+          "scorer": "J. Musiala",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 39,
+          "scorer": "H. Kane",
+          "score": "2:0",
+          "is_penalty": true,
+          "is_own_goal": false
+        },
+        {
+          "minute": 43,
+          "scorer": "M. Olise",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 54,
+          "scorer": "H. Kane",
+          "score": "4:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 70,
+          "scorer": "I. Saibari",
+          "score": "5:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 73,
+          "scorer": "M. Olise",
+          "score": "6:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 76,
+          "scorer": "M. Olise",
+          "score": "7:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83186,
+      "match_date": "2026-09-19T15:30:00",
+      "home_team": "Eintracht Frankfurt",
+      "away_team": "SC Freiburg",
+      "is_finished": true,
+      "score": "2:2",
+      "goals": [
+        {
+          "minute": 10,
+          "scorer": "Younes Ebnoutalib",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 34,
+          "scorer": "D. Scherhant",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 36,
+          "scorer": "J. Burkardt",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 48,
+          "scorer": "Y. Suzuki",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83187,
+      "match_date": "2026-09-19T15:30:00",
+      "home_team": "Borussia Mönchengladbach",
+      "away_team": "1. FSV Mainz 05",
+      "is_finished": true,
+      "score": "3:4",
+      "goals": [
+        {
+          "minute": 11,
+          "scorer": "F. Neuhaus",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 18,
+          "scorer": "P. Tietz",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 46,
+          "scorer": "S. Becker",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 59,
+          "scorer": "Isac Lidberg",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 78,
+          "scorer": "E. Martel",
+          "score": "2:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 89,
+          "scorer": "Danny da Costa",
+          "score": "2:4",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 95,
+          "scorer": "S. Machino",
+          "score": "3:4",
+          "is_penalty": true,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83188,
+      "match_date": "2026-09-19T15:30:00",
+      "home_team": "Hamburger SV",
+      "away_team": "1. FC Köln",
+      "is_finished": true,
+      "score": "2:1",
+      "goals": [
+        {
+          "minute": 44,
+          "scorer": "N. Capaldo",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 49,
+          "scorer": " Poulsen, Yussuf",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 90,
+          "scorer": "R. Ache",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83189,
+      "match_date": "2026-09-19T15:30:00",
+      "home_team": "SV Werder Bremen",
+      "away_team": "FC Augsburg",
+      "is_finished": true,
+      "score": "3:2",
+      "goals": [
+        {
+          "minute": 18,
+          "scorer": "R. Fellhauer",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 58,
+          "scorer": "Calvin Brackelmann",
+          "score": "0:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 66,
+          "scorer": "M. Grüll",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 86,
+          "scorer": "N. Füllkrug",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 93,
+          "scorer": "M. Weiser",
+          "score": "3:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83184,
+      "match_date": "2026-09-19T18:30:00",
+      "home_team": "VfB Stuttgart",
+      "away_team": "Borussia Dortmund",
+      "is_finished": true,
+      "score": "0:1",
+      "goals": [
+        {
+          "minute": 70,
+          "scorer": "M. Beier",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83185,
+      "match_date": "2026-09-20T15:30:00",
+      "home_team": "Bayer 04 Leverkusen",
+      "away_team": "RB Leipzig",
+      "is_finished": true,
+      "score": "2:0",
+      "goals": [
+        {
+          "minute": 44,
+          "scorer": "P. Schick",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 58,
+          "scorer": "Miguel Gutiérrez",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83190,
+      "match_date": "2026-09-20T17:30:00",
+      "home_team": "FC Schalke 04",
+      "away_team": "SV 07 Elversberg",
+      "is_finished": true,
+      "score": "0:0",
+      "goals": []
+    },
+    {
+      "match_id": 83191,
+      "match_date": "2026-09-20T19:30:00",
+      "home_team": "SC Paderborn 07",
+      "away_team": "TSG Hoffenheim",
+      "is_finished": true,
+      "score": "3:1",
+      "goals": [
+        {
+          "minute": 29,
+          "scorer": "Santiago Castaneda",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 42,
+          "scorer": "S. Marino",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 50,
+          "scorer": "A. Daghim",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 69,
+          "scorer": "S. Tigges",
+          "score": "3:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    }
+  ],
+  "5": [
+    {
+      "match_id": 83198,
+      "match_date": "2026-10-10T15:30:00",
+      "home_team": "1. FC Union Berlin",
+      "away_team": "SV 07 Elversberg",
+      "is_finished": true,
+      "score": "1:0",
+      "goals": [
+        {
+          "minute": 81,
+          "scorer": "Livan Burcu",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83192,
+      "match_date": "2026-10-09T20:30:00",
+      "home_team": "Borussia Dortmund",
+      "away_team": "SV Werder Bremen",
+      "is_finished": true,
+      "score": "2:2",
+      "goals": [
+        {
+          "minute": 80,
+          "scorer": "Daniel Svensson",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 85,
+          "scorer": "N. Schlotterbeck",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 88,
+          "scorer": "L. Reis",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 92,
+          "scorer": "N. Füllkrug",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83194,
+      "match_date": "2026-10-10T15:30:00",
+      "home_team": "TSG Hoffenheim",
+      "away_team": "Hamburger SV",
+      "is_finished": true,
+      "score": "2:3",
+      "goals": [
+        {
+          "minute": 12,
+          "scorer": " Poulsen, Yussuf",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 51,
+          "scorer": "S. Bornauw",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": true
+        },
+        {
+          "minute": 53,
+          "scorer": "B. Conté",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 83,
+          "scorer": "T. Moffi",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 94,
+          "scorer": "M. Muheim",
+          "score": "2:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83196,
+      "match_date": "2026-10-10T15:30:00",
+      "home_team": "FC Augsburg",
+      "away_team": "FC Bayern München",
+      "is_finished": true,
+      "score": "2:2",
+      "goals": [
+        {
+          "minute": 1,
+          "scorer": "R. Fellhauer",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 55,
+          "scorer": "I. Saibari",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 64,
+          "scorer": "Rodrigo Ribeiro",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 81,
+          "scorer": "N. Brown",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83197,
+      "match_date": "2026-10-10T15:30:00",
+      "home_team": "1. FSV Mainz 05",
+      "away_team": "Bayer 04 Leverkusen",
+      "is_finished": true,
+      "score": "3:4",
+      "goals": [
+        {
+          "minute": 5,
+          "scorer": "R. Andrich",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 9,
+          "scorer": "P. Schick",
+          "score": "0:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 33,
+          "scorer": "A. Caci",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 42,
+          "scorer": "A. Caci",
+          "score": "2:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 55,
+          "scorer": "J. Quansah",
+          "score": "2:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 65,
+          "scorer": "M. Diaby",
+          "score": "2:4",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 92,
+          "scorer": "B. Hollerbach",
+          "score": "3:4",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83200,
+      "match_date": "2026-10-10T15:30:00",
+      "home_team": "SC Paderborn 07",
+      "away_team": "VfB Stuttgart",
+      "is_finished": true,
+      "score": "0:2",
+      "goals": [
+        {
+          "minute": 25,
+          "scorer": "J. Chabot",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 84,
+          "scorer": "C. Führich",
+          "score": "0:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83193,
+      "match_date": "2026-10-10T18:30:00",
+      "home_team": "RB Leipzig",
+      "away_team": "Eintracht Frankfurt",
+      "is_finished": true,
+      "score": "6:0",
+      "goals": [
+        {
+          "minute": 1,
+          "scorer": "E. Banzuzi",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 5,
+          "scorer": "C. Nkunku",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 41,
+          "scorer": "C. Nkunku",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 44,
+          "scorer": "C. Nkunku",
+          "score": "4:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 54,
+          "scorer": "A. Nusa",
+          "score": "5:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 89,
+          "scorer": "T. Gomis",
+          "score": "6:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83199,
+      "match_date": "2026-10-11T15:30:00",
+      "home_team": "1. FC Köln",
+      "away_team": "Borussia Mönchengladbach",
+      "is_finished": true,
+      "score": "2:1",
+      "goals": [
+        {
+          "minute": 26,
+          "scorer": "Í. Jóhannesson",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 39,
+          "scorer": "J. Scally",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 66,
+          "scorer": "S. El Mala",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83195,
+      "match_date": "2026-10-11T17:30:00",
+      "home_team": "SC Freiburg",
+      "away_team": "FC Schalke 04",
+      "is_finished": true,
+      "score": "2:1",
+      "goals": [
+        {
+          "minute": 10,
+          "scorer": "M. Eggestein",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 30,
+          "scorer": "K. Karaman",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 85,
+          "scorer": "K. Goto",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    }
+  ],
+  "6": [
+    {
+      "match_id": 83203,
+      "match_date": "2026-10-16T20:30:00",
+      "home_team": "Eintracht Frankfurt",
+      "away_team": "1. FC Köln",
+      "is_finished": true,
+      "score": "1:0",
+      "goals": [
+        {
+          "minute": 77,
+          "scorer": "Younes Ebnoutalib",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83204,
+      "match_date": "2026-10-17T15:30:00",
+      "home_team": "1. FC Union Berlin",
+      "away_team": "Borussia Dortmund",
+      "is_finished": true,
+      "score": "0:0",
+      "goals": []
+    },
+    {
+      "match_id": 83206,
+      "match_date": "2026-10-17T15:30:00",
+      "home_team": "Hamburger SV",
+      "away_team": "VfB Stuttgart",
+      "is_finished": true,
+      "score": "1:0",
+      "goals": [
+        {
+          "minute": 88,
+          "scorer": "M. Muheim",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83207,
+      "match_date": "2026-10-17T15:30:00",
+      "home_team": "SV Werder Bremen",
+      "away_team": "SC Paderborn 07",
+      "is_finished": true,
+      "score": "2:2",
+      "goals": [
+        {
+          "minute": 18,
+          "scorer": "S. Marino",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 30,
+          "scorer": "S. Tigges",
+          "score": "0:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 59,
+          "scorer": "N. Füllkrug",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 65,
+          "scorer": "N. Füllkrug",
+          "score": "2:2",
+          "is_penalty": true,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83208,
+      "match_date": "2026-10-17T15:30:00",
+      "home_team": "FC Schalke 04",
+      "away_team": "1. FSV Mainz 05",
+      "is_finished": true,
+      "score": "0:1",
+      "goals": [
+        {
+          "minute": 24,
+          "scorer": "P. Tietz",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83209,
+      "match_date": "2026-10-17T15:30:00",
+      "home_team": "SV 07 Elversberg",
+      "away_team": "FC Augsburg",
+      "is_finished": true,
+      "score": "4:3",
+      "goals": [
+        {
+          "minute": 4,
+          "scorer": "L. Petkov",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 7,
+          "scorer": "Lasse Günther",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 28,
+          "scorer": "Maximilian Rohr",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 54,
+          "scorer": "F. Rieder",
+          "score": "3:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 76,
+          "scorer": "M. Gregoritsch",
+          "score": "3:2",
+          "is_penalty": true,
+          "is_own_goal": false
+        },
+        {
+          "minute": 89,
+          "scorer": "Frederik Schmahl",
+          "score": "4:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 90,
+          "scorer": "Mert Kömür",
+          "score": "4:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83201,
+      "match_date": "2026-10-17T18:30:00",
+      "home_team": "FC Bayern München",
+      "away_team": "RB Leipzig",
+      "is_finished": true,
+      "score": "6:1",
+      "goals": [
+        {
+          "minute": 12,
+          "scorer": "Luis Díaz",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 26,
+          "scorer": "Aleksandar Pavlovic",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 34,
+          "scorer": "M. Olise",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 47,
+          "scorer": "Luis Díaz",
+          "score": "4:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 53,
+          "scorer": "H. Kane",
+          "score": "5:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 69,
+          "scorer": "Luis Díaz",
+          "score": "6:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 91,
+          "scorer": "A. Maksimovic",
+          "score": "6:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83202,
+      "match_date": "2026-10-18T15:30:00",
+      "home_team": "Bayer 04 Leverkusen",
+      "away_team": "SC Freiburg",
+      "is_finished": true,
+      "score": "2:1",
+      "goals": [
+        {
+          "minute": 14,
+          "scorer": "D. Scherhant",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 19,
+          "scorer": "Ibrahim Maza",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 76,
+          "scorer": "P. Schick",
+          "score": "2:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83205,
+      "match_date": "2026-10-18T17:30:00",
+      "home_team": "Borussia Mönchengladbach",
+      "away_team": "TSG Hoffenheim",
+      "is_finished": true,
+      "score": "1:2",
+      "goals": [
+        {
+          "minute": 11,
+          "scorer": "B. Conté",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 49,
+          "scorer": "W. Mohya",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 54,
+          "scorer": "A. Prass",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    }
+  ],
+  "7": [
+    {
+      "match_id": 83212,
+      "match_date": "2026-10-23T20:30:00",
+      "home_team": "VfB Stuttgart",
+      "away_team": "Borussia Mönchengladbach",
+      "is_finished": true,
+      "score": "2:3",
+      "goals": [
+        {
+          "minute": 5,
+          "scorer": "E. Demirovic",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 38,
+          "scorer": "J. Scally",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 51,
+          "scorer": "S. Machino",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 66,
+          "scorer": "W. Mohya",
+          "score": "1:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 83,
+          "scorer": "E. Demirovic",
+          "score": "2:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83211,
+      "match_date": "2026-10-24T15:30:00",
+      "home_team": "RB Leipzig",
+      "away_team": "SV 07 Elversberg",
+      "is_finished": true,
+      "score": "4:0",
+      "goals": [
+        {
+          "minute": 48,
+          "scorer": "T. Gomis",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 66,
+          "scorer": "Romulo",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 84,
+          "scorer": "C. Baumgartner",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 94,
+          "scorer": "Romulo",
+          "score": "4:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83215,
+      "match_date": "2026-10-24T15:30:00",
+      "home_team": "FC Augsburg",
+      "away_team": "1. FC Union Berlin",
+      "is_finished": true,
+      "score": "1:1",
+      "goals": [
+        {
+          "minute": 71,
+          "scorer": "Han-Noah Massengo",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 74,
+          "scorer": "J. Haberer",
+          "score": "1:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83216,
+      "match_date": "2026-10-24T15:30:00",
+      "home_team": "1. FSV Mainz 05",
+      "away_team": "SV Werder Bremen",
+      "is_finished": true,
+      "score": "2:3",
+      "goals": [
+        {
+          "minute": 6,
+          "scorer": "N. Füllkrug",
+          "score": "0:1",
+          "is_penalty": true,
+          "is_own_goal": false
+        },
+        {
+          "minute": 24,
+          "scorer": "N. Füllkrug",
+          "score": "0:2",
+          "is_penalty": true,
+          "is_own_goal": false
+        },
+        {
+          "minute": 33,
+          "scorer": "A. Caci",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 61,
+          "scorer": "L. Reis",
+          "score": "1:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 64,
+          "scorer": "Lee Jae-sung",
+          "score": "2:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83217,
+      "match_date": "2026-10-24T15:30:00",
+      "home_team": "1. FC Köln",
+      "away_team": "FC Schalke 04",
+      "is_finished": true,
+      "score": "0:0",
+      "goals": []
+    },
+    {
+      "match_id": 83218,
+      "match_date": "2026-10-24T15:30:00",
+      "home_team": "SC Paderborn 07",
+      "away_team": "Hamburger SV",
+      "is_finished": true,
+      "score": "1:0",
+      "goals": [
+        {
+          "minute": 88,
+          "scorer": "R. Philippe",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83210,
+      "match_date": "2026-10-24T18:30:00",
+      "home_team": "Borussia Dortmund",
+      "away_team": "Eintracht Frankfurt",
+      "is_finished": true,
+      "score": "1:0",
+      "goals": [
+        {
+          "minute": 80,
+          "scorer": "M. Beier",
+          "score": "1:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83213,
+      "match_date": "2026-10-25T15:30:00",
+      "home_team": "TSG Hoffenheim",
+      "away_team": "Bayer 04 Leverkusen",
+      "is_finished": true,
+      "score": "3:0",
+      "goals": [
+        {
+          "minute": 78,
+          "scorer": "A. Kramaric",
+          "score": "1:0",
+          "is_penalty": true,
+          "is_own_goal": false
+        },
+        {
+          "minute": 90,
+          "scorer": "A. Prass",
+          "score": "2:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 95,
+          "scorer": "M. Moerstedt",
+          "score": "3:0",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    },
+    {
+      "match_id": 83214,
+      "match_date": "2026-10-25T17:30:00",
+      "home_team": "SC Freiburg",
+      "away_team": "FC Bayern München",
+      "is_finished": true,
+      "score": "1:3",
+      "goals": [
+        {
+          "minute": 16,
+          "scorer": "D. Upamecano",
+          "score": "0:1",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 42,
+          "scorer": "S. Gnabry",
+          "score": "0:2",
+          "is_penalty": false,
+          "is_own_goal": false
+        },
+        {
+          "minute": 82,
+          "scorer": "T. Bischof",
+          "score": "1:2",
+          "is_penalty": false,
+          "is_own_goal": true
+        },
+        {
+          "minute": 95,
+          "scorer": "M. Olise",
+          "score": "1:3",
+          "is_penalty": false,
+          "is_own_goal": false
+        }
+      ]
+    }
+  ]
+}
