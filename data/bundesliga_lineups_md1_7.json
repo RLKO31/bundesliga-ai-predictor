@@ -1,0 +1,146 @@
+{
+  "1": {
+    "starters": [
+      { "name": "Gregor Kobel", "club": "Borussia Dortmund", "pos": "TW", "minutes": 90 },
+      { "name": "Ridle Baku", "club": "RB Leipzig", "pos": "RV", "minutes": 90 },
+      { "name": "Dayot Upamecano", "club": "FC Bayern München", "pos": "IV", "minutes": 90 },
+      { "name": "Nico Schlotterbeck", "club": "Borussia Dortmund", "pos": "IV", "minutes": 90 },
+      { "name": "David Mokwa", "club": "SV 07 Elversberg", "pos": "LV", "minutes": 90 },
+      { "name": "Aleksandar Pavlovic", "club": "FC Bayern München", "pos": "ZM", "minutes": 90 },
+      { "name": "Cole Campbell", "club": "SV 07 Elversberg", "pos": "ZM", "minutes": 84 },
+      { "name": "Michael Olise", "club": "FC Bayern München", "pos": "OM", "minutes": 90 },
+      { "name": "Antonio Nusa", "club": "RB Leipzig", "pos": "RA", "minutes": 85 },
+      { "name": "Younes Ebnoutalib", "club": "Eintracht Frankfurt", "pos": "MS", "minutes": 88 },
+      { "name": "Yuito Suzuki", "club": "SC Freiburg", "pos": "LA", "minutes": 86 }
+    ],
+    "substitutes": [
+      { "name": "Thijs Dallinga", "club": "1. FC Köln", "sub_minute": 65, "minutes": 25, "goals": 2, "is_penalty": false },
+      { "name": "Tim Skarke", "club": "1. FC Union Berlin", "sub_minute": 75, "minutes": 15, "goals": 1, "is_penalty": false },
+      { "name": "Luis Díaz", "club": "FC Bayern München", "sub_minute": 68, "minutes": 22, "goals": 1, "assists": 1, "is_penalty": false }
+    ]
+  },
+  "2": {
+    "starters": [
+      { "name": "Ron-Thorben Hoffmann", "club": "FC Schalke 04", "pos": "TW", "minutes": 90 },
+      { "name": "Facundo Medina", "club": "Bayer 04 Leverkusen", "pos": "IV", "minutes": 90 },
+      { "name": "Matthias Ginter", "club": "SC Freiburg", "pos": "IV", "minutes": 90 },
+      { "name": "Robin Fellhauer", "club": "FC Augsburg", "pos": "IV", "minutes": 90 },
+      { "name": "Philipp Mwene", "club": "1. FSV Mainz 05", "pos": "LM", "minutes": 90 },
+      { "name": "Bilal El Khannouss", "club": "VfB Stuttgart", "pos": "ZM", "minutes": 85 },
+      { "name": "Alexis Claude-Maurice", "club": "FC Augsburg", "pos": "ZM", "minutes": 88 },
+      { "name": "Josha Vagnoman", "club": "VfB Stuttgart", "pos": "RM", "minutes": 90 },
+      { "name": "Ibrahim Maza", "club": "Bayer 04 Leverkusen", "pos": "OM", "minutes": 78 },
+      { "name": "Phillip Tietz", "club": "1. FSV Mainz 05", "pos": "ST", "minutes": 81 },
+      { "name": "Ermedin Demirovic", "club": "VfB Stuttgart", "pos": "ST", "minutes": 90 }
+    ],
+    "substitutes": [
+      { "name": "Maurice Krattenmacher", "club": "SV 07 Elversberg", "sub_minute": 60, "minutes": 30, "goals": 2, "is_penalty": false },
+      { "name": "Fabio Silva", "club": "Borussia Dortmund", "sub_minute": 63, "minutes": 27, "goals": 1, "is_penalty": false },
+      { "name": "Florian Rieder", "club": "FC Augsburg", "sub_minute": 72, "minutes": 18, "goals": 1, "is_penalty": false }
+    ]
+  },
+  "3": {
+    "starters": [
+      { "name": "Noah Atubolu", "club": "SC Freiburg", "pos": "TW", "minutes": 90 },
+      { "name": "Willi Orbán", "club": "RB Leipzig", "pos": "RV", "minutes": 90 },
+      { "name": "Maximilian Wöber", "club": "FC Schalke 04", "pos": "IV", "minutes": 90 },
+      { "name": "Nico Schlotterbeck", "club": "Borussia Dortmund", "pos": "IV", "minutes": 90 },
+      { "name": "Robin Gosens", "club": "FC Schalke 04", "pos": "LV", "minutes": 90 },
+      { "name": "Antonio Nusa", "club": "RB Leipzig", "pos": "RM", "minutes": 80 },
+      { "name": "Maximilian Eggestein", "club": "SC Freiburg", "pos": "ZM", "minutes": 90 },
+      { "name": "Yannik Engelhardt", "club": "SC Freiburg", "pos": "ZM", "minutes": 88 },
+      { "name": "Can Uzun", "club": "Eintracht Frankfurt", "pos": "LM", "minutes": 75 },
+      { "name": "Adam Hlozek", "club": "TSG Hoffenheim", "pos": "ST", "minutes": 82 },
+      { "name": "Igor Matanovic", "club": "SC Freiburg", "pos": "ST", "minutes": 84 }
+    ],
+    "substitutes": [
+      { "name": "Felix Nmecha", "club": "Borussia Dortmund", "sub_minute": 67, "minutes": 23, "goals": 1, "is_penalty": false },
+      { "name": "Patrik Schick", "club": "Bayer 04 Leverkusen", "sub_minute": 71, "minutes": 19, "goals": 1, "is_penalty": false },
+      { "name": "Christopher Nkunku", "club": "RB Leipzig", "sub_minute": 65, "minutes": 25, "goals": 1, "is_penalty": false }
+    ]
+  },
+  "4": {
+    "starters": [
+      { "name": "Gregor Kobel", "club": "Borussia Dortmund", "pos": "TW", "minutes": 90 },
+      { "name": "Mitchell Weiser", "club": "SV Werder Bremen", "pos": "RV", "minutes": 90 },
+      { "name": "Edmond Tapsoba", "club": "Bayer 04 Leverkusen", "pos": "IV", "minutes": 90 },
+      { "name": "Waldemar Anton", "club": "Borussia Dortmund", "pos": "IV", "minutes": 90 },
+      { "name": "Miguel Gutiérrez", "club": "Bayer 04 Leverkusen", "pos": "LV", "minutes": 86 },
+      { "name": "Santiago Castaneda", "club": "SC Paderborn 07", "pos": "ZM", "minutes": 90 },
+      { "name": "Jamal Musiala", "club": "FC Bayern München", "pos": "ZM", "minutes": 79 },
+      { "name": "Jonathan Burkardt", "club": "Eintracht Frankfurt", "pos": "OM", "minutes": 85 },
+      { "name": "Michael Olise", "club": "FC Bayern München", "pos": "RA", "minutes": 88 },
+      { "name": "Harry Kane", "club": "FC Bayern München", "pos": "MS", "minutes": 82 },
+      { "name": "Patrik Schick", "club": "Bayer 04 Leverkusen", "pos": "LA", "minutes": 76 }
+    ],
+    "substitutes": [
+      { "name": "Danny da Costa", "club": "1. FSV Mainz 05", "sub_minute": 62, "minutes": 28, "goals": 1, "is_penalty": false },
+      { "name": "Maximilian Beier", "club": "Borussia Dortmund", "sub_minute": 66, "minutes": 24, "goals": 1, "is_penalty": false },
+      { "name": "Ismael Saibari", "club": "FC Bayern München", "sub_minute": 70, "minutes": 20, "goals": 1, "is_penalty": false }
+    ]
+  },
+  "5": {
+    "starters": [
+      { "name": "Alexander Nübel", "club": "VfB Stuttgart", "pos": "TW", "minutes": 90 },
+      { "name": "Danilho Doekhi", "club": "1. FC Union Berlin", "pos": "IV", "minutes": 90 },
+      { "name": "Julian Chabot", "club": "VfB Stuttgart", "pos": "IV", "minutes": 90 },
+      { "name": "Robin Fellhauer", "club": "FC Augsburg", "pos": "IV", "minutes": 90 },
+      { "name": "Miro Muheim", "club": "Hamburger SV", "pos": "LM", "minutes": 90 },
+      { "name": "Robert Andrich", "club": "Bayer 04 Leverkusen", "pos": "ZM", "minutes": 90 },
+      { "name": "Jarell Quansah", "club": "Bayer 04 Leverkusen", "pos": "ZM", "minutes": 90 },
+      { "name": "Anthony Caci", "club": "1. FSV Mainz 05", "pos": "RM", "minutes": 90 },
+      { "name": "Antonio Nusa", "club": "RB Leipzig", "pos": "LA", "minutes": 83 },
+      { "name": "Christopher Nkunku", "club": "RB Leipzig", "pos": "MS", "minutes": 80 },
+      { "name": "Rodrigo Ribeiro", "club": "FC Augsburg", "pos": "RA", "minutes": 78 }
+    ],
+    "substitutes": [
+      { "name": "Niclas Füllkrug", "club": "SV Werder Bremen", "sub_minute": 65, "minutes": 25, "goals": 1, "is_penalty": false },
+      { "name": "Said El Mala", "club": "1. FC Köln", "sub_minute": 70, "minutes": 20, "goals": 1, "is_penalty": false },
+      { "name": "Chris Führich", "club": "VfB Stuttgart", "sub_minute": 62, "minutes": 28, "goals": 1, "is_penalty": false }
+    ]
+  },
+  "6": {
+    "starters": [
+      { "name": "Daniel Heuer Fernandes", "club": "Hamburger SV", "pos": "TW", "minutes": 90 },
+      { "name": "Lasse Günther", "club": "SV 07 Elversberg", "pos": "RV", "minutes": 90 },
+      { "name": "Danilho Doekhi", "club": "1. FC Union Berlin", "pos": "IV", "minutes": 90 },
+      { "name": "Nico Schlotterbeck", "club": "Borussia Dortmund", "pos": "IV", "minutes": 90 },
+      { "name": "Miro Muheim", "club": "Hamburger SV", "pos": "LV", "minutes": 90 },
+      { "name": "Aleksandar Pavlovic", "club": "FC Bayern München", "pos": "DM", "minutes": 87 },
+      { "name": "Alexander Prass", "club": "TSG Hoffenheim", "pos": "CM", "minutes": 90 },
+      { "name": "Ibrahim Maza", "club": "Bayer 04 Leverkusen", "pos": "OM", "minutes": 84 },
+      { "name": "Michael Olise", "club": "FC Bayern München", "pos": "RA", "minutes": 82 },
+      { "name": "Luis Díaz", "club": "FC Bayern München", "pos": "LA", "minutes": 85 },
+      { "name": "Niclas Füllkrug", "club": "SV Werder Bremen", "pos": "MS", "minutes": 90 }
+    ],
+    "substitutes": [
+      { "name": "Patrik Schick", "club": "Bayer 04 Leverkusen", "sub_minute": 64, "minutes": 26, "goals": 1, "is_penalty": false },
+      { "name": "Younes Ebnoutalib", "club": "Eintracht Frankfurt", "sub_minute": 60, "minutes": 30, "goals": 1, "is_penalty": false },
+      { "name": "Frederik Schmahl", "club": "SV 07 Elversberg", "sub_minute": 78, "minutes": 12, "goals": 1, "is_penalty": false }
+    ]
+  },
+  "7": {
+    "starters": [
+      { "name": "Oliver Baumann", "club": "TSG Hoffenheim", "pos": "TW", "minutes": 90, "clean_sheet": true, "saves": 7 },
+      { "name": "Joe Scally", "club": "Borussia Mönchengladbach", "pos": "RM", "minutes": 90, "goals": 1, "is_penalty": false },
+      { "name": "Dayot Upamecano", "club": "FC Bayern München", "pos": "IV", "minutes": 90, "goals": 1, "is_penalty": false },
+      { "name": "Willi Orbán", "club": "RB Leipzig", "pos": "IV", "minutes": 90, "clean_sheet": true },
+      { "name": "Felix Götze", "club": "SC Paderborn 07", "pos": "IV", "minutes": 90, "clean_sheet": true, "clearances": 12 },
+      { "name": "Anthony Caci", "club": "1. FSV Mainz 05", "pos": "LM", "minutes": 90, "goals": 1, "is_penalty": false },
+      { "name": "Alexander Prass", "club": "TSG Hoffenheim", "pos": "ZM", "minutes": 89, "goals": 1, "is_penalty": false },
+      { "name": "Ludovit Reis", "club": "SV Werder Bremen", "pos": "ZM", "minutes": 90, "goals": 1, "is_penalty": false },
+      { "name": "Michael Olise", "club": "FC Bayern München", "pos": "RA", "minutes": 90, "goals": 1, "assists": 1, "is_penalty": false },
+      { "name": "Ermedin Demirovic", "club": "VfB Stuttgart", "pos": "MS", "minutes": 90, "goals": 2, "is_penalty": false },
+      { "name": "Niclas Füllkrug", "club": "SV Werder Bremen", "pos": "ST", "minutes": 82, "goals": 2, "is_penalty": true }
+    ],
+    "substitutes": [
+      { "name": "Andrej Kramarić", "club": "TSG Hoffenheim", "sub_minute": 65, "minutes": 25, "goals": 1, "is_penalty": true, "highlight": "Herausragender Einfluss von der Bank: Verwandelt eiskalt den 1000. TSG-Bundesligatreffer zum 2:0 und leitet den 3:0-Triumph über Meister Leverkusen ein!" },
+      { "name": "Romulo", "club": "RB Leipzig", "sub_minute": 46, "minutes": 44, "goals": 2, "is_penalty": false, "highlight": "Supersub par excellence: Schnürt nach Einwechslung einen berauschenden Doppelpack beim 4:0 gegen Elversberg!" },
+      { "name": "Christoph Baumgartner", "club": "RB Leipzig", "sub_minute": 72, "minutes": 18, "goals": 1, "is_penalty": false, "highlight": "Feuerwerk nach Einwechslung: Erzielt 12 Minuten nach Betreten des Rasens das 3:0 und kreiert 5 Topchancen!" },
+      { "name": "Maximilian Beier", "club": "Borussia Dortmund", "sub_minute": 68, "minutes": 22, "goals": 1, "is_penalty": false, "highlight": "Erzielt in der 80. Minute das goldene 1:0-Siegtor gegen Eintracht Frankfurt!" },
+      { "name": "Rayan Philippe", "club": "SC Paderborn 07", "sub_minute": 70, "minutes": 20, "goals": 1, "is_penalty": false, "highlight": "Schießt Aufsteiger Paderborn in Minute 88 zum 1:0-Sieg gegen den Hamburger SV!" },
+      { "name": "Max Moerstedt", "club": "TSG Hoffenheim", "sub_minute": 83, "minutes": 7, "goals": 1, "is_penalty": false, "highlight": "Setzt in der 95. Minute den 3:0-Schlusspunkt gegen Leverkusen!" },
+      { "name": "Winsley Boteli", "club": "Borussia Mönchengladbach", "sub_minute": 60, "minutes": 30, "goals": 1, "is_penalty": false, "highlight": "Trifft 6 Minuten nach Einwechslung zum 3:1 beim Auswärtssieg in Stuttgart!" }
+    ]
+  }
+}
