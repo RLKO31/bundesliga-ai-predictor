@@ -1020,5 +1020,151 @@
         "highlight": "Starter (82 Min.), Doppelpack (6' FE, 24' FE) sichert 3:2-Sieg in Mainz"
       }
     ]
+  },
+  "8": {
+    "matchday": 8,
+    "title": "8. Spieltag (2026/2027)",
+    "formation": "4-3-3",
+    "mvp": "Ermedin Demirovic (VfB Stuttgart)",
+    "mvp_reason": "⭐ DOPPELPACK (14', 66') aus dem Spiel heraus beim grandiosen 4:2-Erfolg bei Meister Bayer Leverkusen (TIP: 1.85, TDI: 3.10, xWAR: +0.85)",
+    "coach": "Sebastian Hoeneß (VfB Stuttgart)",
+    "jokers": [
+      {
+        "rank": 1,
+        "name": "Fábio Silva",
+        "club": "Borussia Dortmund",
+        "min_in": "Eingewechselt (76')",
+        "stat": "Tor in 89. Min. (2:2 vs Bayern) | TIP: 1.45",
+        "highlight": "Klassiker-Coup: Schockt die Bayern in der 89. Minute zum 2:2-Remis in der Allianz Arena!"
+      },
+      {
+        "rank": 2,
+        "name": "Cyriaque Irié",
+        "club": "SC Freiburg",
+        "min_in": "Eingewechselt (83')",
+        "stat": "Siegtor in 85. Min. (2:1 bei Augsburg) | TIP: 1.35",
+        "highlight": "Blitz-Joker: Erzielt 120 Sekunden nach Einwechslung das umjubelte 2:1-Siegtor beim FC Augsburg!"
+      },
+      {
+        "rank": 3,
+        "name": "Malek El Mala",
+        "club": "1. FC Köln",
+        "min_in": "Eingewechselt (71')",
+        "stat": "Bundesligadebüt-Tor (79') | TIP: 1.30",
+        "highlight": "Traumdebüt par excellence: Trifft 8 Minuten nach Einwechslung mit seinem allerersten Bundesliga-Schuss zum 1:1 bei Union Berlin!"
+      }
+    ],
+    "fixtures_summary": [
+      "SV 07 Elversberg 4:1 1. FSV Mainz 05",
+      "Bayer 04 Leverkusen 2:4 VfB Stuttgart",
+      "FC Augsburg 1:2 SC Freiburg",
+      "Borussia Mönchengladbach 0:0 SC Paderborn 07",
+      "SV Werder Bremen 2:0 TSG Hoffenheim",
+      "FC Schalke 04 0:2 RB Leipzig",
+      "FC Bayern München 2:2 Borussia Dortmund",
+      "1. FC Union Berlin 1:1 1. FC Köln",
+      "Eintracht Frankfurt 3:1 Hamburger SV"
+    ],
+    "lineup": [
+      {
+        "pos": "TW",
+        "name": "Michael Zetterer",
+        "club": "SV Werder Bremen",
+        "x": 50,
+        "y": 88,
+        "stat": "GSAE: +1.45 | QRSR: 1.82",
+        "highlight": "Starter (90 Min.), Weiße Weste, 5 Paraden beim 2:0 gegen Hoffenheim"
+      },
+      {
+        "pos": "RV",
+        "name": "Konrad Laimer",
+        "club": "FC Bayern München",
+        "x": 82,
+        "y": 70,
+        "stat": "TIP: 1.05 | DSI: 2.30",
+        "highlight": "Starter (90 Min.), Führungstor (38') im Klassiker gegen den BVB"
+      },
+      {
+        "pos": "IV",
+        "name": "Dayot Upamecano",
+        "club": "FC Bayern München",
+        "x": 60,
+        "y": 74,
+        "stat": "BLS: 2.35 | CDE: 5.50",
+        "highlight": "Starter (90 Min.), Führungstor (66') im Klassiker, 94% Passquote"
+      },
+      {
+        "pos": "IV",
+        "name": "Willi Orbán",
+        "club": "RB Leipzig",
+        "x": 40,
+        "y": 74,
+        "stat": "BLS: 2.40 | CDE: 6.00",
+        "highlight": "Starter (90 Min.), Weiße Weste, 100% Luftduelle (5/5) beim 2:0 auf Schalke"
+      },
+      {
+        "pos": "LV",
+        "name": "Felix Götze",
+        "club": "SC Paderborn 07",
+        "x": 18,
+        "y": 70,
+        "stat": "BLS: 2.30 | DSI: 2.85",
+        "highlight": "Starter (90 Min.), Weiße Weste, 11 Klärungen/Blocks beim 0:0 in Gladbach"
+      },
+      {
+        "pos": "ZM",
+        "name": "Felix Keidel",
+        "club": "SV 07 Elversberg",
+        "x": 35,
+        "y": 50,
+        "stat": "TIP: 1.15 | BPS: 1.25",
+        "highlight": "Starter (90 Min.), Traum-Freistoßtor (7') & Taktgeber beim 4:1 gegen Mainz"
+      },
+      {
+        "pos": "ZM",
+        "name": "Raphael Onyedika",
+        "club": "Eintracht Frankfurt",
+        "x": 65,
+        "y": 50,
+        "stat": "BPS: 1.28 | TIP: 1.10",
+        "highlight": "Starter (90 Min.), Führungstor (47') & 8 Balleroberungen beim 3:1 vs HSV"
+      },
+      {
+        "pos": "OM",
+        "name": "Bilal El Khannouss",
+        "club": "VfB Stuttgart",
+        "x": 50,
+        "y": 36,
+        "stat": "TIP: 1.45 | TDI: 2.40",
+        "highlight": "Starter (85 Min.), Traumtor (51') & 5 Vorlagenläufe beim 4:2 in Leverkusen"
+      },
+      {
+        "pos": "RA",
+        "name": "Jamie Leweling",
+        "club": "VfB Stuttgart",
+        "x": 80,
+        "y": 20,
+        "stat": "TIP: 1.55 | TDI: 2.50",
+        "highlight": "Starter (85 Min.), Tor (22') & Vorlage beim 4:2-Auswärtscoup in Leverkusen"
+      },
+      {
+        "pos": "MS",
+        "name": "Ermedin Demirovic",
+        "club": "VfB Stuttgart",
+        "x": 50,
+        "y": 16,
+        "stat": "TIP: 1.85 | TDI: 3.10",
+        "highlight": "⭐ MVP: Starter (90 Min.), 2 Feldtore (14', 66') beim 4:2-Sieg in Leverkusen"
+      },
+      {
+        "pos": "LA",
+        "name": "Antonio Nusa",
+        "club": "RB Leipzig",
+        "x": 20,
+        "y": 20,
+        "stat": "TIP: 1.35 | TDI: 2.20",
+        "highlight": "Starter (90 Min.), Tor (35' FE) + Assist (78') beim 2:0 auf Schalke"
+      }
+    ]
   }
 }
