@@ -1166,5 +1166,151 @@
         "highlight": "Starter (90 Min.), Tor (35' FE) + Assist (78') beim 2:0 auf Schalke"
       }
     ]
+  },
+  "9": {
+    "matchday": 9,
+    "title": "9. Spieltag (2026/2027)",
+    "formation": "4-3-3",
+    "mvp": "Felix Nmecha (Borussia Dortmund)",
+    "mvp_reason": "⭐ DOPPELPACK (55', 71') aus dem Mittelfeld heraus entscheidet den packenden 2:1-Heimsieg gegen den SV 07 Elversberg (TIP: 1.80, BPS: 1.45, xWAR: +0.82)",
+    "coach": "Merlin Polzin (Hamburger SV)",
+    "jokers": [
+      {
+        "rank": 1,
+        "name": "Christoph Baumgartner",
+        "club": "RB Leipzig",
+        "min_in": "Eingewechselt (65')",
+        "stat": "Tor in 66. Min. (60 Sek. nach Einwechslung) | TIP: 1.40",
+        "highlight": "Blitz-Joker par excellence: Trifft nur eine Minute nach seiner Einwechslung eiskalt zum 5:1 gegen den FC Augsburg!"
+      },
+      {
+        "rank": 2,
+        "name": "Marvin Pieringer",
+        "club": "SC Paderborn 07",
+        "min_in": "Eingewechselt (65')",
+        "stat": "Elfmetertor in 73. Min. | TIP: 1.25",
+        "highlight": "Kaltblütiger Strafstoß-Joker: Verwandelt 8 Minuten nach Betreten des Rasens zur zwischenzeitlichen 2:1-Führung gegen Eintracht Frankfurt!"
+      },
+      {
+        "rank": 3,
+        "name": "Noel Futkeu",
+        "club": "SV 07 Elversberg",
+        "min_in": "Eingewechselt (78')",
+        "stat": "Traumtor in 81. Min. | TIP: 1.20",
+        "highlight": "Spektakulärer Seitfallzieher im Signal Iduna Park: Verkürzt nur drei Minuten nach Einwechslung zum 1:2 bei Borussia Dortmund!"
+      }
+    ],
+    "fixtures_summary": [
+      "Hamburger SV 3:1 Borussia Mönchengladbach",
+      "Borussia Dortmund 2:1 SV 07 Elversberg",
+      "RB Leipzig 5:2 FC Augsburg",
+      "1. FSV Mainz 05 1:2 FC Bayern München",
+      "SC Paderborn 07 2:2 Eintracht Frankfurt",
+      "VfB Stuttgart 1:0 SV Werder Bremen",
+      "1. FC Köln 1:2 Bayer 04 Leverkusen",
+      "SC Freiburg 2:0 1. FC Union Berlin",
+      "TSG Hoffenheim 2:1 FC Schalke 04"
+    ],
+    "lineup": [
+      {
+        "pos": "TW",
+        "name": "Noah Atubolu",
+        "club": "SC Freiburg",
+        "x": 50,
+        "y": 88,
+        "stat": "GSAE: +1.50 | QRSR: 1.85",
+        "highlight": "Starter (90 Min.), Weiße Weste, 6 Glanzparaden beim 2:0 gegen Union Berlin"
+      },
+      {
+        "pos": "RV",
+        "name": "Joe Scally",
+        "club": "Borussia Mönchengladbach",
+        "x": 82,
+        "y": 70,
+        "stat": "TIP: 1.10 | DSI: 2.45",
+        "highlight": "Starter (90 Min.), Wuchtiger Ausgleichstreffer (44') & 7 Tackles beim HSV"
+      },
+      {
+        "pos": "IV",
+        "name": "Julian Chabot",
+        "club": "VfB Stuttgart",
+        "x": 60,
+        "y": 74,
+        "stat": "BLS: 2.45 | CDE: 6.50",
+        "highlight": "Starter (90 Min.), Weiße Weste, 12 Klärungen/Blocks beim 1:0 gegen Bremen"
+      },
+      {
+        "pos": "IV",
+        "name": "Matthias Ginter",
+        "club": "SC Freiburg",
+        "x": 40,
+        "y": 74,
+        "stat": "BLS: 2.35 | CDE: 5.80",
+        "highlight": "Starter (90 Min.), Weiße Weste, 100% Luftduelle beim 2:0 gegen Union"
+      },
+      {
+        "pos": "LV",
+        "name": "David Raum",
+        "club": "RB Leipzig",
+        "x": 18,
+        "y": 70,
+        "stat": "TIP: 1.55 | BPS: 1.35",
+        "highlight": "Starter (90 Min.), Direktes Freistoßtor (46') + Vorlage beim 5:2 gegen Augsburg"
+      },
+      {
+        "pos": "ZM",
+        "name": "Joshua Kimmich",
+        "club": "FC Bayern München",
+        "x": 35,
+        "y": 50,
+        "stat": "BPS: 1.40 | xG Buildup: 1.35",
+        "highlight": "Starter (86 Min.), Führungstor (14') & 96% Passquote beim 2:1 in Mainz"
+      },
+      {
+        "pos": "ZM",
+        "name": "Felix Nmecha",
+        "club": "Borussia Dortmund",
+        "x": 50,
+        "y": 38,
+        "stat": "TIP: 1.80 | xWAR: +0.82",
+        "highlight": "⭐ MVP: Starter (90 Min.), Doppelpack (55', 71') sichert 2:1-Sieg gegen Elversberg"
+      },
+      {
+        "pos": "ZM",
+        "name": "Aleix García",
+        "club": "Bayer 04 Leverkusen",
+        "x": 65,
+        "y": 50,
+        "stat": "TIP: 1.25 | BPS: 1.30",
+        "highlight": "Starter (90 Min.), Traum-Freistoßtor (7') & Taktgeber beim 2:1-Derbysieg in Köln"
+      },
+      {
+        "pos": "RA",
+        "name": "Fisnik Asllani",
+        "club": "TSG Hoffenheim",
+        "x": 80,
+        "y": 20,
+        "stat": "TIP: 1.55 | TDI: 2.65",
+        "highlight": "Starter (78 Min.), Tor (10') + Vorlage (26') beim 2:1 gegen Schalke 04"
+      },
+      {
+        "pos": "MS",
+        "name": "Jonathan Burkardt",
+        "club": "Eintracht Frankfurt",
+        "x": 50,
+        "y": 16,
+        "stat": "TIP: 1.85 | TDI: 2.85",
+        "highlight": "Starter (90 Min.), 2 Feldtore (23', 93' Hacke) retten 2:2 in Paderborn"
+      },
+      {
+        "pos": "LA",
+        "name": "Christopher Nkunku",
+        "club": "RB Leipzig",
+        "x": 20,
+        "y": 20,
+        "stat": "TIP: 1.55 | TDI: 2.40",
+        "highlight": "Starter (75 Min.), Tor (35') + Vorlage beim 5:2-Torfestival gegen Augsburg"
+      }
+    ]
   }
 }

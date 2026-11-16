@@ -870,5 +870,144 @@
         "is_penalty": false
       }
     ]
+  },
+  "9": {
+    "starters": [
+      {
+        "name": "Noah Atubolu",
+        "club": "SC Freiburg",
+        "pos": "TW",
+        "minutes": 90,
+        "clean_sheet": true,
+        "saves": 6
+      },
+      {
+        "name": "Joe Scally",
+        "club": "Borussia Mönchengladbach",
+        "pos": "RV",
+        "minutes": 90,
+        "goals": 1,
+        "is_penalty": false
+      },
+      {
+        "name": "Julian Chabot",
+        "club": "VfB Stuttgart",
+        "pos": "IV",
+        "minutes": 90,
+        "clean_sheet": true,
+        "clearances": 12
+      },
+      {
+        "name": "Matthias Ginter",
+        "club": "SC Freiburg",
+        "pos": "IV",
+        "minutes": 90,
+        "clean_sheet": true
+      },
+      {
+        "name": "David Raum",
+        "club": "RB Leipzig",
+        "pos": "LV",
+        "minutes": 90,
+        "goals": 1,
+        "assists": 1,
+        "is_penalty": false
+      },
+      {
+        "name": "Joshua Kimmich",
+        "club": "FC Bayern München",
+        "pos": "ZM",
+        "minutes": 86,
+        "goals": 1,
+        "is_penalty": false
+      },
+      {
+        "name": "Felix Nmecha",
+        "club": "Borussia Dortmund",
+        "pos": "ZM",
+        "minutes": 90,
+        "goals": 2,
+        "is_penalty": false
+      },
+      {
+        "name": "Aleix García",
+        "club": "Bayer 04 Leverkusen",
+        "pos": "ZM",
+        "minutes": 90,
+        "goals": 1,
+        "is_penalty": false
+      },
+      {
+        "name": "Fisnik Asllani",
+        "club": "TSG Hoffenheim",
+        "pos": "RA",
+        "minutes": 78,
+        "goals": 1,
+        "assists": 1,
+        "is_penalty": false
+      },
+      {
+        "name": "Jonathan Burkardt",
+        "club": "Eintracht Frankfurt",
+        "pos": "MS",
+        "minutes": 90,
+        "goals": 2,
+        "is_penalty": false
+      },
+      {
+        "name": "Christopher Nkunku",
+        "club": "RB Leipzig",
+        "pos": "LA",
+        "minutes": 75,
+        "goals": 1,
+        "assists": 1,
+        "is_penalty": false
+      }
+    ],
+    "substitutes": [
+      {
+        "name": "Christoph Baumgartner",
+        "club": "RB Leipzig",
+        "sub_minute": 65,
+        "minutes": 25,
+        "goals": 1,
+        "is_penalty": false,
+        "highlight": "Blitz-Joker par excellence: Trifft nur eine Minute nach seiner Einwechslung eiskalt zum 5:1 gegen den FC Augsburg!"
+      },
+      {
+        "name": "Marvin Pieringer",
+        "club": "SC Paderborn 07",
+        "sub_minute": 65,
+        "minutes": 25,
+        "goals": 1,
+        "is_penalty": true,
+        "highlight": "Kaltblütiger Strafstoß-Joker: Verwandelt 8 Minuten nach Betreten des Rasens zur zwischenzeitlichen 2:1-Führung gegen Eintracht Frankfurt!"
+      },
+      {
+        "name": "Noel Futkeu",
+        "club": "SV 07 Elversberg",
+        "sub_minute": 78,
+        "minutes": 12,
+        "goals": 1,
+        "is_penalty": false,
+        "highlight": "Spektakulärer Seitfallzieher im Signal Iduna Park: Verkürzt nur drei Minuten nach Einwechslung zum 1:2 bei Borussia Dortmund!"
+      },
+      {
+        "name": "Junior Adamu",
+        "club": "FC Schalke 04",
+        "sub_minute": 70,
+        "minutes": 20,
+        "goals": 1,
+        "is_penalty": false
+      },
+      {
+        "name": "Uchenna Ogundu",
+        "club": "FC Augsburg",
+        "sub_minute": 80,
+        "minutes": 10,
+        "goals": 1,
+        "is_penalty": false
+      }
+    ]
   }
 }
