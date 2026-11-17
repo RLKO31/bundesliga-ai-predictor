@@ -171,7 +171,7 @@
       },
       {
         "rank": 3,
-        "name": "Florian Rieder",
+        "name": "Fabian Rieder",
         "club": "FC Augsburg",
         "min_in": "Eingewechselt (72')",
         "stat": "Tor in 89. Min. | TIP: 1.10",
@@ -639,12 +639,12 @@
       },
       {
         "pos": "IV",
-        "name": "Danilho Doekhi",
+        "name": "Leopold Querfeld",
         "club": "1. FC Union Berlin",
         "x": 25,
         "y": 72,
         "stat": "BLS: 2.35 | CDE: 6.00",
-        "highlight": "Starter (90 Min.), Weiße Weste, 8 Luftduelle beim 1:0 gegen Elversberg"
+        "highlight": "Starter (90 Min.), Weiße Weste & 8 Klärungen beim 1:0-Sieg gegen SV 07 Elversberg"
       },
       {
         "pos": "IV",
@@ -794,12 +794,12 @@
       },
       {
         "pos": "IV",
-        "name": "Danilho Doekhi",
+        "name": "Leopold Querfeld",
         "club": "1. FC Union Berlin",
         "x": 62,
         "y": 73,
         "stat": "BLS: 2.42 | CDE: 7.00",
-        "highlight": "Starter (90 Min.), Weiße Weste, 9/9 Luftduelle (100%), 0 Fouls vs BVB"
+        "highlight": "Starter (90 Min.), Weiße Weste & 10 gewonnene Zweikämpfe beim 0:0 gegen Dortmund"
       },
       {
         "pos": "IV",
@@ -1068,12 +1068,12 @@
     "lineup": [
       {
         "pos": "TW",
-        "name": "Michael Zetterer",
+        "name": "Karl Hein",
         "club": "SV Werder Bremen",
         "x": 50,
         "y": 88,
         "stat": "GSAE: +1.45 | QRSR: 1.82",
-        "highlight": "Starter (90 Min.), Weiße Weste, 5 Paraden beim 2:0 gegen Hoffenheim"
+        "highlight": "Starter (90 Min.), Weiße Weste & 5 Glanzparaden beim 1:0-Heimsieg gegen Union Berlin"
       },
       {
         "pos": "RV",

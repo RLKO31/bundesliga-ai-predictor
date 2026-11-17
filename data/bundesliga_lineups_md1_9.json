@@ -183,7 +183,7 @@
         "is_penalty": false
       },
       {
-        "name": "Florian Rieder",
+        "name": "Fabian Rieder",
         "club": "FC Augsburg",
         "sub_minute": 72,
         "minutes": 18,
@@ -393,7 +393,7 @@
         "minutes": 90
       },
       {
-        "name": "Danilho Doekhi",
+        "name": "Leopold Querfeld",
         "club": "1. FC Union Berlin",
         "pos": "IV",
         "minutes": 90
@@ -495,7 +495,7 @@
         "minutes": 90
       },
       {
-        "name": "Danilho Doekhi",
+        "name": "Leopold Querfeld",
         "club": "1. FC Union Berlin",
         "pos": "IV",
         "minutes": 90
@@ -723,7 +723,7 @@
         "highlight": "Setzt in der 95. Minute den 3:0-Schlusspunkt gegen Leverkusen!"
       },
       {
-        "name": "Winsley Boteli",
+        "name": "Tim Kleindienst",
         "club": "Borussia Mönchengladbach",
         "sub_minute": 60,
         "minutes": 30,
@@ -736,7 +736,7 @@
   "8": {
     "starters": [
       {
-        "name": "Michael Zetterer",
+        "name": "Karl Hein",
         "club": "SV Werder Bremen",
         "pos": "TW",
         "minutes": 90,
